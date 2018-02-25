@@ -1,0 +1,216 @@
+﻿@model Shodypati.Models.Doctor
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Doctor</h4>
+    <hr />
+    <table class="tabledisplay">
+        <thead>
+            <tr>
+                <td>Column Name</td>
+                <td>Value</td>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.FullName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.FullName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.RegistrationNo)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.RegistrationNo)
+            </td>
+        </tr>
+        @*<tr>
+            <td>
+                @Html.DisplayNameFor(model => model.RegistrationType)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.RegistrationType)
+            </td>
+        </tr>*@
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ClinicHospitalName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ClinicHospitalName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Designation)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Designation)
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                @Html.DisplayNameFor(model => model.YearOfExperience)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.YearOfExperience)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.WorkingTypeName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.WorkingTypeName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Addresss)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Addresss)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.DateOfBirth)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Email)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Email)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CanVisitDays)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.SelectedVisitDaysStr)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.VisitTimeStart)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.VisitTimeStart)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.VisitTimeEnd)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.VisitTimeEnd)
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                @Html.DisplayNameFor(model => model.VisitFee)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.VisitFee)
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                @Html.DisplayNameFor(model => model.SlotDuration)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.SlotDuration)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.VisitingCard)
+            </td>
+
+            <td>
+                @{
+                if (!string.IsNullOrEmpty(Model.RawDBImagePath))
+                {
+                    <a href="@Model.VisitingCard" data-lightbox="image-1" data-title="@Model.FullName">
+                        <img src="@Model.VisitingCard" class="img-display" />
+                    </a>
+            }
+                }
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CreatedOnUtc)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.CreatedOnUtc)
+            </td></tr>
+        <tr>
+
+            <td>
+                @Html.DisplayNameFor(model => model.UpdatedOnUtc)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.UpdatedOnUtc)
+            </td></tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Active)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Active)
+            </td></tr>
+        </tbody>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

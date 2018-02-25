@@ -1,0 +1,108 @@
+﻿@model Shodypati.Models.Merchant
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Merchant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+      
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name_English)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name_English)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name_Bangla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name_Bangla)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.URL)
+        </dt>
+
+        <dd>
+            <a href="@Model.URL">@Model.URL </a >       
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Logo)
+        </dt>
+
+        <dd>
+            <img src="@Model.Logo" class="img-display" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfGoods)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfGoods)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountAvailable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountAvailable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOnUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOnUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedOnUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedOnUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Published)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Published)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

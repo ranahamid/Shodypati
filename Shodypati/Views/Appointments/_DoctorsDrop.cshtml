@@ -1,0 +1,7 @@
+﻿@model Shodypati.Models.DoctorViewModel
+
+@Html.LabelFor(m => m.SelectedDoctorId, new { @class = "col-md-2 control-label" })
+
+<div class="col-md-10">
+    @Html.DropDownListFor(m => Model.SelectedDoctorId, new SelectList(Model.DoctorslList, "Value", "Text"), "Select Doctor", new { @id= "SelectedDoctor", @class = "form-control" })
+</div>

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Shodypati.Models.CampaignProducts>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th> @Html.DisplayNameFor(model => model.Products.Id)</th>
+            <th> @Html.DisplayNameFor(model => model.Products.ProductName_English) </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Products.Id)</td>
+            <th> @Html.DisplayFor(model => item.Products.ProductName_English) </th>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 21, 27.25" name="Shodypati">
+  <DataContextMoniker Name="/ShodypatiDataContext" />
+  <nestedChildShapes>
+    <classShape Id="9c837c7c-9774-4145-a239-875a4b165950" absoluteBounds="0.75, 0.75, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/ShodypatiDataContext/BannerImageTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="73399095-acd2-427d-86f5-0f3bce13362c" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="163794b0-489a-4304-aa83-15b4b93f04b1" absoluteBounds="3.75, 0.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/ShodypatiDataContext/StockStatusTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7a288969-e0ef-4542-8796-7356d8469b52" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="968a89bb-e5e7-4742-bf46-6750ddc9fe2f" absoluteBounds="3.75, 3.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/ShodypatiDataContext/BannerTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3c80c832-ca53-4b28-a227-162525fd896b" absoluteBounds="3.765, 4.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4810f98e-8312-4c20-99f4-b584577089ed" absoluteBounds="6.75, 0.75, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/ShodypatiDataContext/BazarListTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dc6b1b3f-5d28-4b04-aa71-d5dba9177f93" absoluteBounds="6.765, 1.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b52c15b2-7e82-4038-982c-0bf9a381a850" absoluteBounds="0.75, 6.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/ShodypatiDataContext/BrandTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="15eb9dca-0212-4d71-9414-fd0af1ecce74" absoluteBounds="0.765, 7.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2fa5ce09-d1ce-4294-a51a-063dde50d74b" absoluteBounds="3.75, 6.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/ShodypatiDataContext/CampaignProductsTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="98c5e960-ce16-4f16-82ed-bdd03d3c55c5" absoluteBounds="3.765, 7.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dd47a99b-dc17-4b18-8d24-2ec759b26e31" absoluteBounds="6.75, 4.75, 2, 3.1170068359375005">
+      <DataClassMoniker Name="/ShodypatiDataContext/CategoryTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d238bd1a-e081-4315-ad50-d61ef68f9482" absoluteBounds="6.765, 5.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3222e6ab-39a6-430b-9c44-bfa23fbfd226" absoluteBounds="3.75, 8.75, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/ShodypatiDataContext/CustomerSearchTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="66e16afd-e0ed-4a15-8bfb-fc5d06e00859" absoluteBounds="3.765, 9.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="42b11b2c-5be9-426d-a176-05f2c5f47b88" absoluteBounds="6.75, 8.75, 2, 3.6939111328124987">
+      <DataClassMoniker Name="/ShodypatiDataContext/DoctorAppointmentTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="208b4aa3-3b02-440c-9a2c-09d7997803ae" absoluteBounds="6.765, 9.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7363c437-9642-4ac5-877c-91835c9fbd99" absoluteBounds="9.75, 0.75, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/ShodypatiDataContext/DoctorRegistrationTypeTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7bafade9-e5b1-47d5-a3c7-74c1ca8f5ae0" absoluteBounds="9.765, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="85257fc4-1bd1-42fb-a695-628891168ab6" absoluteBounds="9.75, 2.75, 2, 4.8477197265624987">
+      <DataClassMoniker Name="/ShodypatiDataContext/DoctorTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cce631af-ee4f-4cde-82e9-32e3a8cbbd4f" absoluteBounds="9.765, 3.21, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a1f8e0a2-77e7-46f4-9938-1067bd77fcf7" absoluteBounds="9.75, 8.75, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/ShodypatiDataContext/DoctorWorkingAreaTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="546e0027-25c1-47ac-95ee-3cc451be6a31" absoluteBounds="9.765, 9.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1e871686-40bc-4b04-a684-d37dd13fd8c8" absoluteBounds="0.75, 11.75, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/ShodypatiDataContext/GeoZoneTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1155d5d5-f55d-4094-88dc-74b34ad6e4b8" absoluteBounds="0.765, 12.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="614a948d-fcca-4bd6-b38f-972a4ddaa8a6" absoluteBounds="9.75, 11.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/ShodypatiDataContext/LogTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8bbaf1c2-e067-4de6-b44f-4c3317f6446a" absoluteBounds="9.765, 12.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="91d569f5-6bad-42fe-8114-9bb8d52a3fb9" absoluteBounds="12.75, 0.75, 2, 1.9631982421875003">
+      <DataClassMoniker Name="/ShodypatiDataContext/MedicineListTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4b6c742a-d4d9-4825-ad6c-a145891ea171" absoluteBounds="12.765, 1.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="938b4c55-24f4-4218-8e04-902b4ff02ea5" absoluteBounds="12.75, 3.75, 2, 3.1170068359375005">
+      <DataClassMoniker Name="/ShodypatiDataContext/MerchantTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ecb7e877-6dd4-4e76-a5a2-d967249c5a15" absoluteBounds="12.765, 4.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="22089c42-1831-4fc4-b46a-a4d2979360df" absoluteBounds="12.75, 7.75, 2, 1.7708968098958335">
+      <DataClassMoniker Name="/ShodypatiDataContext/OrderPaymentMethodTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="515f9ab3-8b58-4a55-bcf1-53f5d29a419d" absoluteBounds="12.765, 8.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0ae647cf-4cbc-47ca-8c9a-e478a8597aac" absoluteBounds="12.75, 10.75, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/ShodypatiDataContext/OrderPaymentStatusTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8a343015-f302-4a5d-bd3c-a362abc71419" absoluteBounds="12.765, 11.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8351a8b0-48a9-4b64-ac7d-f31be19e992b" absoluteBounds="3.75, 13.75, 2, 3.1170068359375023">
+      <DataClassMoniker Name="/ShodypatiDataContext/OrdersAddressTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9143ac15-eb0c-4486-a41d-5e07b1aac53f" absoluteBounds="3.765, 14.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c5aafe81-025e-4cc2-9244-5efa3f7e3af6" absoluteBounds="12.75, 13.75, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/ShodypatiDataContext/OrderShippingTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fc5c5679-9d53-426f-a52d-502c7db3d5ab" absoluteBounds="12.765, 14.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d8e8b582-111b-4c00-b442-a0389865a0c3" absoluteBounds="15.75, 0.75, 2, 5.0400211588541666">
+      <DataClassMoniker Name="/ShodypatiDataContext/OrdersProductTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d15e1c59-df9b-4f92-a479-a6815b780f92" absoluteBounds="15.765, 1.21, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="75a3ed33-8910-439d-90dd-3a6112476a10" absoluteBounds="15.75, 6.75, 2, 1.3862939453124996">
+      <DataClassMoniker Name="/ShodypatiDataContext/OrderStatusTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a6128c9e-ed4f-4c20-b21d-2a90d5ccd773" absoluteBounds="15.765, 7.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8c47df0b-796b-4bd0-bfb6-b2eb7c519526" absoluteBounds="6.75, 15.75, 2, 6.0015283203125005">
+      <DataClassMoniker Name="/ShodypatiDataContext/OrdersTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="41f9a027-c4a3-44a8-b9a7-36a4d5100da0" absoluteBounds="6.765, 16.21, 1.9700000000000002, 5.4415283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ff01d761-e1b3-47f4-bca9-4bc96d554d17" absoluteBounds="15.75, 9.75, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/ShodypatiDataContext/ProductImageTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="816307dd-108a-4aea-a31f-ab3f05e56d76" absoluteBounds="15.765, 10.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c115a0bc-a36b-488a-b885-ba439769f4f5" absoluteBounds="15.75, 12.75, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/ShodypatiDataContext/ProductRelatedTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ccb45f1d-d08a-4250-b56d-af6e717739c0" absoluteBounds="15.765, 13.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="539b9961-21fd-4487-8a72-e9f58629b40d" absoluteBounds="15.75, 15.75, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/ShodypatiDataContext/ProductReviewTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b10399b5-c5ea-452e-8305-ad8d8a66babf" absoluteBounds="15.765, 16.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="875f653e-b422-4d97-8f53-7312c763f471" absoluteBounds="9.75, 16.75, 2, 10.232159830729167">
+      <DataClassMoniker Name="/ShodypatiDataContext/ProductTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0f95f1bd-5729-4a2c-a0df-c07083ea95d2" absoluteBounds="9.765, 17.21, 1.9700000000000002, 9.6721598307291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a3bf5db2-9767-4b1d-a1a9-7a1e0da96008" absoluteBounds="0.75, 17.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/ShodypatiDataContext/ShipmentTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a84993d3-b1ad-454b-9200-960cba65517c" absoluteBounds="0.765, 18.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9a35a662-be21-4de7-9567-ff13670c633f" absoluteBounds="18.75, 0.75, 2, 3.1170068359375005">
+      <DataClassMoniker Name="/ShodypatiDataContext/UserTbl" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dc868e73-e8a3-4756-b722-14b3a0a64857" absoluteBounds="18.765, 1.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

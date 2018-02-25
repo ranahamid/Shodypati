@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Shodypati.Models.Category>
+
+@{
+    ViewBag.Title = "Category Lists";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name_English)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name_Bangla)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.DisplayOrder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Parent1Id)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+
+                <td> @Html.DisplayFor(modelItem => item.Id)</td>
+                <td> @Html.DisplayFor(modelItem => item.Name_English) </td>
+                <td> @Html.DisplayFor(modelItem => item.Name_Bangla)</td>
+
+                <td>@Html.DisplayFor(modelItem => item.DisplayOrder)</td>
+                <td>
+                    @{
+                        if (!string.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <a href="@item.ImagePath" data-lightbox="image-1" data-title="@item.Name_English">
+                                <img src="@item.ImagePath" class="img-display" alt=""/>
+                            </a>
+                        }
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parent1Name_English)
+                </td>             
+            </tr>
+        }
+    </tbody>
+</table>
+
+<

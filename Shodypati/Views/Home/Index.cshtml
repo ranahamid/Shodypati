@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Shodypati.Models.CategoryMobile>
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="index-page" >
+
+    <div class="">
+        @{ Html.RenderAction("MenuBanner", "Catalog"); }
+    </div>
+
+
+    <div class=" " style="margin-top:10px;">
+        @{
+            foreach (var item in Model)
+            {
+                <div class="box-heading box-sections box-block">
+                    <ul>
+                        <li>&nbsp; @item.Name_English</li>
+                    </ul>
+                </div>
+
+
+                foreach (var product in item.products)
+                {
+                <div class="productContainer">
+
+                    <div class="productName">
+                        <a href="">
+                            <h5> @product.ProductName_English</h5>
+                        </a>
+                    </div>
+
+
+                    <div class="product" data-id="@product.Id" data-price="@product.OfferPrice" data-title="@product.ProductName_English"
+                         data-img="@product.MainImagePath"
+                         data-url="https://www.momastore.org/museum/moma/ProductDisplay_Stockwell%20Travel%20Speaker_10451_10001_223993_-1_26707_26707_224026">
+
+                        <img src="@product.MainImagePath" class="img-aspect" />
+
+                    </div>
+                 
+                    <span class="add-to-cart a_demo_four">Add to cart</span>
+                    <span class="add-to-wish a_demo_two">Add to wish</span>
+                    <div class="syn-product-price">
+                        <span class="syn-price-product-grid">৳@product.UnitPrice</span>
+                        ৳@product.OfferPrice
+                    </div>
+                </div>
+                }
+            }
+        }
+
+
+    </div>
+</div>

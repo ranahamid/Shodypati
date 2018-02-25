@@ -1,0 +1,130 @@
+﻿
+
+<div class="productpage">
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.16/backbone.localStorage-min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/iScroll/5.1.3/iscroll.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.22/webfontloader.js'></script>
+    <script src="~/Content/shopping-cart-2-responsive/js/index.js"></script>
+</div>
+
+<div class="Lightbox">
+    <link href="~/Content/lightbox/css/lightbox.css" rel="stylesheet" />
+    <script src="~/Content/lightbox/js/lightbox.js"></script>
+</div>
+
+<div id="dataTableExport">
+    <link href="~/Content/DataTables/css/jquery.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/buttons.dataTables.css" rel="stylesheet" />
+
+    <script src="~/Content/datatable-export/jquery.dataTables.min.js"></script>
+    <script src="~/Content/datatable-export/dataTables.buttons.min.js"></script>
+    <script src="~/Content/datatable-export/buttons.flash.min.js"></script>
+    <script src="~/Content/datatable-export/jszip.min.js"></script>
+    <script src="~/Content/datatable-export/pdfmake.min.js"></script>
+    <script src="~/Content/datatable-export/vfs_fonts.js"></script>
+    <script src="~/Content/datatable-export/buttons.html5.min.js"></script>
+    <script src="~/Content/datatable-export/buttons.print.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.table').DataTable(
+                {
+                    "iDisplayLength": 10,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            $('.tabledisplay').DataTable(
+                {
+                    "iDisplayLength": 100,
+                    "ordering": false,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+        });
+    </script>
+
+</div>
+
+<script>
+    $('.datetime').datepicker({
+        autoclose: true
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $(".nav-tabs a").click(function () {
+            $(this).tab('show');
+        });
+    });
+</script>
+
+<div class="editor">
+    <link href="https://summernote.org/vendors/summernote/dist/summernote.css" rel="stylesheet">
+    <script src="https://summernote.org/vendors/summernote/dist/summernote.js"></script>
+    <script src="https://summernote.org/vendors/summernote/lang/summernote-ko-KR.js"></script>
+    <script>
+        $('.summernote').summernote({
+            height: 600,
+            focus: true,
+
+        });
+
+    </script>
+</div>
+<div class="clock">
+    <script>
+        var inputa = $("#timeclock-a");
+        inputa.clockpicker({
+            autoclose: true
+        });
+
+        // Manual operations
+        $('#button-a').click(function(e){
+            // Have to stop propagation here
+            e.stopPropagation();
+            inputa.clockpicker('show')
+                .clockpicker('toggleView', 'minutes');
+        });
+        $('#button-b').click(function(e){
+            // Have to stop propagation here
+            e.stopPropagation();
+            inputa.clockpicker('show')
+                .clockpicker('toggleView', 'hours');
+        });
+
+        //second
+        var inputb = $("#timeclock-b");
+        inputb.clockpicker({
+            autoclose: true
+        });
+
+        // Manual operations
+        $('#button-c').click(function(e){
+            // Have to stop propagation here
+            e.stopPropagation();
+            inputb.clockpicker('show')
+                .clockpicker('toggleView', 'minutes');
+        });
+        $('#button-d').click(function(e){
+            // Have to stop propagation here
+            e.stopPropagation();
+            inputb.clockpicker('show')
+                .clockpicker('toggleView', 'hours');
+        });      
+
+    </script>
+</div>
+
+
+
+
+

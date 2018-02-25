@@ -1,0 +1,30 @@
+﻿@model  Shodypati.Models.BannerSelectList
+
+@{
+    ViewBag.Title = "SetBanner";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>SetBanner</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedBanner, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => Model.SelectedBanner, Model.AllBanerItems, "---Select Banner---", new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.SelectedBanner, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    
+    <p>&nbsp;</p>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Update" class="btn btn-default" />
+        </div>
+    </div>
+}

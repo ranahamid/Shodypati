@@ -1,0 +1,144 @@
+﻿<div class="row">
+    @*<div class="col-md-2">
+        <div class="logo"><a href="/Home"> <img alt="logo" src="~/Content/images/logo.png" style="max-height:100px;max-width:110px;" /> </a></div>
+    </div>
+    <div class="col-md-6">
+        <form action="#" id="headersearch" role="search">
+            <input alt="Search" id="keywords" name="q" placeholder="Enter your search" size="40" type="text" style="max-width: 340px; ">
+            <button class="ss-search" id="submitquery" name="sa" type="submit">
+                <span class="hide">search</span>
+            </button>
+        </form>
+    </div>*@
+
+
+    @*<div class="col-md-2">
+        @Html.Partial("_LoginPartial")
+    </div>*@
+</div>
+
+
+<div class="menu-banner">
+    <div class="menubar">
+
+        <div class="col-md-12">
+            <header style="z-index:9999;">
+                <nav id='cssmenu'>
+
+
+
+                    <div id="head-mobile"></div>
+                    <div class="button"></div>
+                    <ul>
+                        <li class='active'><a href='/Home'>HOME</a></li>
+
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                           <li>
+                               <a href='/Dashboard/Index'>Admin Panel</a>
+                           </li>
+                        }
+
+                        <li><a href='#'>ABOUT</a></li>
+                        <li>
+                            <a href='#'>PRODUCTS</a>
+                            <ul>
+                                <li>
+                                    <a href='#'>Product 1</a>
+                                    <ul>
+                                        <li><a href='#'>Sub Product</a></li>
+                                        <li><a href='#'>Sub Product</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href='#'>Product 2</a>
+                                    <ul>
+                                        <li><a href='#'>Sub Product</a></li>
+                                        <li><a href='#'>Sub Product</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href='#'>Hot Deals</a></li>
+                        <li><a href='/Medicines/Create'>Medicine</a></li>
+                        <li><a href='/BazarLists/Create'>Bazar List</a></li>
+                        <li><a href='#'>CONTACT</a></li>
+
+                        @Html.Partial("_LoginPartial")
+                      
+                    </ul>
+                  
+                </nav>
+            </header>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+<script>
+    (function ($) {
+        $.fn.menumaker = function (options) {
+            var cssmenu = $(this), settings = $.extend({
+                format: "dropdown",
+                sticky: false
+            }, options);
+            return this.each(function () {
+                $(this).find(".button").on('click', function () {
+                    $(this).toggleClass('menu-opened');
+                    var mainmenu = $(this).next('ul');
+                    if (mainmenu.hasClass('open')) {
+                        mainmenu.slideToggle().removeClass('open');
+                    }
+                    else {
+                        mainmenu.slideToggle().addClass('open');
+                        if (settings.format === "dropdown") {
+                            mainmenu.find('ul').show();
+                        }
+                    }
+                });
+                cssmenu.find('li ul').parent().addClass('has-sub');
+                multiTg = function () {
+                    cssmenu.find(".has-sub").prepend('<span class="submenu-button"></span>');
+                    cssmenu.find('.submenu-button').on('click', function () {
+                        $(this).toggleClass('submenu-opened');
+                        if ($(this).siblings('ul').hasClass('open')) {
+                            $(this).siblings('ul').removeClass('open').slideToggle();
+                        }
+                        else {
+                            $(this).siblings('ul').addClass('open').slideToggle();
+                        }
+                    });
+                };
+                if (settings.format === 'multitoggle') multiTg();
+                else cssmenu.addClass('dropdown');
+                if (settings.sticky === true) cssmenu.css('position', 'fixed');
+                resizeFix = function () {
+                    var mediasize = 1000;
+                    if ($(window).width() > mediasize) {
+                        cssmenu.find('ul').show();
+                    }
+                    if ($(window).width() <= mediasize) {
+                        cssmenu.find('ul').hide().removeClass('open');
+                    }
+                };
+                resizeFix();
+                return $(window).on('resize', resizeFix);
+            });
+        };
+    })(jQuery);
+
+    (function ($) {
+        $(document).ready(function () {
+            $("#cssmenu").menumaker({
+                format: "multitoggle"
+            });
+        });
+    })(jQuery);
+
+</script>
+
+
+

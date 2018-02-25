@@ -1,0 +1,387 @@
+﻿@using Microsoft.AspNet.Identity
+@using Shodypati.Models
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+
+@if (Request.IsAuthenticated)
+{
+    //full name
+    var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+    var user = userManager.FindByEmail(User.Identity.GetUserName());
+
+    string FullName = string.Empty;
+    if (user != null && user.Name != null)
+    {
+        FullName = user.Name;
+    }
+    else
+    {
+        FullName = User.Identity.GetUserName();
+    }
+
+
+    <!-- Left side column. contains the logo and sidebar -->
+
+    <div class="page-sidebar navbar-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+        <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+        <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+        <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+        <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+        <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+            <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            <li class="sidebar-toggler-wrapper hide">
+                <div class="sidebar-toggler">
+                    <span></span>
+                </div>
+            </li>
+            <!-- END SIDEBAR TOGGLER BUTTON -->
+            <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+            <li class="sidebar-search-wrapper">
+                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+                <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
+                <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
+                <form class="sidebar-search  " action="page_general_search_3.html" method="POST">
+                    <a href="javascript:;" class="remove">
+                        <i class="icon-close"></i>
+                    </a>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <a href="javascript:;" class="btn submit">
+                                <i class="icon-magnifier"></i>
+                            </a>
+                        </span>
+                    </div>
+                </form>
+                <!-- END RESPONSIVE QUICK SEARCH FORM -->
+            </li>
+
+            <li class="nav-item start ">
+                <a href="@Url.Action("Index", "Dashboard")">
+                    <i class="icon-home"></i>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
+            <li class="heading">
+                <h3 class="uppercase">Main Navigation</h3>
+            </li>
+
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-puzzle"></i>
+                    <span class="title">Catalog</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "categories")">
+                            <i class="icon-basket"></i>
+                            <span class="title">Categories</span>
+                            <span class="badge badge-danger">2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Products")">
+                            <i class="icon-graph"></i>
+                            <span class="title">Products</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-puzzle"></i>
+                    <span class="title">Promotion</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "CampaignProducts")">
+                            <i class="icon-call-out"></i>
+                            <span class="title">Campaign Products</span>
+                            <span class="badge badge-danger">2</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-puzzle"></i>
+                    <span class="title">Shodypati List</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Create", "BazarLists")">
+                            <i class="icon-basket"></i>
+                            <span class="title">Create Bazar List</span>
+                            <span class="badge badge-danger">2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "BazarLists")">
+                            <i class="icon-list"></i>
+                            <span class="title">Bazar List</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-basket"></i>
+                    <span class="title">Sales</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Orders")">
+                            <i class="icon-basket"></i>
+                            <span class="title">Orders</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-docs"></i>
+                    <span class="title">Health Section</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Medicines")">
+                            <i class="icon-clock"></i>
+                            <span class="title">Medicines</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Doctors")">
+                            <i class="icon-check"></i>
+                            <span class="title">Doctors</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Appointments")">
+                            <i class="icon-calendar"></i>
+                            <span class="title">Appoinments</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-user"></i>
+                    <span class="title">Design</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Banners")">
+                            <i class="icon-user"></i>
+                            <span class="title">Banners</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-user"></i>
+                    <span class="title">Customers</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Customers")">
+                            <i class="icon-user"></i>
+                            <span class="title">Customers</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "RolesAdmin")">
+                            <i class="icon-user-female"></i>
+                            <span class="title">Roles Admin</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "UsersAdmin")">
+                            <i class="icon-user"></i>
+                            <span class="title">Users Admin</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Merchants")">
+                            <i class="icon-user"></i>
+                            <span class="title">Merchants</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "Brands")">
+                            <i class="icon-user"></i>
+                            <span class="title">Brands</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-settings"></i>
+                    <span class="title">Report</span>
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                  
+                    <li class="nav-item">
+                        <a href="javascript:;" target="_blank" class="nav-link nav-toggle">
+                            <i class="icon-globe"></i> Sales
+                            <span class="arrow nav-toggle"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Sales")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Sales</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("ZoneWiseReports", "Sales")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Zone Wise Reports</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("BestSellers", "Sales")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Best Sellers</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" target="_blank" class="nav-link nav-toggle">
+                            <i class="icon-globe"></i> Products
+                            <span class="arrow nav-toggle"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a href="@Url.Action("ProductsNeverPurchased", "Sales")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Products Never Purchased</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("BestSellingProducts", "Sales")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Best Selling Products</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("MostViewedProducts", "Sales")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Most Viewed Products</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="@Url.Action("Index", "Logs")">
+                            <i class="icon-camera"></i>
+                            <span class="title">Logs</span>
+                            <span class="badge badge-success">6</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-settings"></i>
+                    <span class="title">Settings</span>
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item">
+                        <a href="@Url.Action("Index", "DoctorWorkingAreas")">
+                            <i class="icon-camera"></i>
+                            <span class="title">Doctor Working Areas</span>
+                            <span class="badge badge-success">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="icon-settings"></i> Order
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "OrderPaymentMethods")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Order Payment Methods </span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "OrderStatus")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Order Status</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "OrderPaymentStatus")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Order Payment Status</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "OrderShippings")">
+                                    <i class="icon-camera"></i>
+                                    <span class="title">Order Shippings</span>
+                                    <span class="badge badge-success">6</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+}

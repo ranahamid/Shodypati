@@ -1,0 +1,110 @@
+﻿@model Shodypati.Models.Banner
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Create</h2>
+
+
+<script>
+    var $form = null;
+    $(function () {
+
+        $form = $('#fileupload').fileupload({
+            dataType: 'json',
+            maxNumberOfFiles: 10,
+            maxFileSize: 10000000,
+        });
+
+    });
+    $('#fileupload').addClass('fileupload-processing');
+
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.GuidId)
+
+    <div class="form-horizontal">
+        <h4>Banner</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Published)
+                    @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.Label("Additional Images", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <button type="button" class="btn-success" data-toggle="modal" data-target="#imageupload">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                </button>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="imageupload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add banner images</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="fileupload" method="POST" enctype="multipart/form-data" data-url="@Url.Action("UploadAdditional","banners")"
+                      data-ng-app="demo"
+                      data-ng-controller="DemoFileUploadController"
+                      data-file-upload="options"
+                      data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+                    @Html.HiddenFor(model => model.GuidId)
+
+                    @Html.Partial("_Files")
+                </form>
+                @Html.Partial("_blueimpGallery")
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

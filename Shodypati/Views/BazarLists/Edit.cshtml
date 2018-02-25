@@ -1,0 +1,112 @@
+﻿@model Shodypati.Models.BazarList
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>BazarList</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#home">General</a></li>
+        <li><a href="#menu1">Description</a></li>
+        <li><a href="#menu2">Image</a></li>
+
+    </ul>
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, 10, 80, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <div class="form-group">
+                @Html.HiddenFor(x => x.RawDBImagePath)
+                @Html.LabelFor(model => model.MainImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Partial("_SingleFiles")
+                    @Html.HiddenFor(model => model.MainImagePath)
+                    <script>
+                        var rawimagepath = $("#RawDBImagePath");
+                var imagepath = $("#MainImagePath");
+                var imgAddress = "@Model.MainImagePath";
+                $(function ()
+                {
+                    $("#imgSrc").attr("src",imgAddress)
+                    $("#fileurl").val(imgAddress)
+                });
+                    function preupload(event)
+                    {
+                        event.preventDefault();
+                        $("#imgSrc").css("display", "none");
+                        var files = $("#fileinput")[0].files;
+
+                        var url = '/BazarLists/Upload';
+
+                        upload(files, url, imagepath, rawimagepath);
+                    }
+                    function preclearfile(event)
+                    {
+                        rawimagepath.val("");
+                        imagepath.val("");
+                        clearfile(imagepath);
+                    }
+                    </script>
+                </div>
+            </div>
+        </div>
+
+    </div>
+   
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

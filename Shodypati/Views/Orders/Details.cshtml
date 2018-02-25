@@ -1,0 +1,305 @@
+﻿@model Shodypati.Models.OrderMobile
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Customer Details</h2>
+<div class="">
+    @{ Html.RenderAction("GetUserInfoById", "Account", new { id = Model.CustomerId }); }
+</div>
+<h2>Order Details</h2>
+
+<div>
+    <hr />
+    <table class="tabledisplay">
+        <thead>
+            <tr>
+                <th>Column Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+    
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.OrderStatus)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.OrderStatus)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ShippingMethod)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.ShippingMethod)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.TotalProductPrice)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.TotalProductPrice)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ShippingPrice)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.ShippingPrice)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.TotalPriceAfterShipping)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.TotalPriceAfterShipping)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.OrderDiscountPrice)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.OrderDiscountPrice)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.TotalPriceAfterShippingAndDiscount)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.TotalPriceAfterShippingAndDiscount)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.PaymentMethod)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.PaymentMethod)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.OrderDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.OrderDate)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.PickUpInStore)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.PickUpInStore)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.PaymentStatus)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.PaymentStatus)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Active)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Active)
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Billing Address</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Column Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.BillingAddress.Address1)</td>
+                <td>@Html.DisplayFor(model => model.BillingAddress.Address1)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.BillingAddress.Address2)</td>
+                <td>@Html.DisplayFor(model => model.BillingAddress.Address2)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.BillingAddress.PostOffice)</td>
+                <td>@Html.DisplayFor(model => model.BillingAddress.PostOffice)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.BillingAddress.Thana)</td>
+                <td>@Html.DisplayFor(model => model.BillingAddress.Thana)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.BillingAddress.District)</td>
+                <td>@Html.DisplayFor(model => model.BillingAddress.District)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.BillingAddress.Division)</td>
+                <td>@Html.DisplayFor(model => model.BillingAddress.Division)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.BillingAddress.PostCode)</td>
+                <td>@Html.DisplayFor(model => model.BillingAddress.PostCode)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.BillingAddress.MobileNumber)</td>
+                <td>@Html.DisplayFor(model => model.BillingAddress.MobileNumber)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Shipping Address</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Column Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ShippingAddress.Address1)</td>
+                <td>@Html.DisplayFor(model => model.ShippingAddress.Address1)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ShippingAddress.Address2)</td>
+                <td>@Html.DisplayFor(model => model.ShippingAddress.Address2)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ShippingAddress.PostOffice)</td>
+                <td>@Html.DisplayFor(model => model.ShippingAddress.PostOffice)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ShippingAddress.Thana)</td>
+                <td>@Html.DisplayFor(model => model.ShippingAddress.Thana)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ShippingAddress.District)</td>
+                <td>@Html.DisplayFor(model => model.ShippingAddress.District)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ShippingAddress.Division)</td>
+                <td>@Html.DisplayFor(model => model.ShippingAddress.Division)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ShippingAddress.PostCode)</td>
+                <td>@Html.DisplayFor(model => model.ShippingAddress.PostCode)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ShippingAddress.MobileNumber)</td>
+                <td>@Html.DisplayFor(model => model.ShippingAddress.MobileNumber)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Products</h2>
+    @{if (Model.OrdersProducts != null && Model.OrdersProducts.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>ProductName</th>
+                
+                        <th>Weight</th>
+                        <th>Unit Price</th>
+                        <th>Offer Price</th>
+                        <th></th>
+                        <th>Quantity</th>
+                        <th></th>
+                        <th>Shipping Charge</th>
+                        <th></th>
+                        <th>Total Price</th>
+                        <th>Brand</th>
+                        <th>Merchant</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.OrdersProducts)
+                    {
+                        <tr>
+                            <td><a href=" @Url.Action("Details", "Products", new { id = item.ProductId})" target="_blank">Details</a> </td>
+                            <td>@Html.DisplayFor(model => item.Id)</td>
+                            <td>@Html.DisplayFor(model => item.ProductName_English)</td>
+                         
+                            <td>@Html.DisplayFor(model => item.Weight)</td>
+                            <td>@Html.DisplayFor(model => item.UnitPrice)</td>
+                            <td>@Html.DisplayFor(model => item.OfferPrice)</td>
+                            <td>*</td>
+                            <td>@Html.DisplayFor(model => item.Quantity) </td>
+                            <td>+</td>
+                            <td>@Html.DisplayFor(model => item.ShippingCharge)</td>
+                            <td>=</td>
+                            <th>@Html.DisplayFor(model => item.TotalPriceAfterDiscount)</th>
+                            <td>
+                             
+                                @if (item.BrandId != null && item.BrandId != 0)
+                                {   
+                                    @Html.DisplayFor(model => item.BrandId)
+                                    <span>|</span>                                
+                                    <a href=" @Url.Action("Details", "Brands", new { id = item.BrandId})" target="_blank">Details</a>
+                                }
+
+                            </td>
+                            <td>
+                              
+                                @if (item.MerchantId != null && item.MerchantId != 0)
+                                {
+                                      @Html.DisplayFor(model => item.MerchantId)
+                                    <span>|</span>                                  
+                                    <a href=" @Url.Action("Details", "Merchants", new { id = item.MerchantId})" target="_blank">Details</a>
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(model => item.Note)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h3>No Products</h3>
+        }
+    }
+
+
+
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

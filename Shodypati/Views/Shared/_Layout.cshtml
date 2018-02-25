@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Shodypati</title>
+    @Html.Partial("_LayoutHead")
+</head>
+<body>
+    <div class="container body-content" style="background-color:#fff">
+        @Html.Partial("_TopMenu")
+        @RenderBody()
+        @Html.Partial("_Footer")
+    </div>
+    @Html.Partial("_LayoutFooter")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

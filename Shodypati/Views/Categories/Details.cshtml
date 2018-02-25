@@ -1,0 +1,123 @@
+﻿@model Shodypati.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name_English)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name_English)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name_Bangla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name_Bangla)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control summernote" })
+            @*@Html.DisplayFor(model => model.Description)*@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+
+        
+
+        <dd>
+              @{
+                  if (!string.IsNullOrEmpty(Model.ImagePath))
+                    {
+                       
+                        <a href="@Model.ImagePath" data-lightbox="image-1" data-title="@Model.Name_English">
+                            <img src="@Model.ImagePath" class="img-display" />
+                        </a>
+                    }
+                }
+       
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parent1Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parent1Name_English)
+        </dd>
+
+      
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShowOnHomePage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShowOnHomePage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IncludeInTopMenu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncludeInTopMenu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOnUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOnUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedOnUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedOnUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Published)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Published)
+        </dd>
+
+  
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

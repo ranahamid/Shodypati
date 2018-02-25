@@ -1,0 +1,446 @@
+﻿@model Shodypati.Models.Product
+
+@{
+    ViewBag.Title = "Product Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName_English)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName_English)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName_Bangla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName_Bangla)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description_English)
+        </dt>
+
+        <dd>
+            @Html.TextAreaFor(m => m.Description_English, new { @class = "form-control summernote" })
+            @*@Html.DisplayFor(model => model.Description_English)*@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description_Bangla)
+        </dt>
+
+        <dd>
+            @Html.TextAreaFor(m => m.Description_Bangla, new { @class = "form-control summernote" })
+            @*@Html.DisplayFor(model => model.Description_Bangla)*@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parent1Name_English)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantityInStock)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantityInStock)
+        </dd>
+
+        <dt>
+            
+              
+            @Html.DisplayNameFor(model => model.MainImagePath)
+        </dt>
+
+        <dd>         
+              @{
+                    if (!string.IsNullOrEmpty(Model.MainImagePath))
+                    {
+                           <a href="@Model.MainImagePath" data-lightbox="image-1" data-title="@Model.ProductName_English">
+                            <img src="@Model.MainImagePath" class="img-display" />
+                        </a>     
+                    }
+                }
+            @*<img src="@Model.MainImagePath" class="img-display" />*@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OfferPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OfferPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountPercentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountPercentage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountStartDateUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountStartDateUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountEndDateUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountEndDateUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountRequiresCouponCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountRequiresCouponCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CouponCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CouponCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsHot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsHot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BrandId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BrandId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MerchantId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MerchantId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowCustomerReviews)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowCustomerReviews)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsShipEnabled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsShipEnabled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsFreeShipping)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsFreeShipping)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipSeparately)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipSeparately)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdditionalShippingCharge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdditionalShippingCharge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayStockAvailability)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayStockAvailability)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayStockQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisplayStockQuantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderMinimumQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderMinimumQuantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderMaximumQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderMaximumQuantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotReturnable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotReturnable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DisableBuyButton)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DisableBuyButton)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableForPreOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableForPreOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreOrderAvailabilityStartDateTimeUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreOrderAvailabilityStartDateTimeUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MarkAsNew)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarkAsNew)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MarkAsNewStartDateTimeUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarkAsNewStartDateTimeUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MarkAsNewEndDateTimeUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarkAsNewEndDateTimeUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Size)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Size)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Length)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Length)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Width)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Width)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Height)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Height)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableStartDateTimeUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableStartDateTimeUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableEndDateTimeUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableEndDateTimeUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RelatedProductId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelatedProductId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOnUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOnUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedOnUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedOnUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Published)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Published)
+        </dd>
+
+
+
+    </dl>
+
+    <div class="additional">
+        <h3>Additional images</h3>
+        <table style="width:100%" class="table table-responsive">
+            <tr>
+                <th>Description</th>
+                <th>DisplayOrder</th>
+                <th>ImagePath</th>
+            </tr>
+
+            @{
+                foreach (var item in Model.ProductImages)
+                {
+                    <tr>
+                        <td>@item.Description</td>
+                        <td>@item.DisplayOrder</td>
+                        <td><img src="@item.ImagePath" class="img-display" /></td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
