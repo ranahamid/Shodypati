@@ -21,7 +21,6 @@ namespace Shodypati.Controllers
     [Authorize(Roles = "Admin")]
     public class CampaignProductsController : BaseController
     {  
-
         public CampaignProductsController()
         {
             //api url                  
