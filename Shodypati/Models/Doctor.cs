@@ -25,7 +25,7 @@ namespace Shodypati.Models
         [Display(Name = "Clinic Hospital Name")]
         public string ClinicHospitalName { get; set; }
 
-        [Required]
+       
         public string Designation { get; set; }
 
         [Display(Name = "Year Of Experience")]
@@ -48,7 +48,7 @@ namespace Shodypati.Models
 
         [Phone]
         [Display(Name = "Phone Number")]
-        [Required]
+  
         public string PhoneNumber { get; set; }
 
         public string Email { get; set; }
