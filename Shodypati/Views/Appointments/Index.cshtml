@@ -28,17 +28,9 @@
 
         <div class="form-group" id="doctorsdiv">
             @Html.Partial("_DoctorsDrop", new DoctorViewModel()
-       {
-           //SelectedDoctor = (string)Model.SelectedDoctorId,
-           SelectedWorkingTypeId = (string)Model.SelectedDoctorWorkingTypeId
-       })
-
-            @*@Html.LabelFor(m => m.SelectedDoctorId, new { @class = "col-md-2 control-label" })
-
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => Model.SelectedDoctorId, Model.AllDoctors, "---Select Doctor---", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.SelectedDoctorId, "", new { @class = "text-danger" })
-            </div>*@
+               {          
+                   SelectedWorkingTypeId = (string)Model.SelectedDoctorWorkingTypeId
+               })
         </div>
 
         <div class="form-group">
