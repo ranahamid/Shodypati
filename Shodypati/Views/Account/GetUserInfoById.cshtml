@@ -1,14 +1,12 @@
 ﻿@model Shodypati.Models.ApplicationUser
 @{
     ViewBag.Title = "GetUserInfoById";
-  
+
 }
 
 
-
-
 <div>
-    <hr />
+    <hr/>
 
     @{
         if (Model != null)
@@ -41,14 +39,13 @@
 
                 @if (Model.IsFakeEmail == false)
                 {
-                <dt>
-                    @Html.DisplayNameFor(model => model.Email)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Email)
-                </dd>
-
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
                 }
                 <dt>
                     @Html.DisplayNameFor(model => model.PhoneNumber)
@@ -65,15 +62,14 @@
                 <dd>
                     @Html.DisplayFor(model => model.UserName)
                 </dd>
-                
+
             </dl>
         }
         else
         {
-          <h2> Not found the specified user.</h2 >
+            <h2> Not found the specified user.</h2 >
         }
 
     }
 
 </div>
-

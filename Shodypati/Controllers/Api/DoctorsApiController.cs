@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Shodypati.Models;
 using Shodypati.DAL;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers.Api
 {
@@ -36,10 +29,7 @@ namespace Shodypati.Controllers.Api
         public IHttpActionResult GetDoctor(int id)
         {
             var item = _repository.Get(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            if (item == null) return NotFound();
             return Ok(item);
         }
 
@@ -69,6 +59,5 @@ namespace Shodypati.Controllers.Api
             _repository.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
-
     }
 }

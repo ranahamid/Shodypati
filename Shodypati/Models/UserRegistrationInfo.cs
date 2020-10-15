@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Shodypati.Models
+﻿namespace Shodypati.Models
 {
     public class UserStatusInfo
     {
@@ -24,5 +19,4 @@ namespace Shodypati.Models
         //extends
         public bool PatientRole { get; set; }
     }
-
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace Shodypati.DAL
 {
@@ -14,6 +11,6 @@ namespace Shodypati.DAL
         void Put(TPrimaryKey id, TEntity entity);
         void Delete(TPrimaryKey id);
 
-        List<System.Web.Mvc.SelectListItem> GetAllMerchantsSelectList();
+        List<SelectListItem> GetAllMerchantsSelectList();
     }
 }

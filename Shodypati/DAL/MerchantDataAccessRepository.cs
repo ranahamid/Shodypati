@@ -1,15 +1,10 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Shodypati.Controllers;
 using Shodypati.Filters;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Shodypati.DAL
 {
@@ -23,21 +18,20 @@ namespace Shodypati.DAL
 
         public IEnumerable<Merchant> Get()
         {
-            var entities = Db.MerchantTbls.Select(x => new Merchant()
+            var entities = Db.MerchantTbls.Select(x => new Merchant
             {
-                Id                  = x.Id,
-                URL                 = x.URL,
-                Name_English        = x.Name_English,
-                Name_Bangla         = x.Name_Bangla,
-                Logo                = x.Logo,
-                TypeOfGoods         = x.TypeOfGoods,
-                Notes               = x.Notes,
-                DiscountAvailable   =x.DiscountAvailable,
-                DisplayOrder        = x.DisplayOrder,
-                CreatedOnUtc        = x.CreatedOnUtc,
-                UpdatedOnUtc        = x.UpdatedOnUtc,
-                Published           = x.Published,
-                
+                Id = x.Id,
+                URL = x.URL,
+                Name_English = x.Name_English,
+                Name_Bangla = x.Name_Bangla,
+                Logo = x.Logo,
+                TypeOfGoods = x.TypeOfGoods,
+                Notes = x.Notes,
+                DiscountAvailable = x.DiscountAvailable,
+                DisplayOrder = x.DisplayOrder,
+                CreatedOnUtc = x.CreatedOnUtc,
+                UpdatedOnUtc = x.UpdatedOnUtc,
+                Published = x.Published
             }).ToList();
 
             return entities;
@@ -45,21 +39,20 @@ namespace Shodypati.DAL
 
         public Merchant Get(int id)
         {
-            Merchant entity = Db.MerchantTbls.Where(x => x.Id == id).Select(x => new Merchant()
+            var entity = Db.MerchantTbls.Where(x => x.Id == id).Select(x => new Merchant
             {
-                Id                  = x.Id,
-                URL                 = x.URL,
-                Name_English        = x.Name_English,
-                Name_Bangla         = x.Name_Bangla,
-                Logo                = x.Logo,
-                TypeOfGoods         = x.TypeOfGoods,
-                Notes               = x.Notes,
-                DiscountAvailable   =x.DiscountAvailable,
-                DisplayOrder        = x.DisplayOrder,
-                CreatedOnUtc        = x.CreatedOnUtc,
-                UpdatedOnUtc        = x.UpdatedOnUtc,
-                Published           = x.Published,
-             
+                Id = x.Id,
+                URL = x.URL,
+                Name_English = x.Name_English,
+                Name_Bangla = x.Name_Bangla,
+                Logo = x.Logo,
+                TypeOfGoods = x.TypeOfGoods,
+                Notes = x.Notes,
+                DiscountAvailable = x.DiscountAvailable,
+                DisplayOrder = x.DisplayOrder,
+                CreatedOnUtc = x.CreatedOnUtc,
+                UpdatedOnUtc = x.UpdatedOnUtc,
+                Published = x.Published
             }).FirstOrDefault();
 
             return entity;
@@ -69,19 +62,18 @@ namespace Shodypati.DAL
         {
             Db.MerchantTbls.InsertOnSubmit(new MerchantTbl
             {
-               // Id                  = Guid.NewGuid(),
-                URL                 = entity.URL,
-                Name_English        = entity.Name_English,
-                Name_Bangla         = entity.Name_Bangla,
-                Logo                = entity.Logo,
-                TypeOfGoods         = entity.TypeOfGoods,
-                Notes               = entity.Notes,
-                DiscountAvailable   = entity.DiscountAvailable,
-                DisplayOrder        = entity.DisplayOrder,
-                CreatedOnUtc        = DateTime.Now,
-                UpdatedOnUtc        = DateTime.Now,
-                Published           = entity.Published,
-       
+                // Id                  = Guid.NewGuid(),
+                URL = entity.URL,
+                Name_English = entity.Name_English,
+                Name_Bangla = entity.Name_Bangla,
+                Logo = entity.Logo,
+                TypeOfGoods = entity.TypeOfGoods,
+                Notes = entity.Notes,
+                DiscountAvailable = entity.DiscountAvailable,
+                DisplayOrder = entity.DisplayOrder,
+                CreatedOnUtc = DateTime.Now,
+                UpdatedOnUtc = DateTime.Now,
+                Published = entity.Published
             });
             try
             {
@@ -96,11 +88,11 @@ namespace Shodypati.DAL
         public void Put(int id, Merchant entity)
         {
             var isEntity = from x in Db.MerchantTbls
-                           where x.Id == entity.Id
-                           select x;
+                where x.Id == entity.Id
+                select x;
 
-            
-            MerchantTbl entitySingle = isEntity.FirstOrDefault();
+
+            var entitySingle = isEntity.FirstOrDefault();
 
             if (entitySingle != null)
             {
@@ -131,12 +123,12 @@ namespace Shodypati.DAL
         public void Delete(int id)
         {
             var query = from x in Db.MerchantTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query.Count() == 1)
             {
-                MerchantTbl entity = query.FirstOrDefault();
+                var entity = query.FirstOrDefault();
                 Db.MerchantTbls.DeleteOnSubmit(entity ?? throw new InvalidOperationException());
             }
 
@@ -152,16 +144,14 @@ namespace Shodypati.DAL
 
         public List<SelectListItem> GetAllMerchantsSelectList()
         {
-            var entities = Db.MerchantTbls.Select(x => new SelectListItem()
+            var entities = Db.MerchantTbls.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
-                Text = x.Name_English,
+                Text = x.Name_English
                 // Selected = (item.Value.ToLower() == entity..ToString().ToLower()) ? true : false
             }).ToList();
 
             return entities;
         }
-
-
     }
 }

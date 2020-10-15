@@ -1,15 +1,11 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using Shodypati.Controllers;
 using Shodypati.Filters;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Shodypati.DAL
 {
@@ -18,16 +14,16 @@ namespace Shodypati.DAL
     {
         public IEnumerable<Category> Get()
         {
-            List<Category> entities = new List<Category>();
+            var entities = new List<Category>();
 
-            entities = Db.CategoryTbls.Select(x => new Category()
+            entities = Db.CategoryTbls.Select(x => new Category
             {
                 Id = x.Id,
                 Name_English = x.Name_English,
                 Name_Bangla = x.Name_Bangla,
                 Description = x.Description,
                 DisplayOrder = x.DisplayOrder,
-                ImagePath =  HttpUtility.UrlPathEncode(baseUrl + x.ImagePath) ,
+                ImagePath = HttpUtility.UrlPathEncode(baseUrl + x.ImagePath),
                 RawDBImagePath = x.ImagePath,
                 Parent1Id = x.Parent1Id,
                 //  Parent1Name_English    = GetParentNameFromAllCategories(x.Parent1Id),
@@ -36,8 +32,7 @@ namespace Shodypati.DAL
                 IncludeInTopMenu = x.IncludeInTopMenu,
                 CreatedOnUtc = x.CreatedOnUtc,
                 UpdatedOnUtc = x.UpdatedOnUtc,
-                Published = x.Published,
-
+                Published = x.Published
             }).OrderBy(x => x.Name_English).ToList();
 
             return entities;
@@ -45,7 +40,7 @@ namespace Shodypati.DAL
 
         public Category Get(int id)
         {
-            Category entity = Db.CategoryTbls.Where(x => x.Id == id).Select(x => new Category()
+            var entity = Db.CategoryTbls.Where(x => x.Id == id).Select(x => new Category
             {
                 Id = x.Id,
                 Name_English = x.Name_English,
@@ -61,22 +56,17 @@ namespace Shodypati.DAL
                 IncludeInTopMenu = x.IncludeInTopMenu,
                 CreatedOnUtc = x.CreatedOnUtc,
                 UpdatedOnUtc = x.UpdatedOnUtc,
-                Published = x.Published,
-
+                Published = x.Published
             }).FirstOrDefault();
 
             return entity;
         }
 
 
-
         public void Post(Category entity)
         {
             var imgAddress = string.Empty;
-            if (entity.ImagePath != null)
-            {
-                imgAddress = entity.ImagePath.TrimStart('/');
-            }
+            if (entity.ImagePath != null) imgAddress = entity.ImagePath.TrimStart('/');
 
             Db.CategoryTbls.InsertOnSubmit(new CategoryTbl
             {
@@ -92,8 +82,7 @@ namespace Shodypati.DAL
                 IncludeInTopMenu = entity.IncludeInTopMenu,
                 CreatedOnUtc = DateTime.Now,
                 UpdatedOnUtc = DateTime.Now,
-                Published = entity.Published,
-
+                Published = entity.Published
             });
             try
             {
@@ -108,18 +97,14 @@ namespace Shodypati.DAL
         public void Put(int id, Category entity)
         {
             var isEntity = from x in Db.CategoryTbls
-                           where x.Id == entity.Id
-                           select x;
+                where x.Id == entity.Id
+                select x;
 
             var imgAddress = string.Empty;
-            if (entity.RawDBImagePath != null)
-            {
-                imgAddress = entity.RawDBImagePath.TrimStart('/');
-            }
+            if (entity.RawDBImagePath != null) imgAddress = entity.RawDBImagePath.TrimStart('/');
 
 
-
-            CategoryTbl entitySingle = isEntity.Single();
+            var entitySingle = isEntity.Single();
 
 
             entitySingle.Name_English = entity.Name_English;
@@ -145,22 +130,18 @@ namespace Shodypati.DAL
         }
 
 
-
         public void Delete(int id)
         {
             //check if it is parent of any other 
-            if (IsParentOfAnyCategory(id))
-            {
-                return;
-            }
+            if (IsParentOfAnyCategory(id)) return;
 
             var query = from x in Db.CategoryTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query.Count() == 1)
             {
-                CategoryTbl entity = query.FirstOrDefault();
+                var entity = query.FirstOrDefault();
                 Db.CategoryTbls.DeleteOnSubmit(entity ?? throw new InvalidOperationException());
             }
 
@@ -180,8 +161,5 @@ namespace Shodypati.DAL
         {
             return AllCategories;
         }
-
-
-
     }
 }

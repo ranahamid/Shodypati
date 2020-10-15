@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Shodypati.Models;
 using Shodypati.DAL;
-using Newtonsoft.Json;
-using System.Web;
-using System.IO;
-using System.Web.Hosting;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers.Api
 {
@@ -22,10 +16,15 @@ namespace Shodypati.Controllers.Api
     {
         private readonly IBazarListAccessRepository<BazarList, int> _repository;
 
+        private int _randomNmbr;
+        private readonly string serverMapPath = "~/Content/images/BazarList/";
+
         public BazarListApiController(IBazarListAccessRepository<BazarList, int> r)
         {
             _repository = r;
         }
+
+        private string StorageRoot => Path.Combine(HostingEnvironment.MapPath(serverMapPath));
 
         [Route("api/BazarListApi/")]
         // GET: api/BazarListApi
@@ -40,10 +39,7 @@ namespace Shodypati.Controllers.Api
         public IHttpActionResult GetBazarList(int id)
         {
             var item = _repository.Get(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            if (item == null) return NotFound();
             return Ok(item);
         }
 
@@ -62,11 +58,6 @@ namespace Shodypati.Controllers.Api
             return new Random().Next(100000, 100000000);
         }
 
-        private int _randomNmbr = 0;
-        String serverMapPath = "~/Content/images/BazarList/";
-        
-        private string StorageRoot => Path.Combine(HostingEnvironment.MapPath(serverMapPath));
-
         [Route("api/BazarListApi/")]
         // POST: api/CategoriesApi
         [ResponseType(typeof(Category))]
@@ -83,20 +74,19 @@ namespace Shodypati.Controllers.Api
         [ResponseType(typeof(BazarList))]
         public IHttpActionResult PostBazarList()
         {
-            string imgAddress = string.Empty;
+            var imgAddress = string.Empty;
             //file
             _randomNmbr = GetRandomNumber();
-            string totalpath = StorageRoot + _randomNmbr+"/";
+            var totalpath = StorageRoot + _randomNmbr + "/";
 
-            String fullPath = Path.Combine(totalpath);
+            var fullPath = Path.Combine(totalpath);
             Directory.CreateDirectory(fullPath);
 
-            HttpResponseMessage response = new HttpResponseMessage();
+            var response = new HttpResponseMessage();
             var httpRequest = HttpContext.Current.Request;
-            string filePath = string.Empty;
+            var filePath = string.Empty;
 
             if (httpRequest.Files.Count > 0)
-            {
                 foreach (string file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[file];
@@ -108,7 +98,6 @@ namespace Shodypati.Controllers.Api
                         imgAddress = "/Content/images/BazarList/" + _randomNmbr + "/" + postedFile.FileName;
                     }
                 }
-            }
 
             var entity = new BazarList
             {

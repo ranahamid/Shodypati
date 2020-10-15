@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json.Serialization;
 
 namespace Shodypati
 {
@@ -22,27 +17,24 @@ namespace Shodypati
 
 
             config.Routes.MapHttpRoute(
-                name: "ActionApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                "ActionApi",
+                "api/{controller}/{action}/{id}",
+                new {id = RouteParameter.Optional}
             );
 
 
             config.Routes.MapHttpRoute(
-            name: "ActionApi2",
-            routeTemplate: "api/{controller}/{action}/{categoryid}/{merchantid}",
-            defaults: new { categoryid = RouteParameter.Optional, merchantid = RouteParameter.Optional }
+                "ActionApi2",
+                "api/{controller}/{action}/{categoryid}/{merchantid}",
+                new {categoryid = RouteParameter.Optional, merchantid = RouteParameter.Optional}
             );
 
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                "DefaultApi",
+                "api/{controller}/{id}",
+                new {id = RouteParameter.Optional}
             );
-
-
-
         }
     }
 }

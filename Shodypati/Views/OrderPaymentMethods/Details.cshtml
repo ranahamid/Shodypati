@@ -9,7 +9,7 @@
 
 <div>
     <h4>OrderPaymentMethod</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -35,9 +35,8 @@
             @{
                 if (!string.IsNullOrEmpty(Model.InstructionsImageUrl))
                 {
-                       
                     <a href="@Model.InstructionsImageUrl" data-lightbox="image-1" data-title="@Model.Name">
-                        <img src="@Model.InstructionsImageUrl" class="img-display" />
+                        <img src="@Model.InstructionsImageUrl" class="img-display"/>
                     </a>
                 }
             }
@@ -54,6 +53,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

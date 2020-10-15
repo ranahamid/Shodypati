@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 
 namespace Shodypati.Models
 {
@@ -32,8 +33,6 @@ namespace Shodypati.Models
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
-
-
     }
 
     public class ChangePasswordViewModel
@@ -48,8 +47,6 @@ namespace Shodypati.Models
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
-
-    
     }
 
 
@@ -63,9 +60,7 @@ namespace Shodypati.Models
 
     public class VerifyPhoneNumberViewModel
     {
-        [Required]
-        [Display(Name = "Code")]
-        public string Code { get; set; }
+        [Required] [Display(Name = "Code")] public string Code { get; set; }
 
         [Required]
         [Phone]
@@ -76,7 +71,6 @@ namespace Shodypati.Models
     public class ConfigureTwoFactorViewModel
     {
         public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+        public ICollection<SelectListItem> Providers { get; set; }
     }
-
 }

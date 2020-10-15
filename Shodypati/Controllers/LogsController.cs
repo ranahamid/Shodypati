@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Shodypati.Models;
-using System.Net.Http;
 using Newtonsoft.Json;
 using Shodypati.DAL;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers
 {
     [Authorize(Roles = "Admin")]
-
     public class LogsController : BaseController
     {
-
         public ShodypatiDataContext db;
+
         public LogsController()
         {
             //api url                  
@@ -59,10 +53,7 @@ namespace Shodypati.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Log log)
         {
-            if (ModelState.IsValid)
-            {
-                throw new Exception("Exception");
-            }
+            if (ModelState.IsValid) throw new Exception("Exception");
             throw new Exception("Exception");
         }
 
@@ -77,10 +68,7 @@ namespace Shodypati.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Log log)
         {
-            if (ModelState.IsValid)
-            {
-                throw new Exception("Exception");
-            }
+            if (ModelState.IsValid) throw new Exception("Exception");
             throw new Exception("Exception");
         }
 
@@ -96,27 +84,22 @@ namespace Shodypati.Controllers
 
 
         // POST: Logs/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             var responseMessage = await client.DeleteAsync(url + "/" + id);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
+            if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             throw new Exception("Exception");
         }
 
-        public  ActionResult DeleteAllLog()
+        public ActionResult DeleteAllLog()
         {
             var q = from x in db.LogTbls
                 select x;
 
-            foreach (var item in q)
-            {
-                db.LogTbls.DeleteOnSubmit(item);
-            }
+            foreach (var item in q) db.LogTbls.DeleteOnSubmit(item);
 
             try
             {
@@ -126,15 +109,13 @@ namespace Shodypati.Controllers
             {
                 throw new Exception("Exception");
             }
+
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
+            if (disposing) Db.Dispose();
             base.Dispose(disposing);
         }
     }

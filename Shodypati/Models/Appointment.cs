@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -11,16 +9,15 @@ namespace Shodypati.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public string PatientName { get; set; }
-        [Required]
-        public int? AssignDoctorId { get; set; }
+        [Required] public string PatientName { get; set; }
+
+        [Required] public int? AssignDoctorId { get; set; }
 
         public string AssignDoctorName { get; set; }
 
         public string Address { get; set; }
-        [Required]
-        public string PhoneNumber { get; set; }
+
+        [Required] public string PhoneNumber { get; set; }
 
         public int? AdvanceAmount { get; set; }
 
@@ -37,21 +34,20 @@ namespace Shodypati.Models
         public DateTime? CreatedOnUtc { get; set; }
 
         public DateTime? UpdatedOnUtc { get; set; }
-        
+
         public bool? IsPastDate { get; set; }
     }
 
 
     public class AppoinmentCreate
     {
-        public List< Appointment> Appointments { get; set; }
+        public List<Appointment> Appointments { get; set; }
 
         public Appointment NewAppointment { get; set; }
 
         public string DoctorId { get; set; }
 
         public Doctor DoctorDetails { get; set; }
-
     }
 
     public class AppointmentSelectList
@@ -72,7 +68,7 @@ namespace Shodypati.Models
 
 
     public class AppointmentTime
-    {    
+    {
         public uint AppointmentTimeStart { get; set; }
 
         public int Serial { get; set; }

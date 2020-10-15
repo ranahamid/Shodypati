@@ -10,26 +10,26 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>CampaignProducts</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         @Html.HiddenFor(model => model.Id)
 
-         <div class="form-group">
-             @Html.LabelFor(m => m.AllProductsSelectList, new { @class = "col-md-3 control-label" })
-             <div class="col-md-9">
-                 <div class="input-group ">
-                     @Html.ListBoxFor(model => model.AllProductsSelectListStr, Model.AllProductsSelectList, new { @id = "mySkills" })
-                 </div>
-             </div>
-         </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.AllProductsSelectList, new {@class = "col-md-3 control-label"})
+            <div class="col-md-9">
+                <div class="input-group ">
+                    @Html.ListBoxFor(model => model.AllProductsSelectListStr, Model.AllProductsSelectList, new {id = "mySkills"})
+                </div>
+            </div>
+        </div>
 
-   
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default"/>
             </div>
         </div>
     </div>

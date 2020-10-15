@@ -1,34 +1,20 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web;
 using Shodypati.Controllers;
 using Shodypati.Filters;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Shodypati.DAL
 {
-
     [ExceptionHandlerAttribute]
     public class OrderDataAccessRepository : BaseController, IOrderAccessRepository<Orders, int>
     {
-        public OrderDataAccessRepository()
-        {
-        }
-
-
         public IEnumerable<OrderMobile> Get()
         {
-            var entities = Db.OrdersTbls.Select(x => new OrderMobile()
+            var entities = Db.OrdersTbls.Select(x => new OrderMobile
             {
                 Id = x.Id,
 
@@ -52,27 +38,25 @@ namespace Shodypati.DAL
 
                 Active = x.Active,
 
-                OrdersProducts = Db.OrdersProductTbls.Where(y => y.OrderGuidId == x.GuidId).Select(y => new OrdersProduct()
-                {
-                    Id = y.Id,
-                    ProductId = y.ProductId,
-                    ShippingCharge = y.ShippingCharge,
-                    Quantity = y.Quantity,
-                    MainImagePath = HttpUtility.UrlPathEncode(baseUrl + y.MainImagePath),
-                    ProductName_English = y.ProductName_English,
-                    ProductName_Bangla = y.ProductName_Bangla,
-                    UnitPrice = y.UnitPrice,
-                    OfferPrice = y.OfferPrice,
-                    TotalPrice = y.TotalPrice,
-                    Discount = y.Discount,
-                    TotalPriceAfterDiscount = y.TotalPriceAfterDiscount,
+                OrdersProducts = Db.OrdersProductTbls.Where(y => y.OrderGuidId == x.GuidId).Select(y =>
+                    new OrdersProduct
+                    {
+                        Id = y.Id,
+                        ProductId = y.ProductId,
+                        ShippingCharge = y.ShippingCharge,
+                        Quantity = y.Quantity,
+                        MainImagePath = HttpUtility.UrlPathEncode(baseUrl + y.MainImagePath),
+                        ProductName_English = y.ProductName_English,
+                        ProductName_Bangla = y.ProductName_Bangla,
+                        UnitPrice = y.UnitPrice,
+                        OfferPrice = y.OfferPrice,
+                        TotalPrice = y.TotalPrice,
+                        Discount = y.Discount,
+                        TotalPriceAfterDiscount = y.TotalPriceAfterDiscount,
 
-                    BrandId = y.BrandId,
-                    MerchantId = y.MerchantId
-
-                }).OrderByDescending(y => y.Id).ToList(),
-
-
+                        BrandId = y.BrandId,
+                        MerchantId = y.MerchantId
+                    }).OrderByDescending(y => y.Id).ToList()
             }).OrderByDescending(y => y.Id).ToList();
 
             return entities;
@@ -80,7 +64,7 @@ namespace Shodypati.DAL
 
         public OrderMobile Get(int id)
         {
-            OrderMobile entity = Db.OrdersTbls.Where(x => x.Id == id).Select(x => new OrderMobile()
+            var entity = Db.OrdersTbls.Where(x => x.Id == id).Select(x => new OrderMobile
             {
                 Id = x.Id,
 
@@ -116,93 +100,87 @@ namespace Shodypati.DAL
 
                 Active = x.Active,
 
-                OrdersProducts = Db.OrdersProductTbls.Where(y => y.OrderGuidId == x.GuidId).Select(y => new OrdersProduct()
-                {
-                    Id = y.Id,
-                    ProductId = y.ProductId,
-                    Quantity = y.Quantity,
-                    MainImagePath = HttpUtility.UrlPathEncode(baseUrl + y.MainImagePath),
-                    ProductName_English = y.ProductName_English,
-                    ProductName_Bangla = y.ProductName_Bangla,
-                    UnitPrice = y.UnitPrice,
-                    OfferPrice = y.OfferPrice,
-                    TotalPrice = y.TotalPrice,
-                    Discount = y.Discount,
-                    ShippingCharge = y.ShippingCharge,
+                OrdersProducts = Db.OrdersProductTbls.Where(y => y.OrderGuidId == x.GuidId).Select(y =>
+                    new OrdersProduct
+                    {
+                        Id = y.Id,
+                        ProductId = y.ProductId,
+                        Quantity = y.Quantity,
+                        MainImagePath = HttpUtility.UrlPathEncode(baseUrl + y.MainImagePath),
+                        ProductName_English = y.ProductName_English,
+                        ProductName_Bangla = y.ProductName_Bangla,
+                        UnitPrice = y.UnitPrice,
+                        OfferPrice = y.OfferPrice,
+                        TotalPrice = y.TotalPrice,
+                        Discount = y.Discount,
+                        ShippingCharge = y.ShippingCharge,
 
-                    TotalPriceAfterDiscount = y.TotalPriceAfterDiscount,
+                        TotalPriceAfterDiscount = y.TotalPriceAfterDiscount,
 
-                    //extra
-                    BrandId = y.BrandId,
-                    MerchantId = y.MerchantId,
-                    Size = y.Size,
-                    Color = y.Color,
-                    Weight = y.Weight,
-                    Length = y.Length,
-                    Width = y.Width,
-                }).ToList(),
+                        //extra
+                        BrandId = y.BrandId,
+                        MerchantId = y.MerchantId,
+                        Size = y.Size,
+                        Color = y.Color,
+                        Weight = y.Weight,
+                        Length = y.Length,
+                        Width = y.Width
+                    }).ToList(),
 
-                BillingAddress = Db.OrdersAddressTbls.Where(y => y.OrderGuidId == x.GuidId && y.IsBilling == true).Select(y => new OrderAddressMobile()
-                {
-                    Address1 = y.Address1,
-                    Address2 = y.Address2,
-                    Division = y.Division,
-                    District = y.District,
-                    Thana = y.Thana,
-                    PostOffice = y.PostOffice,
-                    PostCode = y.PostCode,
-                    MobileNumber = y.MobileNumber,
-                }).SingleOrDefault(),
+                BillingAddress = Db.OrdersAddressTbls.Where(y => y.OrderGuidId == x.GuidId && y.IsBilling == true)
+                    .Select(y => new OrderAddressMobile
+                    {
+                        Address1 = y.Address1,
+                        Address2 = y.Address2,
+                        Division = y.Division,
+                        District = y.District,
+                        Thana = y.Thana,
+                        PostOffice = y.PostOffice,
+                        PostCode = y.PostCode,
+                        MobileNumber = y.MobileNumber
+                    }).SingleOrDefault(),
 
-                ShippingAddress = Db.OrdersAddressTbls.Where(y => y.OrderGuidId == x.GuidId && y.IsShipping == true).Select(y => new OrderAddressMobile()
-                {
-                    Address1 = y.Address1,
-                    Address2 = y.Address2,
-                    Division = y.Division,
-                    District = y.District,
-                    Thana = y.Thana,
-                    PostOffice = y.PostOffice,
-                    PostCode = y.PostCode,
-                    MobileNumber = y.MobileNumber,
-                }).SingleOrDefault(),
+                ShippingAddress = Db.OrdersAddressTbls.Where(y => y.OrderGuidId == x.GuidId && y.IsShipping == true)
+                    .Select(y => new OrderAddressMobile
+                    {
+                        Address1 = y.Address1,
+                        Address2 = y.Address2,
+                        Division = y.Division,
+                        District = y.District,
+                        Thana = y.Thana,
+                        PostOffice = y.PostOffice,
+                        PostCode = y.PostCode,
+                        MobileNumber = y.MobileNumber
+                    }).SingleOrDefault()
 
                 //   CreatedOnUtc = x.CreatedOnUtc,
                 //   UpdatedOnUtc = x.UpdatedOnUtc
-
             }).SingleOrDefault();
             return entity;
         }
 
 
-
         public OrderMobile Post(Orders entity, ApplicationUserManager UserManager)
         {
-            Guid orderGuidId = Guid.NewGuid();
+            var orderGuidId = Guid.NewGuid();
             //Add all prdoucts
             int? totalProductPrice = 0;
-            string productInfo = string.Empty;
+            var productInfo = string.Empty;
 
             if (entity.OrdersProducts != null && entity.OrdersProducts.Count > 0)
-            {
                 foreach (var product in entity.OrdersProducts)
                 {
                     //product details
                     var productQuery = (from x in Db.ProductTbls
-                                        where x.Id == product.ProductId
-                                        select x).SingleOrDefault();
+                        where x.Id == product.ProductId
+                        select x).SingleOrDefault();
 
-                    if (product.Quantity == null || product.Quantity == 0)
-                    {
-                        product.Quantity = 1;
-                    }
+                    if (product.Quantity == null || product.Quantity == 0) product.Quantity = 1;
 
                     int? productPrice;
                     if (productQuery.OfferPrice == 0 || productQuery.OfferPrice == null)
                     {
-                        if (productQuery.UnitPrice == null)
-                        {
-                            productQuery.UnitPrice = 0;
-                        }
+                        if (productQuery.UnitPrice == null) productQuery.UnitPrice = 0;
 
                         productPrice = product.Quantity * productQuery.UnitPrice;
                     }
@@ -212,17 +190,11 @@ namespace Shodypati.DAL
                     }
 
 
+                    if (product.Discount == null || product.Discount < 0) product.Discount = 0;
 
 
-                    if (product.Discount == null || product.Discount < 0)
-                    {
-                        product.Discount = 0;
-                    }
-
-
-
-                    int shippingCharge = productQuery.AdditionalShippingCharge ?? 0;
-                    int totalPriceAll = productPrice + shippingCharge - product.Discount ?? 0;
+                    var shippingCharge = productQuery.AdditionalShippingCharge ?? 0;
+                    var totalPriceAll = productPrice + shippingCharge - product.Discount ?? 0;
                     totalProductPrice += totalPriceAll;
 
                     //Email template
@@ -238,14 +210,14 @@ namespace Shodypati.DAL
 
                     Db.OrdersProductTbls.InsertOnSubmit(new OrdersProductTbl
                     {
-                        OrderGuidId = orderGuidId,            //AUTO
+                        OrderGuidId = orderGuidId, //AUTO
                         ProductId = product.ProductId,
                         Quantity = product.Quantity,
                         ProductName_English = productQuery.ProductName_English,
                         ProductName_Bangla = productQuery.ProductName_Bangla,
                         UnitPrice = productQuery.UnitPrice,
                         OfferPrice = productQuery.OfferPrice,
-                        TotalPrice = productPrice,             //AUTO
+                        TotalPrice = productPrice, //AUTO
                         Discount = product.Discount,
 
                         ShippingCharge = shippingCharge,
@@ -261,77 +233,58 @@ namespace Shodypati.DAL
                         Weight = productQuery.Weight,
                         Length = productQuery.Length,
                         Width = productQuery.Width,
-                        Height = productQuery.Height,
+                        Height = productQuery.Height
                     });
                 }
-            }
 
             //Order Status 
             entity.OrderStatusId = 1; //need to implement set default from db
             var query = (from x in Db.OrderStatusTbls
-                         where x.Id == entity.OrderStatusId
-                         select x).SingleOrDefault();
+                where x.Id == entity.OrderStatusId
+                select x).SingleOrDefault();
 
-            string orderStatusStr = string.Empty;
+            var orderStatusStr = string.Empty;
 
-            if (query != null)
-            {
-                orderStatusStr = query.Name;
-            }
+            if (query != null) orderStatusStr = query.Name;
 
             //Payment Type 
-            if (entity.PaymentMethodId == null)
-            {
-                entity.PaymentMethodId = 1;
-            }
+            if (entity.PaymentMethodId == null) entity.PaymentMethodId = 1;
             var query2 = (from x in Db.OrderPaymentMethodTbls
-                          where x.Id == entity.PaymentMethodId
-                          select x).SingleOrDefault();
+                where x.Id == entity.PaymentMethodId
+                select x).SingleOrDefault();
 
-            string paymentMethodStr = string.Empty;
+            var paymentMethodStr = string.Empty;
 
-            if (query2 != null)
-            {
-                paymentMethodStr = query2.Name;
-            }
+            if (query2 != null) paymentMethodStr = query2.Name;
 
             //payment status
             entity.PaymentStatusId = 1; //need to implement set default from db
 
             var query3 = (from x in Db.OrderPaymentStatusTbls
-                          where x.Id == entity.PaymentStatusId
-                          select x).SingleOrDefault();
+                where x.Id == entity.PaymentStatusId
+                select x).SingleOrDefault();
 
-            string paymentStatuStr = string.Empty;
+            var paymentStatuStr = string.Empty;
 
-            if (query3 != null)
-            {
-                paymentStatuStr = query3.Name;
-            }
+            if (query3 != null) paymentStatuStr = query3.Name;
 
             //Payment Type 
-            if (entity.ShippingMethodId == null)
-            {
-                entity.ShippingMethodId = 1;
-            }
+            if (entity.ShippingMethodId == null) entity.ShippingMethodId = 1;
             var query4 = (from x in Db.OrderShippingTbls
-                          where x.Id == entity.ShippingMethodId
-                          select x).SingleOrDefault();
+                where x.Id == entity.ShippingMethodId
+                select x).SingleOrDefault();
 
-            string shippingMethodStr = string.Empty;
+            var shippingMethodStr = string.Empty;
 
-            if (query4 != null)
-            {
-                shippingMethodStr = query4.Name;
-            }
+            if (query4 != null) shippingMethodStr = query4.Name;
 
             //User template
             var customerDetails = GetUserInfo(UserManager, entity.CustomerId);
             var customer =
-                          "Name:        " + customerDetails.Name + "\n" +
-                          "Address:     " + customerDetails.Address + "\n" +
-                          "Email:       " + customerDetails.Email.Trim() + "\n" +
-                          "PhoneNumber: " + customerDetails.PhoneNumber + "\n" + "\n";
+                "Name:        " + customerDetails.Name + "\n" +
+                "Address:     " + customerDetails.Address + "\n" +
+                "Email:       " + customerDetails.Email.Trim() + "\n" +
+                "PhoneNumber: " + customerDetails.PhoneNumber + "\n" + "\n";
 
             var totalPriceOrder = entity.ShippingPrice + totalProductPrice - entity.OrderDiscountPrice;
             Db.OrdersTbls.InsertOnSubmit(new OrdersTbl
@@ -345,13 +298,13 @@ namespace Shodypati.DAL
                 OrderStatusId = entity.OrderStatusId, //AUTO
 
                 TotalProductPrice = totalProductPrice, //AUTO
-                                                       // TotalPriceBeforeShipping                                = TotalProductPrice                                        , //AUTO
+                // TotalPriceBeforeShipping                                = TotalProductPrice                                        , //AUTO
                 ShippingPrice = entity.ShippingPrice,
                 TotalPriceAfterShipping = entity.ShippingPrice + totalProductPrice, //AUTO
                 OrderDiscountPrice = entity.OrderDiscountPrice,
                 TotalPriceAfterShippingAndDiscount = totalPriceOrder, //AUTO
                 //2
-                PaymentMethod = paymentMethodStr,  //AUTO
+                PaymentMethod = paymentMethodStr, //AUTO
                 PaymentMethodId = entity.PaymentMethodId,
 
                 OrderDate = DateTime.Now, //AUTO
@@ -368,14 +321,12 @@ namespace Shodypati.DAL
 
                 Active = true, //AUTO
                 CreatedOnUtc = DateTime.Now, //AUTO
-                UpdatedOnUtc = DateTime.Now, //AUTO
+                UpdatedOnUtc = DateTime.Now //AUTO
             });
-
 
 
             //Add billing address
             if (entity.BillingAddress != null)
-            {
                 Db.OrdersAddressTbls.InsertOnSubmit(new OrdersAddressTbl
                 {
                     OrderGuidId = orderGuidId,
@@ -388,13 +339,11 @@ namespace Shodypati.DAL
                     PostCode = entity.BillingAddress.PostCode,
                     MobileNumber = entity.BillingAddress.MobileNumber,
                     IsBilling = true,
-                    IsShipping = false,
+                    IsShipping = false
                 });
-            }
 
             //Add billing address
             if (entity.ShippingAddress != null)
-            {
                 Db.OrdersAddressTbls.InsertOnSubmit(new OrdersAddressTbl
                 {
                     OrderGuidId = orderGuidId,
@@ -407,21 +356,18 @@ namespace Shodypati.DAL
                     PostCode = entity.ShippingAddress.PostCode,
                     MobileNumber = entity.ShippingAddress.MobileNumber,
                     IsShipping = true,
-                    IsBilling = false,
+                    IsBilling = false
                 });
-            }
             try
             {
                 Db.SubmitChanges();
-
-
             }
             catch (Exception)
             {
                 throw new Exception("Exception");
             }
 
-            int orderId = GetOrderIdFromGuidId(orderGuidId);
+            var orderId = GetOrderIdFromGuidId(orderGuidId);
 
             //web
             var webOrderDetailsUrl = baseUrl + "orders/Details/" + orderId;
@@ -432,52 +378,43 @@ namespace Shodypati.DAL
                 "Total Product Price (without order shipping price) :" + totalProductPrice + "\n" +
                 "Order ShippingPrice                                :" + entity.ShippingPrice + "\n" +
                 "total Order Price (with order shipping price )     :" + totalPriceOrder + "\n" +
-                "CreatedOnUtc                                       :" + DateTime.Now.ToString("dddd, dd MMMM yyyy h:mm tt") + "\n" + "\n";
+                "CreatedOnUtc                                       :" +
+                DateTime.Now.ToString("dddd, dd MMMM yyyy h:mm tt") + "\n" + "\n";
 
             //EMAI Integraiton to Admin   
-            string receiver = ConfigurationManager.AppSettings["AdminAddress"];
-            string body = "Dear Admin," +
-                          "\nA New Order has been placed!" +
-                          "\nCustomer Details are\n" +
-                          "__________________________________\n" +
-                          customer +
-                          "\nThe product order details are: \n" +
-                          "__________________________________\n" +
-                          productInfo +
-                          "\n\nThe order details are: \n" +
-                          "__________________________________\n" +
-                          orderDetails +
-                          "\n\nFor more info, click here " +
-                          webOrderDetailsUrl +
-                          "\n\n\nThank you," +
-                          "\nThe Shodypati Team.";
+            var receiver = ConfigurationManager.AppSettings["AdminAddress"];
+            var body = "Dear Admin," +
+                       "\nA New Order has been placed!" +
+                       "\nCustomer Details are\n" +
+                       "__________________________________\n" +
+                       customer +
+                       "\nThe product order details are: \n" +
+                       "__________________________________\n" +
+                       productInfo +
+                       "\n\nThe order details are: \n" +
+                       "__________________________________\n" +
+                       orderDetails +
+                       "\n\nFor more info, click here " +
+                       webOrderDetailsUrl +
+                       "\n\n\nThank you," +
+                       "\nThe Shodypati Team.";
 
-            string subject = "A New Order has been placed.";
+            var subject = "A New Order has been placed.";
             SendEmailBase(receiver, subject, body);
             //Get Order
             var order = Get(orderId);
             return order;
         }
 
-        public int GetOrderIdFromGuidId(Guid id)
-        {
-            //db.OrdersTbls.Select(x => new Orders()
-            var query = (from x in Db.OrdersTbls
-                         where x.GuidId == id
-                         select x.Id).SingleOrDefault();
-            return query;
-        }
-
-
 
         public void Put(int id, Orders entity)
         {
             var isEntity = from x in Db.OrdersTbls
-                           where x.Id == entity.Id
-                           select x;
+                where x.Id == entity.Id
+                select x;
 
 
-            OrdersTbl entitySingle = isEntity.Single();
+            var entitySingle = isEntity.Single();
 
 
             entitySingle.CustomerId = entity.CustomerId;
@@ -500,8 +437,6 @@ namespace Shodypati.DAL
             entitySingle.UpdatedOnUtc = DateTime.Now;
 
 
-
-
             try
             {
                 Db.SubmitChanges();
@@ -516,23 +451,22 @@ namespace Shodypati.DAL
         public void Delete(int id)
         {
             var query = from x in Db.OrdersTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query.Count() == 1)
             {
-                OrdersTbl entity = query.SingleOrDefault();
+                var entity = query.SingleOrDefault();
                 Db.OrdersTbls.DeleteOnSubmit(entity ?? throw new InvalidOperationException());
 
                 //delete all products
                 Db.OrdersProductTbls.DeleteAllOnSubmit(from x in Db.OrdersProductTbls
-                                                       where x.OrderGuidId == entity.GuidId
-                                                       select x);
+                    where x.OrderGuidId == entity.GuidId
+                    select x);
                 // delete shipping and billing address
                 Db.OrdersAddressTbls.DeleteAllOnSubmit(from x in Db.OrdersAddressTbls
-                                                       where x.OrderGuidId == entity.GuidId
-                                                       select x);
-
+                    where x.OrderGuidId == entity.GuidId
+                    select x);
             }
 
             try
@@ -545,6 +479,13 @@ namespace Shodypati.DAL
             }
         }
 
-
+        public int GetOrderIdFromGuidId(Guid id)
+        {
+            //db.OrdersTbls.Select(x => new Orders()
+            var query = (from x in Db.OrdersTbls
+                where x.GuidId == id
+                select x.Id).SingleOrDefault();
+            return query;
+        }
     }
 }

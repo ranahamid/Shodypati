@@ -1,19 +1,20 @@
-﻿@using System.Diagnostics
-@model Shodypati.Models.AppoinmentCreate
+﻿@model Shodypati.Models.AppoinmentCreate
 
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Create";
-                Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 @{
     var doctorid = 0;
     if (Model?.DoctorDetails?.FullName != null)
     {
-        doctorid = @Model.DoctorDetails.Id;
-        <h1> <small>Doctor Name: </small><strong>@Model.DoctorDetails.FullName</strong></h1>
+        doctorid = Model.DoctorDetails.Id;
+        <h1>
+            <small>Doctor Name: </small><strong>@Model.DoctorDetails.FullName</strong>
+        </h1>
 
 
         <div class="row">
@@ -111,7 +112,7 @@
                                         </h3>
                                     </div>
                                 </li>
-                            
+
                                 <li class="mt-list-item">
                                     <div class="list-icon-container">
                                         <a href="javascript:;">
@@ -131,7 +132,6 @@
                 </div>
             </div>
         </div>
-
     }
     else
     {
@@ -140,9 +140,11 @@
                 <div class="number font-green"> 404 </div>
                 <div class="details">
                     <h3>Oops! You're lost.</h3>
-                    <p> We can not find the page you're looking for.
+                    <p>
+                        We can not find the page you're looking for.
                         <br/>
-                        <a href="index.html"> Return home </a> or try the search bar below. </p>
+                        <a href="index.html"> Return home </a> or try the search bar below.
+                    </p>
                     <form action="#">
                         <div class="input-group input-medium">
                             <input type="text" class="form-control" placeholder="keyword...">
@@ -161,9 +163,8 @@
 }
 
 
-
 <script>
-    $('#my-today-button').click(function () {
+    $('#my-today-button').click(function() {
         $('#calendar').fullCalendar('today');
     });
 </script>
@@ -176,56 +177,56 @@
                 <h4 class="modal-title">Patient Information</h4>
             </div>
             <div class="modal-body">
-                <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
+                <div class="scroller" style="height: 300px" data-always-visible="1" data-rail-visible1="1">
 
-                    @Html.HiddenFor(model => model.DoctorDetails.Id, new { @id = "assigndoctorid" })
-                    @Html.HiddenFor(model => model.DoctorDetails.FullName, new { @id = "doctorfullName" })
+                    @Html.HiddenFor(model => model.DoctorDetails.Id, new {id = "assigndoctorid"})
+                    @Html.HiddenFor(model => model.DoctorDetails.FullName, new {id = "doctorfullName"})
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.NewAppointment.PatientName, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.LabelFor(model => model.NewAppointment.PatientName, new {@class = "control-label col-md-4"})
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.NewAppointment.PatientName, new { htmlAttributes = new { id = "PatientName", @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NewAppointment.PatientName, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NewAppointment.PatientName, new {htmlAttributes = new {id = "PatientName", @class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.NewAppointment.PatientName, "", new {@class = "text-danger"})
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.NewAppointment.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.LabelFor(model => model.NewAppointment.Address, new {@class = "control-label col-md-4"})
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.NewAppointment.Address, new { htmlAttributes = new { id = "Address", @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NewAppointment.Address, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NewAppointment.Address, new {htmlAttributes = new {id = "Address", @class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.NewAppointment.Address, "", new {@class = "text-danger"})
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.NewAppointment.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.LabelFor(model => model.NewAppointment.PhoneNumber, new {@class = "control-label col-md-4"})
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.NewAppointment.PhoneNumber, new { htmlAttributes = new { id = "PhoneNumber", @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NewAppointment.PhoneNumber, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NewAppointment.PhoneNumber, new {htmlAttributes = new {id = "PhoneNumber", @class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.NewAppointment.PhoneNumber, "", new {@class = "text-danger"})
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DoctorDetails.VisitFee, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.LabelFor(model => model.DoctorDetails.VisitFee, new {@class = "control-label col-md-4"})
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.DoctorDetails.VisitFee, new { htmlAttributes = new { @readonly = "readonly", id = "VisitFee", @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DoctorDetails.VisitFee, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.DoctorDetails.VisitFee, new {htmlAttributes = new {@readonly = "readonly", id = "VisitFee", @class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.DoctorDetails.VisitFee, "", new {@class = "text-danger"})
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.NewAppointment.AdvanceAmount, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.LabelFor(model => model.NewAppointment.AdvanceAmount, new {@class = "control-label col-md-4"})
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.NewAppointment.AdvanceAmount, new { htmlAttributes = new { id = "AdvanceAmount", @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NewAppointment.AdvanceAmount, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NewAppointment.AdvanceAmount, new {htmlAttributes = new {id = "AdvanceAmount", @class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.NewAppointment.AdvanceAmount, "", new {@class = "text-danger"})
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.NewAppointment.RemainingAmount, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.LabelFor(model => model.NewAppointment.RemainingAmount, new {@class = "control-label col-md-4"})
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.NewAppointment.RemainingAmount, new { htmlAttributes = new { @readonly = "readonly", id = "RemainingAmount", @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NewAppointment.RemainingAmount, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NewAppointment.RemainingAmount, new {htmlAttributes = new {@readonly = "readonly", id = "RemainingAmount", @class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.NewAppointment.RemainingAmount, "", new {@class = "text-danger"})
                         </div>
                     </div>
                 </div>
@@ -240,26 +241,24 @@
 </div>
 
 
-
 <script>
-    $('#AdvanceAmount').on('input', function (e) {
-        var visitFee = $("#VisitFee").val();
-        var advanceAmount = $("#AdvanceAmount").val();
-        var remainingAmount = visitFee - advanceAmount;
-        $("#RemainingAmount").val(remainingAmount);
-    });
+    $('#AdvanceAmount').on('input',
+        function(e) {
+            var visitFee = $("#VisitFee").val();
+            var advanceAmount = $("#AdvanceAmount").val();
+            var remainingAmount = visitFee - advanceAmount;
+            $("#RemainingAmount").val(remainingAmount);
+        });
 </script>
 <script>
 
-    $(document).ready(function ()
-    {
-        if (@doctorid > 0)
-        {
+    $(document).ready(function() {
+        if (@doctorid > 0) {
 
             var startTime, endtime;
 
             $('#basic').on('hidden.bs.modal',
-                function () {
+                function() {
 
                     var assigndoctorid = $("#assigndoctorid").val();
                     if (assigndoctorid) {
@@ -279,15 +278,13 @@
                         var doctorfullName = $("#doctorfullName").val();
                         //jquery post
                         // patientName,  startTime,  endtime,  address,  phoneNumber,  advanceAmount,  assigndoctorid,  doctorfullName
-                        var url = "/Appointments/Create?patientName=" + patientName + "&startTime=" + startTime + "&endtime=" + endtime
-                            + "&address=" + address + "&phoneNumber=" + phoneNumber + "&advanceAmount=" + advanceAmount
-                            + "&assigndoctorid=" + assigndoctorid + "&doctorfullName=" + doctorfullName;
+                        var url = "/Appointments/Create?patientName=" + patientName + "&startTime=" + startTime + "&endtime=" + endtime + "&address=" + address + "&phoneNumber=" + phoneNumber + "&advanceAmount=" + advanceAmount + "&assigndoctorid=" + assigndoctorid + "&doctorfullName=" + doctorfullName;
 
                         $.ajax({
                             url: url,
                             type: "post",
-                            
-                            success: function (response) {
+
+                            success: function(response) {
                                 var title = patientName;
 
                                 if (phoneNumber)
@@ -299,16 +296,16 @@
                                 var eventData;
                                 if (title) {
                                     eventData =
-                                        {
-                                            title: title,
-                                            start: startTime,
-                                            end: endtime
-                                        };
+                                    {
+                                        title: title,
+                                        start: startTime,
+                                        end: endtime
+                                    };
                                     $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
                                 }
                                 $('#calendar').fullCalendar('unselect');
                             },
-                            error: function (jqXhr, textStatus, errorThrown) {
+                            error: function(jqXhr, textStatus, errorThrown) {
                                 console.log(textStatus, errorThrown);
                             }
                         });
@@ -316,56 +313,56 @@
                 });
 
             var chartVal = [];
-                $.ajax({
-                    url: "/Appointments/GetDoctorAppoinmentLists?doctorId=" + @doctorid ,
-                    type: "get",
-                    async: false,
-                    success: function (result) {
-                        var obj = jQuery.parseJSON(result);
-                        var length = obj.length;
-                        for (var i = 0; i < length; i++)
-                        {
-                            chartVal.push({
-                                title: obj[i].PatientName + " [" + obj[i].Address + "][ " + obj[i].PhoneNumber+"]",
-                                start: obj[i].StartTime,
-                                end: obj[i].EndTime
-                            });
-                        }
-                    },
-                    error: function () {
-
+            $.ajax({
+                url: "/Appointments/GetDoctorAppoinmentLists?doctorId=" + @doctorid,
+                type: "get",
+                async: false,
+                success: function(result) {
+                    var obj = jQuery.parseJSON(result);
+                    var length = obj.length;
+                    for (var i = 0; i < length; i++) {
+                        chartVal.push({
+                            title: obj[i].PatientName + " [" + obj[i].Address + "][ " + obj[i].PhoneNumber + "]",
+                            start: obj[i].StartTime,
+                            end: obj[i].EndTime
+                        });
                     }
-                });
+                },
+                error: function() {
 
-                $('#calendar').fullCalendar({
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title'
+                }
+            });
 
-                    },
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title'
 
-                    hiddenDays: [@Model.DoctorDetails.HiddenDays], //sunday, tuesday,thursday
-                    minTime: "@Model.DoctorDetails.VisitTimeStart",
-                    maxTime: "@Model.DoctorDetails.VisitTimeEnd",
-                    
-                    slotDuration: '00:@Model.DoctorDetails.SlotDuration:00',
-                    defaultView: 'agendaDay',
-                    allDaySlot: false,
-                    displayEventTime: true,
-                    displayEventEnd: true,
-                    editable: true,
-                    navLinks: true, // can click day/week names to navigate views
-                    selectable: true,
-                    selectHelper: true,
-                    select: function (start, end) {
-                        $('#basic').modal('toggle');
-                        startTime = start; endtime = end;
-                    },
-                    eventLimit: true, // allow "more" link when too many events
-                    events: chartVal,
+                },
 
-                    eventColor: '#378006'
-                });
+                hiddenDays: [@Model.DoctorDetails.HiddenDays], //sunday, tuesday,thursday
+                minTime: "@Model.DoctorDetails.VisitTimeStart",
+                maxTime: "@Model.DoctorDetails.VisitTimeEnd",
+
+                slotDuration: '00:@Model.DoctorDetails.SlotDuration:00',
+                defaultView: 'agendaDay',
+                allDaySlot: false,
+                displayEventTime: true,
+                displayEventEnd: true,
+                editable: true,
+                navLinks: true, // can click day/week names to navigate views
+                selectable: true,
+                selectHelper: true,
+                select: function(start, end) {
+                    $('#basic').modal('toggle');
+                    startTime = start;
+                    endtime = end;
+                },
+                eventLimit: true, // allow "more" link when too many events
+                events: chartVal,
+
+                eventColor: '#378006'
+            });
         }
 
     });

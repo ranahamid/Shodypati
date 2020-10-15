@@ -1,8 +1,6 @@
-﻿using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using Shodypati.Models;
 
 namespace Shodypati.DAL
 {
@@ -12,14 +10,15 @@ namespace Shodypati.DAL
         TEntity Get(TPrimaryKey id);
         void Post(TEntity entity);
         void Put(TPrimaryKey id, TEntity entity);
+
         void Delete(TPrimaryKey id);
+
         //custom
-        List<System.Web.Mvc.SelectListItem> GetAllProductsSelectList();
+        List<SelectListItem> GetAllProductsSelectList();
 
         List<CategoryMobile> GetProductsByCategoriesList();
         List<CategoryMobile> GetProductsByCategoriesListWeb();
 
         List<ProductMobile> GetProductsBy(int categoryid, int merchantid);
-    
     }
 }

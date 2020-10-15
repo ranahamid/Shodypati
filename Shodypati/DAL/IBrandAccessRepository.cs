@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace Shodypati.DAL
 {
-    public interface IBrandAccessRepository <TEntity, in TPrimaryKey> where TEntity : class
+    public interface IBrandAccessRepository<TEntity, in TPrimaryKey> where TEntity : class
     {
         IEnumerable<TEntity> Get();
         TEntity Get(TPrimaryKey id);
         void Post(TEntity entity);
         void Put(TPrimaryKey id, TEntity entity);
+
         void Delete(TPrimaryKey id);
+
         //custom
-        List<System.Web.Mvc.SelectListItem> GetAllBrandsSelectList();
+        List<SelectListItem> GetAllBrandsSelectList();
     }
 }

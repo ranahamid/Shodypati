@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
-
 
 namespace Shodypati.Models
 {
-
     public class MedicineList
     {
-        public string MedicineName{ get; set; }
+        public string MedicineName { get; set; }
 
         public string Quantity { get; set; }
 
@@ -18,10 +13,12 @@ namespace Shodypati.Models
 
         public DateTime? FinishTime { get; set; }
     }
+
     public class UserIds
     {
         public Guid UserId { get; set; }
     }
+
     public class Medicine
     {
         public int Id { get; set; }

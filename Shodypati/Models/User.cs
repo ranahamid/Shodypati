@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Shodypati.Models
 {
     public class User
     {
         public int Id { get; set; }
-        [Required]
-        public int UserId { get; set; }
+
+        [Required] public int UserId { get; set; }
 
         public string FirstName { get; set; }
 
@@ -33,10 +30,5 @@ namespace Shodypati.Models
         public DateTime? UpdatedOnUtc { get; set; }
 
         public bool? Active { get; set; }
-        
-
     }
-
-  
-
 }

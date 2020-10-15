@@ -6,75 +6,81 @@
 }
 
 
-
-
 <h2>Create</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Category</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#home">General</a></li>
-            <li><a href="#menu1">Image</a></li>
-            <li><a href="#menu2">Display</a></li>
-            <li><a href="#menu3">Publish</a></li>
+            <li class="active">
+                <a href="#home">General</a>
+            </li>
+            <li>
+                <a href="#menu1">Image</a>
+            </li>
+            <li>
+                <a href="#menu2">Display</a>
+            </li>
+            <li>
+                <a href="#menu3">Publish</a>
+            </li>
         </ul>
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Name_English, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Name_English, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Name_English, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Name_English, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Name_English, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Name_English, "", new {@class = "text-danger"})
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Name_Bangla, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Name_Bangla, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Name_Bangla, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Name_Bangla, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Name_Bangla, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Name_Bangla, "", new {@class = "text-danger"})
                     </div>
                 </div>
 
 
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Description, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
 
-                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control summernote" })
+                        @Html.TextAreaFor(m => m.Description, new {@class = "form-control summernote"})
 
                         @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { style = "height:80px;", @class = "form-control summernote" } })*@
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
                     </div>
                 </div>
             </div>
             <div id="menu1" class="tab-pane fade">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.ImagePath, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
                         @Html.Partial("_SingleFiles")
                         @Html.HiddenFor(model => model.ImagePath)
                         <script>
-                        function preupload(event) {
-                            event.preventDefault();
-                            var files = $("#fileinput")[0].files;
+                            function preupload(event) {
+                                event.preventDefault();
+                                var files = $("#fileinput")[0].files;
 
-                            var url = '/Categories/Upload';
-                            var imagepath = $("#ImagePath");
-                            upload(files, url, imagepath);
-                        }
-                        function preclearfile(event) {
-                            var imagepath = $("#MainImagePath");
-                            clearfile(imagepath);
-                        }
+                                var url = '/Categories/Upload';
+                                var imagepath = $("#ImagePath");
+                                upload(files, url, imagepath);
+                            }
+
+                            function preclearfile(event) {
+                                var imagepath = $("#MainImagePath");
+                                clearfile(imagepath);
+                            }
                         </script>
                     </div>
                 </div>
@@ -84,40 +90,39 @@
 
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.DisplayOrder, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.DisplayOrder, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.DisplayOrder, "", new {@class = "text-danger"})
                     </div>
                 </div>
 
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Parent1IdList, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.Parent1IdList, new {@class = "col-md-2 control-label"})
                     <div class="col-md-10">
 
-                        @Html.DropDownListFor(model => model.SelectedParent1Id, Model.AllCategories.OrderBy(x => x.Text), "---Select Parent Category---", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.SelectedParent1Id, Model.AllCategories.OrderBy(x => x.Text), "---Select Parent Category---", new {@class = "form-control"})
                     </div>
                 </div>
 
 
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ShowOnHomePage, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.ShowOnHomePage, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.ShowOnHomePage)
-                            @Html.ValidationMessageFor(model => model.ShowOnHomePage, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.ShowOnHomePage, "", new {@class = "text-danger"})
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.IncludeInTopMenu, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.IncludeInTopMenu, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.IncludeInTopMenu)
-                            @Html.ValidationMessageFor(model => model.IncludeInTopMenu, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.IncludeInTopMenu, "", new {@class = "text-danger"})
                         </div>
                     </div>
                 </div>
@@ -125,11 +130,11 @@
             </div>
             <div id="menu3" class="tab-pane fade">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Published, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Published)
-                            @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.Published, "", new {@class = "text-danger"})
                         </div>
                     </div>
                 </div>
@@ -139,7 +144,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default"/>
             </div>
         </div>
     </div>
@@ -149,4 +154,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-

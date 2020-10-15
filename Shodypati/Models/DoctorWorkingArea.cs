@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Shodypati.Models
 {
@@ -15,8 +10,6 @@ namespace Shodypati.Models
         [Display(Name = "Working Area")]
         public string WorkingArea { get; set; }
 
-        [Display(Name = "Description")]
-        public string Description { get; set; }
-
+        [Display(Name = "Description")] public string Description { get; set; }
     }
 }

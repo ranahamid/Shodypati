@@ -1,34 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
 using System.Web.Mvc;
-using Shodypati.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
-using Shodypati.DAL;
-using System.Configuration;
 using Shodypati.Filters;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers
 {
     [ExceptionHandler]
     public class CatalogController : BaseController
     {
-        public CatalogController()
-        {
-           
-        }
-
-
         public ActionResult MenuBanner()
         {
-           // Banner entity = new Banner();
+            // Banner entity = new Banner();
 
             return PartialView("_MenuBanner");
         }
@@ -44,8 +27,5 @@ namespace Shodypati.Controllers
 
             return PartialView("_HomepageBanner", entity);
         }
-
-       
-
     }
 }

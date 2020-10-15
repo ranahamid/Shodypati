@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Shodypati.Models
 {
     public class Banner
     {
-       
         public int Id { get; set; }
 
         public Guid GuidId { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        [Required] public string Name { get; set; }
 
         public DateTime? CreatedOnUtc { get; set; }
 
@@ -28,31 +24,26 @@ namespace Shodypati.Models
 
     public class BannerMobile
     {
-
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        [Required] public string Name { get; set; }
 
         public List<BannerImageMobile> BannerImages { get; set; }
     }
-
-
 
 
     public class BannerSelectList
     {
         public List<SelectListItem> AllBanerItems { get; set; }
 
-        [Display(Name = "Banner Name")]
-        public string SelectedBanner { get; set; }
+        [Display(Name = "Banner Name")] public string SelectedBanner { get; set; }
     }
 
     public class BannerImage
     {
         public int Id { get; set; }
-        [Required]
-        public Guid BannerGuidId { get; set; }
+
+        [Required] public Guid BannerGuidId { get; set; }
 
         public string URL { get; set; }
 
@@ -65,13 +56,11 @@ namespace Shodypati.Models
         public string Description { get; set; }
 
         public int? DisplayOrder { get; set; }
-
     }
 
 
     public class BannerImageMobile
     {
-
         public string URL { get; set; }
 
         public int? MerchantId { get; set; }
@@ -83,7 +72,5 @@ namespace Shodypati.Models
         public string Description { get; set; }
 
         public int? DisplayOrder { get; set; }
-
     }
-
 }

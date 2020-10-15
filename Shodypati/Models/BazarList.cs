@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
-
 
 namespace Shodypati.Models
 {
@@ -11,8 +7,7 @@ namespace Shodypati.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        [Required] public string Name { get; set; }
 
         [Required]
         [Display(Name = "Bazar List Image")]
@@ -32,6 +27,5 @@ namespace Shodypati.Models
         public DateTime? CreatedOnUtc { get; set; }
 
         public DateTime? UpdatedOnUtc { get; set; }
-
     }
 }

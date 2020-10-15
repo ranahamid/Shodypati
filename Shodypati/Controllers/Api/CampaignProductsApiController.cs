@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Shodypati.Models;
 using Shodypati.DAL;
-
+using Shodypati.Models;
 
 namespace Shodypati.Controllers.Api
 {
     public class CampaignProductsApiController : ApiController
     {
-
-        private ICampaignProductAccessRepository<CampaignProducts, int> _repository;
+        private readonly ICampaignProductAccessRepository<CampaignProducts, int> _repository;
 
         public CampaignProductsApiController(ICampaignProductAccessRepository<CampaignProducts, int> r)
         {
@@ -38,10 +29,7 @@ namespace Shodypati.Controllers.Api
         public IHttpActionResult GetCampaignProducts(int id)
         {
             var item = _repository.Get(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            if (item == null) return NotFound();
             return Ok(item);
         }
 
@@ -79,7 +67,5 @@ namespace Shodypati.Controllers.Api
         {
             return _repository.GetAllCampaignProductsList();
         }
-
-
     }
 }

@@ -1,15 +1,9 @@
-﻿using Shodypati.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers
 {
@@ -22,14 +16,11 @@ namespace Shodypati.Controllers
             return View(await UserManager.Users.ToListAsync());
         }
 
-      
+
         // GET: /Users/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var user = await UserManager.FindByIdAsync(id);
 
             ViewBag.RoleNames = await UserManager.GetRolesAsync(user.Id);
@@ -37,7 +28,7 @@ namespace Shodypati.Controllers
             return View(user);
         }
 
-    
+
         // GET: /Users/Create
         public async Task<ActionResult> Create()
         {
@@ -46,13 +37,13 @@ namespace Shodypati.Controllers
             return View();
         }
 
-     
+
         // POST: /Users/Create
         [HttpPost]
         public async Task<ActionResult> Create(RegisterViewModel userViewModel, params string[] selectedRoles)
         {
             if (ModelState.IsValid)
-            {              
+            {
                 var user = GetApplicationUser(userViewModel);
 
                 //with no roles
@@ -62,17 +53,18 @@ namespace Shodypati.Controllers
                 if (adminresult.Succeeded)
                 {
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code},
+                        Request.Url.Scheme);
 
                     //send email
-                    string body = "Dear " + userViewModel.Email + "," +
-                       ",\n\nWelcome to Shodypati!" +
-                        "\n\nA request has been received to open your Shodypati account." +
-                        "\n\nPlease confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">Click here</a>." +
-
-                        "\n\nIf you did not initiate this request, please contact us immediately at support@example.com." +
-                        "\n\nThank you," +
-                        "\nThe Shodypati Team.";
+                    var body = "Dear " + userViewModel.Email + "," +
+                               ",\n\nWelcome to Shodypati!" +
+                               "\n\nA request has been received to open your Shodypati account." +
+                               "\n\nPlease confirm your account by clicking this link: <a href=\"" + callbackUrl +
+                               "\">Click here</a>." +
+                               "\n\nIf you did not initiate this request, please contact us immediately at support@example.com." +
+                               "\n\nThank you," +
+                               "\nThe Shodypati Team.";
 
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", body);
 
@@ -93,38 +85,33 @@ namespace Shodypati.Controllers
                     ModelState.AddModelError("", adminresult.Errors.First());
                     ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
                     return View();
-
                 }
+
                 return RedirectToAction("Index");
             }
+
             ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
             return View();
         }
 
- 
+
         // GET: /Users/Edit/1
         public async Task<ActionResult> Edit(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var user = await UserManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
 
             var userRoles = await UserManager.GetRolesAsync(user.Id);
 
-            return View(new EditUserViewModel()
+            return View(new EditUserViewModel
             {
                 Id = user.Id,
                 Email = user.Email,
-                PhoneNumber=user.PhoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 Name = user.Name,
                 Address = user.Address,
-                RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem
                 {
                     Selected = userRoles.Contains(x.Name),
                     Text = x.Name,
@@ -133,19 +120,16 @@ namespace Shodypati.Controllers
             });
         }
 
-  
+
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit( EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit(EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByIdAsync(editUser.Id);
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
+                if (user == null) return HttpNotFound();
 
                 user.UserName = editUser.PhoneNumber;
                 user.Email = editUser.Email;
@@ -157,68 +141,62 @@ namespace Shodypati.Controllers
 
                 selectedRole = selectedRole ?? new string[] { };
 
-                var result = await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
+                var result = await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray());
 
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
-                result = await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray<string>());
+
+                result = await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray());
 
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
+
                 return RedirectToAction("Index");
             }
+
             ModelState.AddModelError("", "Something failed.");
             return View();
         }
 
-      
+
         // GET: /Users/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var user = await UserManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
             return View(user);
         }
 
 
         // POST: /Users/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
             if (ModelState.IsValid)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
                 var user = await UserManager.FindByIdAsync(id);
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
+                if (user == null) return HttpNotFound();
                 var result = await UserManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
+
                 return RedirectToAction("Index");
             }
+
             return View();
         }
     }

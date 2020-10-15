@@ -1,16 +1,10 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Shodypati.Controllers;
 using Shodypati.Filters;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Shodypati.DAL
 {
@@ -19,11 +13,11 @@ namespace Shodypati.DAL
     {
         public IEnumerable<OrderStatus> Get()
         {
-            var entities = Db.OrderStatusTbls.Select(x => new OrderStatus()
+            var entities = Db.OrderStatusTbls.Select(x => new OrderStatus
             {
                 Id = x.Id,
                 Name = x.Name,
-                DefaultStatus = x.DefaultStatus,
+                DefaultStatus = x.DefaultStatus
             }).ToList();
 
             return entities;
@@ -31,11 +25,11 @@ namespace Shodypati.DAL
 
         public OrderStatus Get(int id)
         {
-            var entity = Db.OrderStatusTbls.Where(x => x.Id == id).Select(x => new OrderStatus()
+            var entity = Db.OrderStatusTbls.Where(x => x.Id == id).Select(x => new OrderStatus
             {
                 Id = x.Id,
                 Name = x.Name,
-                DefaultStatus = x.DefaultStatus,
+                DefaultStatus = x.DefaultStatus
             }).SingleOrDefault();
 
             return entity;
@@ -47,8 +41,7 @@ namespace Shodypati.DAL
             {
                 //   Id              = entity.Id,           
                 Name = entity.Name,
-                DefaultStatus = entity.DefaultStatus,
-
+                DefaultStatus = entity.DefaultStatus
             });
             try
             {
@@ -63,9 +56,8 @@ namespace Shodypati.DAL
         public void Put(int id, OrderStatus entity)
         {
             var isEntity = from x in Db.OrderStatusTbls
-                           where x.Id == entity.Id
-                           select x;
-
+                where x.Id == entity.Id
+                select x;
 
 
             var entitySingle = isEntity.Single();
@@ -87,8 +79,8 @@ namespace Shodypati.DAL
         public void Delete(int id)
         {
             var query = from x in Db.OrderStatusTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query.Count() == 1)
             {
@@ -107,12 +99,12 @@ namespace Shodypati.DAL
         }
 
         //custom
-        public List<System.Web.Mvc.SelectListItem> GetAllOrderStatusSelectList()
+        public List<SelectListItem> GetAllOrderStatusSelectList()
         {
-            var entities = Db.OrderStatusTbls.Select(x => new SelectListItem()
+            var entities = Db.OrderStatusTbls.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
-                Text = x.Name,
+                Text = x.Name
                 // Selected = (item.Value.ToLower() == entity..ToString().ToLower()) ? true : false
             }).ToList();
 

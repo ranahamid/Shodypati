@@ -1,18 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Configuration;
+using System.Data.Entity;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Web;
-using System.Net.Mail;
-using System.Net;
-using System.Configuration;
 
 namespace Shodypati.Models
 {
@@ -28,7 +26,8 @@ namespace Shodypati.Models
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
             IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var manager =
+                new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
@@ -42,7 +41,7 @@ namespace Shodypati.Models
                 RequireNonLetterOrDigit = false,
                 RequireDigit = false,
                 RequireLowercase = false,
-                RequireUppercase = false,
+                RequireUppercase = false
             };
             // Configure user lockout defaults
             manager.UserLockoutEnabledByDefault = true;
@@ -63,10 +62,8 @@ namespace Shodypati.Models
             manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
-            {
                 manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
-            }
             return manager;
         }
     }
@@ -74,12 +71,13 @@ namespace Shodypati.Models
     // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly
     public class ApplicationRoleManager : RoleManager<IdentityRole>
     {
-        public ApplicationRoleManager(IRoleStore<IdentityRole,string> roleStore)
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
             : base(roleStore)
         {
         }
 
-        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options,
+            IOwinContext context)
         {
             return new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>()));
         }
@@ -93,27 +91,28 @@ namespace Shodypati.Models
             configSendMailasync(message);
             return Task.FromResult(0);
         }
+
         private Task configSendMailasync(IdentityMessage message)
         {
-            MailMessage msg = new MailMessage();
+            var msg = new MailMessage();
             msg.To.Add(message.Destination);
-            msg.From = new System.Net.Mail.MailAddress(
-                                ConfigurationManager.AppSettings["FromAddress"], ConfigurationManager.AppSettings["TeamName"]);
+            msg.From = new MailAddress(
+                ConfigurationManager.AppSettings["FromAddress"], ConfigurationManager.AppSettings["TeamName"]);
             msg.Subject = message.Subject;
 
             msg.Body = message.Body;
 
-            SmtpClient client = new SmtpClient();
+            var client = new SmtpClient();
             client.UseDefaultCredentials = true;
-            client.Host = ConfigurationManager.AppSettings["BaseMailHost"]; 
-            client.Port = Int32.Parse( ConfigurationManager.AppSettings["Port"] );
+            client.Host = ConfigurationManager.AppSettings["BaseMailHost"];
+            client.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
             client.EnableSsl = false;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.Credentials = new NetworkCredential
-                (
-                ConfigurationManager.AppSettings["mailAccount"], 
+            (
+                ConfigurationManager.AppSettings["mailAccount"],
                 ConfigurationManager.AppSettings["mailPassword"]
-                );
+            );
             client.Timeout = 20000;
             try
             {
@@ -128,7 +127,6 @@ namespace Shodypati.Models
             {
                 msg.Dispose();
             }
-
         }
     }
 
@@ -144,15 +142,17 @@ namespace Shodypati.Models
     // This is useful if you do not want to tear down the database each time you run the application.
     // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     // This example shows you how to create a new database if the Model changes
-    public class ApplicationDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext> 
+    public class ApplicationDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
-        protected override void Seed(ApplicationDbContext context) {
+        protected override void Seed(ApplicationDbContext context)
+        {
             InitializeIdentityForEF(context);
             base.Seed(context);
         }
 
         //Create User=Admin@Admin.com with password=Admin@123456 in the Admin role        
-        public static void InitializeIdentityForEF(ApplicationDbContext db) {
+        public static void InitializeIdentityForEF(ApplicationDbContext db)
+        {
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "ranahamid007@gmail.com";
@@ -161,21 +161,24 @@ namespace Shodypati.Models
 
             //Create Role Admin if it does not exist
             var role = roleManager.FindByName(roleName);
-            if (role == null) {
+            if (role == null)
+            {
                 role = new IdentityRole(roleName);
                 var roleresult = roleManager.Create(role);
             }
 
             var user = userManager.FindByName(name);
-            if (user == null) {
-                user = new ApplicationUser { UserName = name, Email = name };
+            if (user == null)
+            {
+                user = new ApplicationUser {UserName = name, Email = name};
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }
 
             // Add user admin to Role Admin if not already added
             var rolesForUser = userManager.GetRoles(user.Id);
-            if (!rolesForUser.Contains(role.Name)) {
+            if (!rolesForUser.Contains(role.Name))
+            {
                 var result = userManager.AddToRole(user.Id, role.Name);
             }
         }
@@ -183,17 +186,22 @@ namespace Shodypati.Models
 
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
-        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) : 
-            base(userManager, authenticationManager) { }
+        public ApplicationSignInManager(ApplicationUserManager userManager,
+            IAuthenticationManager authenticationManager) :
+            base(userManager, authenticationManager)
+        {
+        }
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
-            return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+            return user.GenerateUserIdentityAsync((ApplicationUserManager) UserManager);
         }
 
-        public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
+        public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options,
+            IOwinContext context)
         {
-            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(),
+                context.Authentication);
         }
     }
 }

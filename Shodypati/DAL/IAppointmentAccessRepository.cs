@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using Shodypati.Models;
 
 namespace Shodypati.DAL
@@ -14,10 +11,11 @@ namespace Shodypati.DAL
         Appointment Post(TEntity entity);
         Appointment PostWeb(TEntity entity);
         void Put(TPrimaryKey id, TEntity entity);
+
         void Delete(TPrimaryKey id);
+
         //custom
-        List<System.Web.Mvc.SelectListItem> GetAllDoctorsSelectList();
+        List<SelectListItem> GetAllDoctorsSelectList();
         IEnumerable<TEntity> GetByDoctor(TPrimaryKey id);
-        
     }
 }

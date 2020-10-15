@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using Shodypati.Models;
 using System.Web.Mvc;
-using Shodypati.DAL;
 using System.Web.Routing;
+using Shodypati.DAL;
 
 namespace Shodypati.Filters
 {
@@ -17,30 +14,23 @@ namespace Shodypati.Filters
         {
             if (!filterContext.ExceptionHandled)
             {
-
                 //ip
-                System.Web.HttpContext context = System.Web.HttpContext.Current;
-                string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                var context = HttpContext.Current;
+                var ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
                 string ip;
 
                 if (!string.IsNullOrEmpty(ipAddress))
                 {
-                    string[] addresses = ipAddress.Split(',');
-                    if (addresses.Length != 0)
-                    {
-                        ip = addresses[0];
-                    }
+                    var addresses = ipAddress.Split(',');
+                    if (addresses.Length != 0) ip = addresses[0];
                 }
 
                 ip = context.Request.ServerVariables["REMOTE_ADDR"];
-                if (ip == "::1")
-                {
-                    ip = "127.0.0.1";
-                }
+                if (ip == "::1") ip = "127.0.0.1";
                 //end ip
 
                 //broser
-                System.Web.HttpBrowserCapabilities browser = HttpContext.Current.Request.Browser;
+                var browser = HttpContext.Current.Request.Browser;
                 //string brwDescription =   "Type =                         " + browser.Type + "\n"
                 //                        + "Name =                         " + browser.Browser + "\n"
                 //                        + "Version =                      " + browser.Version + "\n"
@@ -60,14 +50,14 @@ namespace Shodypati.Filters
                 //                        + "Supports Java Applets =        " + browser.JavaApplets + "\n"
                 //                        + "Supports ActiveX Controls =    " + browser.ActiveXControls + "\n";
 
-                string brwDescription = browser.Browser +" " +browser.Version +", " + browser.EcmaScriptVersion.ToString();
+                var brwDescription = browser.Browser + " " + browser.Version + ", " + browser.EcmaScriptVersion;
                 //end browser
                 //os
-                string OSName = string.Empty;
+                var OSName = string.Empty;
                 OSName = HttpContext.Current.Request.Browser.Platform;
                 //end-os
                 //backurl
-                string back = string.Empty;
+                var back = string.Empty;
                 back = HttpContext.Current.Request.Url.AbsoluteUri;
                 //end
                 db.LogTbls.InsertOnSubmit(new LogTbl
@@ -77,7 +67,7 @@ namespace Shodypati.Filters
                     ControllerName = filterContext.RouteData.Values["controller"].ToString(),
                     IpAddress = ip,
                     Browser = brwDescription,
-                    OS= OSName,
+                    OS = OSName,
                     UserId = new Guid(),
                     ActionName = filterContext.RouteData.Values["action"].ToString(),
                     CreatedOnUtc = DateTime.Now
@@ -88,15 +78,14 @@ namespace Shodypati.Filters
                 }
                 catch (Exception)
                 {
-
                 }
 
                 filterContext.ExceptionHandled = true;
                 //redirect
-                var context2 = new RequestContext(new HttpContextWrapper(System.Web.HttpContext.Current), new RouteData());
+                var context2 = new RequestContext(new HttpContextWrapper(HttpContext.Current), new RouteData());
                 var urlHelper = new UrlHelper(context2);
-                var url = urlHelper.Action("ErrorException", "Account", new { backUrl = @back });
-                System.Web.HttpContext.Current.Response.Redirect(url);
+                var url = urlHelper.Action("ErrorException", "Account", new {backUrl = back});
+                HttpContext.Current.Response.Redirect(url);
             }
         }
     }

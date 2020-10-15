@@ -1,49 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Shodypati.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using Shodypati.DAL;
-using System.Configuration;
-using Shodypati.Filters;
-using Shodypati.Helpers;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Hosting;
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using Shodypati.Helpers;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class DoctorsController : BaseController
     {
+        private const string DeleteType = "GET";
         private readonly FilesHelper _filesHelper;
-        readonly string _tempPath = "~/Doctor/";
         private readonly string _serverMapPath = "~/Content/images/Doctor/";
+        private readonly string _tempPath = "~/Doctor/";
         private readonly string _urlBase = "/Content/images/Doctor/";
         private readonly string DeleteURL = "/Doctor/DeleteFile/?file=";
-
-        private string StorageRoot => Path.Combine(HostingEnvironment.MapPath(_serverMapPath));
-        private const string DeleteType = "GET";
 
 
         public DoctorsController()
         {
             var randN = GetRandomNumber();
 
-            _filesHelper = new FilesHelper(DeleteURL, DeleteType, StorageRoot + randN + "/", _urlBase + randN + "/", _tempPath + randN + "/", _serverMapPath + randN + "/");
+            _filesHelper = new FilesHelper(DeleteURL, DeleteType, StorageRoot + randN + "/", _urlBase + randN + "/",
+                _tempPath + randN + "/", _serverMapPath + randN + "/");
 
             //api url                  
             url = baseUrl + "api/DoctorsApi";
         }
 
-        
+        private string StorageRoot => Path.Combine(HostingEnvironment.MapPath(_serverMapPath));
+
+
         // GET: Doctors
         public async Task<ActionResult> Index()
         {
@@ -54,18 +47,20 @@ namespace Shodypati.Controllers
                 var entity = JsonConvert.DeserializeObject<List<Doctor>>(responseData);
                 return View(entity);
             }
+
             throw new Exception("Exception");
         }
-     
+
         // GET: Doctors/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
+            var responseMessage = await client.GetAsync(url + "/" + id);
             if (!responseMessage.IsSuccessStatusCode) throw new Exception("Exception");
             var responseData = responseMessage.Content.ReadAsStringAsync().Result;
             var entity = JsonConvert.DeserializeObject<Doctor>(responseData);
             return View(entity);
         }
+
         [AllowAnonymous]
         // GET: Doctors/Create
         public async Task<ActionResult> Create()
@@ -85,17 +80,14 @@ namespace Shodypati.Controllers
         public async Task<ActionResult> EditSub(Doctor entity)
         {
             var allWorkingTypes = await GetAllDoctorWorkingTypes();
-            List<SelectListItem> workingItems = new List<SelectListItem>();
+            var workingItems = new List<SelectListItem>();
             foreach (var item in allWorkingTypes)
-            {
-                workingItems.Add(new SelectListItem()
+                workingItems.Add(new SelectListItem
                 {
                     Value = item.Value,
                     Text = item.Text,
                     Selected = item.Value == entity.SelectedDoctorWorkingTypeId
                 });
-
-            }
             entity.CanVisitDays = GetAllWeekDaysName();
             entity.AllWorkingSelectListItems = workingItems;
             return View("Edit", entity);
@@ -111,14 +103,12 @@ namespace Shodypati.Controllers
             {
                 //end parent name
                 var responseMessage = await client.PostAsJsonAsync(url, entity);
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+                if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             }
+
             return await CreateSub(entity);
         }
-        
+
 
         [HttpPost]
         public JsonResult Upload()
@@ -139,7 +129,7 @@ namespace Shodypati.Controllers
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
 
-     
+
         // GET: Doctors/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -152,8 +142,6 @@ namespace Shodypati.Controllers
         }
 
 
-    
-
         // POST: Doctors/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -162,14 +150,12 @@ namespace Shodypati.Controllers
             if (ModelState.IsValid)
             {
                 var responseMessage = await client.PutAsJsonAsync(url + "/" + id, entity);
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+                if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             }
-            return await EditSub(entity);          
+
+            return await EditSub(entity);
         }
-     
+
         // GET: Doctors/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
@@ -179,26 +165,21 @@ namespace Shodypati.Controllers
             var entity = JsonConvert.DeserializeObject<Doctor>(responseData);
             return View(entity);
         }
-  
+
         // POST: Doctors/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             var responseMessage = await client.DeleteAsync(url + "/" + id);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
+            if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             throw new Exception("Exception");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
+            if (disposing) Db.Dispose();
             base.Dispose(disposing);
         }
     }

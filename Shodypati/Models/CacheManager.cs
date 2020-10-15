@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Caching;
@@ -23,43 +20,49 @@ namespace Shodypati.Models
         //        allProducts = manager.GetProducts(service);
         //        ContextCache.Max("AllProductskey", allProducts);
         //    }
-/// </summary>
+        /// </summary>
 /// 
 #region Fields
 private static readonly Cache _cache;
+
         #endregion
 
         #region Ctor
+
         /// <summary>
         /// Creates a new instance of the APCache class
         /// </CacheManager>
         static CacheManager()
         {
-            HttpContext current = HttpContext.Current;
+            var current = HttpContext.Current;
             if (current != null)
-            {
                 _cache = current.Cache;
-            }
             else
-            {
                 _cache = HttpRuntime.Cache;
-            }
         }
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the cache is enabled
+        /// </summary>
+        public static bool IsEnabled => true; //HulkERPConfig.CacheEnabled;
+
+        #endregion
+
         #region Methods
+
         /// <summary>
         /// Removes all keys and values from the cache
         /// </summary>
         public static void Clear()
         {
-            IDictionaryEnumerator enumerator = _cache.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                _cache.Remove(enumerator.Key.ToString());
-            }
+            var enumerator = _cache.GetEnumerator();
+            while (enumerator.MoveNext()) _cache.Remove(enumerator.Key.ToString());
         }
+
         /// <summary>
         /// Gets or sets the value associated with the specified key.
         /// </summary>
@@ -90,31 +93,27 @@ private static readonly Cache _cache;
         public static void Max(string key, object obj)
         {
 
-            if (IsEnabled && (obj != null))
-            {
-                //HttpRuntime.Cache.Insert("GetAllAnswer", allAnswers, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(24));
-                _cache.Insert(key, obj, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(24));
-            }
+            if (IsEnabled && obj != null)
+            //HttpRuntime.Cache.Insert("GetAllAnswer", allAnswers, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(24));
+                _cache.Insert(key, obj, null, Cache.NoAbsoluteExpiration, TimeSpan.FromHours(24));
         }
+
         public static void MaxOne(string key, object obj)
         {
 
-            if (IsEnabled && (obj != null))
-            {
-                //HttpRuntime.Cache.Insert("GetAllAnswer", allAnswers, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(24));
-                _cache.Insert(key, obj, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(1));
-            }
+            if (IsEnabled && obj != null)
+            //HttpRuntime.Cache.Insert("GetAllAnswer", allAnswers, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(24));
+                _cache.Insert(key, obj, null, Cache.NoAbsoluteExpiration, TimeSpan.FromHours(1));
         }
 
         public static void MaxOneMinute(string key, object obj)
         {
 
-            if (IsEnabled && (obj != null))
-            {
-                //HttpRuntime.Cache.Insert("GetAllAnswer", allAnswers, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(24));
-                _cache.Insert(key, obj, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(1));
-            }
+            if (IsEnabled && obj != null)
+            //HttpRuntime.Cache.Insert("GetAllAnswer", allAnswers, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(24));
+                _cache.Insert(key, obj, null, Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(1));
         }
+
         /// <summary>
         /// Removes the value with the specified key from the cache
         /// </summary>
@@ -130,30 +129,12 @@ private static readonly Cache _cache;
         /// <param name="pattern">pattern</param>
         public static void RemoveByPattern(string pattern)
         {
-            IDictionaryEnumerator enumerator = _cache.GetEnumerator();
-            Regex regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var enumerator = _cache.GetEnumerator();
+            var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
             while (enumerator.MoveNext())
-            {
-                if (regex.IsMatch(enumerator.Key.ToString()))
-                {
-                    _cache.Remove(enumerator.Key.ToString());
-                }
-            }
+                if (regex.IsMatch(enumerator.Key.ToString())) _cache.Remove(enumerator.Key.ToString());
         }
-        #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the cache is enabled
-        /// </summary>
-        public static bool IsEnabled
-        {
-            get
-            {
-                return true;//HulkERPConfig.CacheEnabled;
-            }
-        }
         #endregion
     }
 }

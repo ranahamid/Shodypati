@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Shodypati.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Required] [Display(Name = "Email")] public string Email { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -18,18 +17,16 @@ namespace Shodypati.Models
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+        public ICollection<SelectListItem> Providers { get; set; }
         public string ReturnUrl { get; set; }
     }
 
     public class VerifyCodeViewModel
     {
-        [Required]
-        public string Provider { get; set; }
+        [Required] public string Provider { get; set; }
 
-        [Required]
-        [Display(Name = "Code")]
-        public string Code { get; set; }
+        [Required] [Display(Name = "Code")] public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
         [Display(Name = "Remember this browser?")]
@@ -43,9 +40,7 @@ namespace Shodypati.Models
         [Display(Name = "Phone Number")]
         public string Number { get; set; }
 
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Required] [Display(Name = "Email")] public string Email { get; set; }
     }
 
     public class LoginViewModel
@@ -59,29 +54,23 @@ namespace Shodypati.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
+        [Display(Name = "Remember me?")] public bool RememberMe { get; set; }
     }
 
     public class RegisterPatient : RegisterViewModel
     {
-        [Display(Name = "Patient Name")]
-        public new string Name { get; set; }
+        [Display(Name = "Patient Name")] public new string Name { get; set; }
 
 
-        [Display(Name = "Doctor Name")]
-        public string DoctorName { get; set; }
+        [Display(Name = "Doctor Name")] public string DoctorName { get; set; }
 
-        [Display(Name = "Hospital Name")]
-        public string HospitalName { get; set; }
+        [Display(Name = "Hospital Name")] public string HospitalName { get; set; }
 
-        [Display(Name = "Description")]
-        public string Description { get; set; }
+        [Display(Name = "Description")] public string Description { get; set; }
     }
 
     public class RegisterViewModel
     {
-
         [Required]
         [Phone]
         [Display(Name = "Phone Number")]
@@ -100,7 +89,6 @@ namespace Shodypati.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
     }
 
     public class ResetPasswordViewModel

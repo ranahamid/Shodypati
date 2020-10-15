@@ -1,46 +1,46 @@
-﻿using Newtonsoft.Json;
-using Shodypati.DAL;
-using Shodypati.Filters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
-using System.Net;
-using Shodypati.Models;
-using Microsoft.AspNet.Identity.Owin;
 using log4net;
-using System.Reflection;
-using Microsoft.Owin.Security;
-using System.Text.RegularExpressions;
 using Microsoft.AspNet.Identity;
-using System.Net.Mail;
-using System.Text;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Newtonsoft.Json;
+using Shodypati.DAL;
+using Shodypati.Filters;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers
 {
     [ExceptionHandler]
-    public class BaseController:Controller
+    public class BaseController : Controller
     {
-        public ShodypatiDataContext Db = new ShodypatiDataContext();
-        public HttpClient client;
-        public string url;
-        public string baseUrl = ConfigurationManager.AppSettings["webapibaseurl"];
-   
-
-        /// <summary>
-        /// caching implementation
-        /// </summary>
-        public ICacheStorage CacheStorage = new HttpContextCacheAdapter();
         //public ICacheStorage _cacheStorage = new NullObjectCache(); 
 
 
-        public static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        public string baseUrl = ConfigurationManager.AppSettings["webapibaseurl"];
+
+
+        /// <summary>
+        ///     caching implementation
+        /// </summary>
+        public ICacheStorage CacheStorage = new HttpContextCacheAdapter();
+
+        public HttpClient client;
+        public ShodypatiDataContext Db = new ShodypatiDataContext();
+        public string url;
 
         public BaseController()
         {
@@ -49,10 +49,119 @@ namespace Shodypati.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.Timeout = TimeSpan.FromMinutes(30);
             //api url
-      
         }
 
-        #region  dcoctorappointment        
+        #region user
+
+        public ApplicationUser GetUserInfo(ApplicationUserManager UserManager, Guid? id)
+        {
+            var user = UserManager.FindById(id.ToString());
+            if (user.IsFakeEmail)
+                user.Email = null;
+            return user;
+        }
+
+        #endregion
+
+
+        #region Email
+
+        public bool SendEmailBase(string receiver, string subject, string body)
+        {
+            var destination = receiver;
+            var msg = new MailMessage();
+            msg.To.Add(destination);
+            msg.From = new MailAddress(
+                ConfigurationManager.AppSettings["FromAddress"], ConfigurationManager.AppSettings["TeamName"]);
+            msg.Subject = subject;
+
+            msg.Body = body;
+
+            var smtpclient = new SmtpClient
+            {
+                UseDefaultCredentials = true,
+                Host = ConfigurationManager.AppSettings["BaseMailHost"],
+                Port = int.Parse(ConfigurationManager.AppSettings["Port"]),
+                EnableSsl = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential
+                (
+                    ConfigurationManager.AppSettings["mailAccount"],
+                    ConfigurationManager.AppSettings["mailPassword"]
+                ),
+                Timeout = 20000
+            };
+
+            try
+            {
+                smtpclient.Send(msg);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Basic
+
+        private string SwitchEngBan(string number)
+        {
+            var en = "1234567890.,";
+            var bn = "১২৩৪৫৬৭৮৯০.,";
+            return number.Select(o => en.Contains(o)
+                    ? bn.Substring(en.IndexOf(o), 1)
+                    : en.Substring(bn.IndexOf(o), 1))
+                .Aggregate((a, b) => a + b);
+        }
+
+        #endregion
+
+        #region Banner
+
+        public async Task<List<SelectListItem>> GetAllBannerList()
+        {
+            //custom property for parent     
+            url = baseUrl + "api/BannersApi/GetAllBannersSelectList";
+            var responseMessageParentCat = await client.GetAsync(url);
+            var entities = new List<SelectListItem>();
+            if (responseMessageParentCat.IsSuccessStatusCode)
+            {
+                var responseDataParentCat = responseMessageParentCat.Content.ReadAsStringAsync().Result;
+
+                entities = JsonConvert.DeserializeObject<List<SelectListItem>>(responseDataParentCat);
+            }
+
+            //end custom property for parent 
+            return entities;
+        }
+
+        #endregion
+
+        #region all
+
+        public List<SelectListItem> SetSelectedItem(List<SelectListItem> items, int? id)
+        {
+            var tempItems = new List<SelectListItem>();
+
+            foreach (var item in items)
+                tempItems.Add(new SelectListItem
+                {
+                    Text = item.Text,
+                    Value = item.Value,
+                    Selected = string.Equals(item.Value, id.ToString(), StringComparison.CurrentCultureIgnoreCase)
+                        ? true
+                        : false
+                });
+            return tempItems;
+        }
+
+        #endregion
+
+        #region dcoctorappointment
+
         public async Task<List<SelectListItem>> GetAllDoctorWorkingTypes()
         {
             url = baseUrl + "api/DoctorWorkingAreaApi/GetAllDoctorWorkingAreasSelectList";
@@ -64,53 +173,50 @@ namespace Shodypati.Controllers
                 var entity = JsonConvert.DeserializeObject<List<SelectListItem>>(responseData);
                 return entity;
             }
+
             return null;
         }
 
         public List<SelectListItem> GetAllWeekDaysName()
         {
-            List<SelectListItem> days = new List<SelectListItem>
+            var days = new List<SelectListItem>
             {
-                new SelectListItem { Value = "0", Text = "রবিবার"},
-                new SelectListItem { Value = "1", Text = "সোমবার"},
-                new SelectListItem { Value = "2", Text = "মঙ্গলবার"},
-                new SelectListItem { Value = "3", Text = "বুধবার"},
-                new SelectListItem { Value = "4", Text = "বৃহস্পতিবার"},
-                new SelectListItem { Value = "5", Text = "শুক্রবার"},
-                new SelectListItem { Value = "6", Text = "শনিবার"},
-
+                new SelectListItem {Value = "0", Text = "রবিবার"},
+                new SelectListItem {Value = "1", Text = "সোমবার"},
+                new SelectListItem {Value = "2", Text = "মঙ্গলবার"},
+                new SelectListItem {Value = "3", Text = "বুধবার"},
+                new SelectListItem {Value = "4", Text = "বৃহস্পতিবার"},
+                new SelectListItem {Value = "5", Text = "শুক্রবার"},
+                new SelectListItem {Value = "6", Text = "শনিবার"}
             };
             return days;
         }
 
-      
+
         public List<string> GetListFromCommaSeparatedIntList(string list)
         {
-            List<string> daysName = new List<string>();
+            var daysName = new List<string>();
             try
             {
                 if (list != string.Empty)
                 {
-
                     var daysIds = list.Split(',').Select(int.Parse).ToList();
 
-                    foreach (var item in daysIds)
-                    {
-                        daysName.Add(item.ToString());
-                    }
+                    foreach (var item in daysIds) daysName.Add(item.ToString());
                 }
             }
             catch (Exception)
             {
                 return daysName;
             }
+
             return daysName;
         }
 
 
         public string GetHiddenDaysFromActiveDays(string dayLists)
         {
-            StringBuilder daysName = new StringBuilder();
+            var daysName = new StringBuilder();
             try
             {
                 if (dayLists != string.Empty)
@@ -119,15 +225,38 @@ namespace Shodypati.Controllers
                     var numberList = Enumerable.Range(0, 7).ToList();
                     var resultList = numberList.Except(daysIds);
                     foreach (var item in resultList)
-                    {
                         if (daysName.ToString() != string.Empty)
-                        {
                             daysName.Append("," + item);
-                        }
                         else
-                        {
                             daysName.Append(item);
-                        }
+                }
+            }
+            catch (Exception)
+            {
+                return daysName.ToString();
+            }
+
+            return daysName.ToString();
+        }
+
+
+        public string GetDaysNameFromNumbers(string dayLists)
+        {
+            var daysName = new StringBuilder();
+            try
+            {
+                if (dayLists != string.Empty)
+                {
+                    var daysIds = dayLists.Split(',').Select(int.Parse).ToList();
+
+                    foreach (var item in daysIds)
+                    {
+                        var dayInStr = GetDayByInt(item);
+
+                        if (daysName.ToString() != string.Empty)
+                            daysName.Append("," + dayInStr);
+                        else
+                            daysName.Append(dayInStr);
                     }
                 }
             }
@@ -135,40 +264,7 @@ namespace Shodypati.Controllers
             {
                 return daysName.ToString();
             }
-            return daysName.ToString();
-        }
 
-
-
-        public string GetDaysNameFromNumbers(string dayLists)
-        {
-            StringBuilder daysName = new StringBuilder();
-            try
-            {
-                if (dayLists != string.Empty)
-                {
-
-                    var daysIds = dayLists.Split(',').Select(int.Parse).ToList();
-
-                    foreach (var item in daysIds)
-                    {
-                        string dayInStr = GetDayByInt(item);
-
-                        if (daysName.ToString() != string.Empty)
-                        {
-                            daysName.Append("," + dayInStr);
-                        }
-                        else
-                        {
-                            daysName.Append(dayInStr);
-                        }
-                    }
-                }
-            }
-            catch (Exception )
-            {
-                return daysName.ToString();
-            }
             return daysName.ToString();
         }
 
@@ -176,7 +272,6 @@ namespace Shodypati.Controllers
         {
             switch (dayNumber)
             {
-
                 case 0:
                     return "রবিবার";
 
@@ -201,18 +296,18 @@ namespace Shodypati.Controllers
 
                 default:
                     return string.Empty;
-
             }
         }
 
         /// <summary>
-        /// Dates  represented as Unix timestamp 
-        /// with slight modification: it defined as the number
-        /// of seconds that have elapsed since 00:00:00, Thursday, 1 January 1970.
-        /// To convert it to .NET DateTime use following extension
+        ///     Dates  represented as Unix timestamp
+        ///     with slight modification: it defined as the number
+        ///     of seconds that have elapsed since 00:00:00, Thursday, 1 January 1970.
+        ///     To convert it to .NET DateTime use following extension
         /// </summary>
         /// <param name="time">DateTime</param>
-        /// <returns>Return as DateTime of uint time
+        /// <returns>
+        ///     Return as DateTime of uint time
         /// </returns>
         public DateTime ToDateTime(uint time)
         {
@@ -220,91 +315,26 @@ namespace Shodypati.Controllers
         }
 
         /// <summary>
-        /// Dates  represented as Unix timestamp 
-        /// with slight modification: it defined as the number
-        /// of seconds that have elapsed since 00:00:00 Thursday, 1 January 1970.
-        /// To convert .NET DateTime to Unix time use following extension
+        ///     Dates  represented as Unix timestamp
+        ///     with slight modification: it defined as the number
+        ///     of seconds that have elapsed since 00:00:00 Thursday, 1 January 1970.
+        ///     To convert .NET DateTime to Unix time use following extension
         /// </summary>
         /// <param name="time">DateTime</param>
         /// <returns>
-        /// Return as uint time of DateTime
+        ///     Return as uint time of DateTime
         /// </returns>
-
         public uint ToUnixTime(DateTime time)
         {
-            return (uint)time.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            return (uint) time.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
         }
 
-        #endregion
-
-        #region  user
-
-        public ApplicationUser GetUserInfo(ApplicationUserManager UserManager, Guid? id)
-        {
-            ApplicationUser user = UserManager.FindById(id.ToString());
-            if (user.IsFakeEmail)
-                user.Email = null;
-            return user;
-        }
-
-        #endregion
-
-
-        #region Email
-        public bool SendEmailBase(string receiver, string subject, string body)
-        {
-            var destination = receiver;
-            MailMessage msg = new MailMessage();
-            msg.To.Add(destination);
-            msg.From = new System.Net.Mail.MailAddress(
-                             ConfigurationManager.AppSettings["FromAddress"], ConfigurationManager.AppSettings["TeamName"]);
-            msg.Subject = subject;
-
-            msg.Body = body;
-
-            SmtpClient smtpclient = new SmtpClient
-            {
-                UseDefaultCredentials = true,
-                Host = ConfigurationManager.AppSettings["BaseMailHost"],
-                Port = Int32.Parse(ConfigurationManager.AppSettings["Port"]),
-                EnableSsl = false,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = new NetworkCredential
-                (
-                    ConfigurationManager.AppSettings["mailAccount"],
-                    ConfigurationManager.AppSettings["mailPassword"]
-                ),
-                Timeout = 20000
-            };
-
-            try
-            {
-                smtpclient.Send(msg);
-                return true;
-
-            }
-            catch (Exception )
-            {
-                return false;
-            }
-
-        }
-        #endregion
-
-        #region Basic
-        private string SwitchEngBan(string number)
-        {
-            string en = "1234567890.,";
-            string bn = "১২৩৪৫৬৭৮৯০.,";
-            return number.Select(o => en.Contains(o)
-                            ? bn.Substring(en.IndexOf(o), 1)
-                            : en.Substring(bn.IndexOf(o), 1))
-                            .Aggregate((a, b) => a + b);
-        }
         #endregion
 
         #region usermanager, rolemanager
-        public BaseController(ApplicationUserManager userManager, ApplicationRoleManager roleManager, ApplicationSignInManager signInManager)
+
+        public BaseController(ApplicationUserManager userManager, ApplicationRoleManager roleManager,
+            ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             RoleManager = roleManager;
@@ -312,13 +342,16 @@ namespace Shodypati.Controllers
         }
 
         public ApplicationUserManager _userManager;
+
         public ApplicationUserManager UserManager
         {
             get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             private set => _userManager = value;
         }
-        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get;  set; }
+
+        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; set; }
         public ApplicationRoleManager _roleManager;
+
         public ApplicationRoleManager RoleManager
         {
             get => _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
@@ -332,30 +365,28 @@ namespace Shodypati.Controllers
             get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             private set => _signInManager = value;
         }
+
         #endregion
 
         #region Account
-        public IdentityResult CreatePatientUser(ApplicationUser user, string password, ApplicationUserManager UserManager)
+
+        public IdentityResult CreatePatientUser(ApplicationUser user, string password,
+            ApplicationUserManager UserManager)
         {
-            IdentityResult result = UserManager.Create(user, password);
-            if (!result.Succeeded)
-            {
-                return result;
-            }
-            
+            var result = UserManager.Create(user, password);
+            if (!result.Succeeded) return result;
+
             //customer role
             var role = "Patient";
             var resultRole = UserManager.AddToRole(user.Id, role);
             return result;
         }
 
-        public IdentityResult CreateCustomerUser(ApplicationUser user, string password, ApplicationUserManager UserManager)
+        public IdentityResult CreateCustomerUser(ApplicationUser user, string password,
+            ApplicationUserManager UserManager)
         {
-            IdentityResult result = UserManager.Create(user, password);
-            if (!result.Succeeded)
-            {
-                return result;
-            }
+            var result = UserManager.Create(user, password);
+            if (!result.Succeeded) return result;
             //customer role
             var role = "Customer";
             var resultRole = UserManager.AddToRole(user.Id, role);
@@ -367,25 +398,19 @@ namespace Shodypati.Controllers
             if (model.UserName.IndexOf('@') > -1)
             {
                 //Validate email format
-                string emailRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-                                       @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-                                          @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+                var emailRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                                 @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                                 @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
 
-                Regex re = new Regex(emailRegex);
-                if (!re.IsMatch(model.UserName))
-                {
-                    ModelState.AddModelError("UserName", "Email is not valid");
-                }
+                var re = new Regex(emailRegex);
+                if (!re.IsMatch(model.UserName)) ModelState.AddModelError("UserName", "Email is not valid");
             }
             else
             {
                 //validate mobile format
-                string emailRegex = @"^[+0-9]*$";
-                Regex re = new Regex(emailRegex);
-                if (!re.IsMatch(model.UserName))
-                {
-                    ModelState.AddModelError("UserName", "Username is not valid");
-                }
+                var emailRegex = @"^[+0-9]*$";
+                var re = new Regex(emailRegex);
+                if (!re.IsMatch(model.UserName)) ModelState.AddModelError("UserName", "Username is not valid");
             }
 
             var userName = model.UserName;
@@ -398,11 +423,9 @@ namespace Shodypati.Controllers
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return null;
                 }
-                else
-                {
-                    userName = user.UserName;
-                    // userName = user.PhoneNumber;
-                }
+
+                userName = user.UserName;
+                // userName = user.PhoneNumber;
             }
 
             return userName;
@@ -411,24 +434,24 @@ namespace Shodypati.Controllers
 
         public ApplicationUser GetApplicationUserPatient(RegisterPatient model)
         {
-            bool isFakeMail = false;
+            var isFakeMail = false;
             if (string.IsNullOrEmpty(model.Email))
             {
                 model.Email = GetGeneratedEmail();
                 isFakeMail = true;
             }
 
-            var user = new ApplicationUser()
+            var user = new ApplicationUser
             {
-                UserName        = model.PhoneNumber,
-                Email           = model.Email,
-                PhoneNumber     = model.PhoneNumber,
-                Address         = model.Address,
-                Name            = model.Name,
-                DoctorName      = model.DoctorName,
-                HospitalName    = model.HospitalName,
-                Description     = model.Description,
-                IsFakeEmail = isFakeMail,
+                UserName = model.PhoneNumber,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                Name = model.Name,
+                DoctorName = model.DoctorName,
+                HospitalName = model.HospitalName,
+                Description = model.Description,
+                IsFakeEmail = isFakeMail
             };
             return user;
         }
@@ -436,21 +459,21 @@ namespace Shodypati.Controllers
 
         public ApplicationUser GetApplicationUser(RegisterViewModel model)
         {
-            bool isFakeMail = false;
+            var isFakeMail = false;
             if (string.IsNullOrEmpty(model.Email))
             {
                 model.Email = GetGeneratedEmail();
                 isFakeMail = true;
             }
 
-            var user = new ApplicationUser()
+            var user = new ApplicationUser
             {
                 UserName = model.PhoneNumber,
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
                 Address = model.Address,
                 Name = model.Name,
-                IsFakeEmail= isFakeMail,
+                IsFakeEmail = isFakeMail
             };
             return user;
         }
@@ -458,9 +481,9 @@ namespace Shodypati.Controllers
 
         public string GetGeneratedEmail()
         {
-            string email = string.Empty;
+            var email = string.Empty;
 
-            email= "temp" + GetRandomNumber() +System.DateTime.Now.Ticks+ "@gmail.com";
+            email = "temp" + GetRandomNumber() + DateTime.Now.Ticks + "@gmail.com";
 
             return email;
         }
@@ -475,18 +498,13 @@ namespace Shodypati.Controllers
         #endregion
 
         #region Category
+
         public string GetParentNameFromAllCategories(int? Id)
         {
             if (Id != null)
-            {
                 foreach (var item in AllCategories)
-                {
                     if (item.Value.ToLower() == Id.ToString().ToLower())
-                    {
                         return item.Text;
-                    }
-                }
-            }
             return string.Empty;
         }
 
@@ -494,11 +512,12 @@ namespace Shodypati.Controllers
         {
             get
             {
-                var listItems = Db.CategoryTbls.Where(x => x.Parent1Id == null || x.Parent1Id == 0 ).Select(x => new SelectListItem
-                {
-                    Text = x.Name_English,
-                    Value = x.Id.ToString()
-                }).ToList();
+                var listItems = Db.CategoryTbls.Where(x => x.Parent1Id == null || x.Parent1Id == 0).Select(x =>
+                    new SelectListItem
+                    {
+                        Text = x.Name_English,
+                        Value = x.Id.ToString()
+                    }).ToList();
 
                 return listItems;
             }
@@ -509,11 +528,13 @@ namespace Shodypati.Controllers
         {
             get
             {
-                var listItems = Db.CategoryTbls.Where(x => x.Parent1Id == null && x.Parent1Id != 0).Select(x => new SelectListItem
-                {
-                    Text = Db.CategoryTbls.FirstOrDefault(a => a.Id == x.Parent1Id).Name_English + " > " + x.Name_English,
-                    Value = x.Id.ToString()
-                }).ToList();
+                var listItems = Db.CategoryTbls.Where(x => x.Parent1Id == null && x.Parent1Id != 0).Select(x =>
+                    new SelectListItem
+                    {
+                        Text = Db.CategoryTbls.FirstOrDefault(a => a.Id == x.Parent1Id).Name_English + " > " +
+                               x.Name_English,
+                        Value = x.Id.ToString()
+                    }).ToList();
                 return listItems;
             }
             set { }
@@ -523,82 +544,51 @@ namespace Shodypati.Controllers
         {
             get
             {
-                List<SelectListItem> sli = new List<SelectListItem>();
-                foreach (SelectListItem item in Categories)
+                var sli = new List<SelectListItem>();
+                foreach (var item in Categories) sli.Add(item);
+                foreach (var item in ChildCategories)
                 {
-                    sli.Add(item);
-                }
-                foreach (SelectListItem item in ChildCategories)
-                {
-                    int i = item.Text?.IndexOf(">") ?? 0;
+                    var i = item.Text?.IndexOf(">") ?? 0;
 
                     if (item.Text != null)
                     {
-                        string text = item.Text.Substring(0, i - 1);
-                        foreach (SelectListItem listItem in ChildCategories)
+                        var text = item.Text.Substring(0, i - 1);
+                        foreach (var listItem in ChildCategories)
                         {
-                            int k = listItem.Text.LastIndexOf(">", StringComparison.Ordinal);
-                            string text2 = listItem.Text.Substring(k + 1);
-                            if (text2.Contains(text))
-                            {
-                                item.Text = listItem.Text + " > " + item.Text.Substring(i + 2);
-                            }
+                            var k = listItem.Text.LastIndexOf(">", StringComparison.Ordinal);
+                            var text2 = listItem.Text.Substring(k + 1);
+                            if (text2.Contains(text)) item.Text = listItem.Text + " > " + item.Text.Substring(i + 2);
                         }
                     }
 
                     sli.Add(item);
                 }
+
                 return sli;
             }
         }
 
         public bool IsParentOfAnyCategory(int id)
         {
-
             var query = from x in Db.CategoryTbls
-                        where x.Parent1Id == id
-                        select x;
-            if (query.Any())
-            {
-                return true;
-            }
+                where x.Parent1Id == id
+                select x;
+            if (query.Any()) return true;
             return false;
         }
-
-
-        #endregion
-
-        #region  Banner
-        public async Task<List<System.Web.Mvc.SelectListItem>> GetAllBannerList()
-        {
-            //custom property for parent     
-            url = baseUrl + "api/BannersApi/GetAllBannersSelectList";           
-            HttpResponseMessage responseMessageParentCat = await client.GetAsync(url);
-            List<SelectListItem> entities = new List<SelectListItem>();
-            if (responseMessageParentCat.IsSuccessStatusCode)
-            {
-                var responseDataParentCat = responseMessageParentCat.Content.ReadAsStringAsync().Result;
-
-                entities = JsonConvert.DeserializeObject<List<SelectListItem>>(responseDataParentCat);
-            }
-            //end custom property for parent 
-            return entities;
-        }
-
 
         #endregion
 
         #region product
 
-
-        public async Task<List<System.Web.Mvc.SelectListItem>> GetAllProductsSelectedList()
+        public async Task<List<SelectListItem>> GetAllProductsSelectedList()
         {
             //custom property for parent     
             url = baseUrl + "api/ProductsApi";
             url = url + "/GetAllProductsSelectList";
-            HttpResponseMessage responseMessageParentCat = await client.GetAsync(url);
+            var responseMessageParentCat = await client.GetAsync(url);
 
-            List<SelectListItem> entities = new List<SelectListItem>();
+            var entities = new List<SelectListItem>();
 
             if (responseMessageParentCat.IsSuccessStatusCode)
             {
@@ -617,9 +607,9 @@ namespace Shodypati.Controllers
             //custom property for parent     
             url = baseUrl + "api/CampaignProductsApi";
             url = url + "/GetAllCampaignProductsStringList";
-            HttpResponseMessage responseMessageParentCat = await client.GetAsync(url);
+            var responseMessageParentCat = await client.GetAsync(url);
 
-            List<string> entities = new List<string>();
+            var entities = new List<string>();
 
             if (responseMessageParentCat.IsSuccessStatusCode)
             {
@@ -631,32 +621,29 @@ namespace Shodypati.Controllers
 
             return entities;
         }
-        
 
-        public async Task<List<System.Web.Mvc.SelectListItem>> GetAllCategoriesSelectedList()
+
+        public async Task<List<SelectListItem>> GetAllCategoriesSelectedList()
         {
             var customurl = baseUrl + "api/CategoriesApi/GetAllCategoriesSelectList";
-            HttpResponseMessage responseMessageCategory = await client.GetAsync(customurl);
+            var responseMessageCategory = await client.GetAsync(customurl);
             var responseDataCategory = responseMessageCategory.Content.ReadAsStringAsync().Result;
 
             List<SelectListItem> listItems;
-            listItems = JsonConvert.DeserializeObject<List<System.Web.Mvc.SelectListItem>>(responseDataCategory);
+            listItems = JsonConvert.DeserializeObject<List<SelectListItem>>(responseDataCategory);
             return listItems;
         }
 
-        public string ParentNameFromAllCategories(List<System.Web.Mvc.SelectListItem> categoriesitems, int? id)
+        public string ParentNameFromAllCategories(List<SelectListItem> categoriesitems, int? id)
         {
-            string paentText = string.Empty;
+            var paentText = string.Empty;
             foreach (var item in categoriesitems)
-            {
-
                 if (item.Value.ToLower() == id.ToString().ToLower())
                 {
                     paentText = item.Text;
                     break;
                 }
 
-            }
             return paentText;
         }
 
@@ -664,8 +651,8 @@ namespace Shodypati.Controllers
         public string GetMarchantName(int? Id)
         {
             var query = from x in Db.MerchantTbls
-                        where x.Id == Id
-                        select x;
+                where x.Id == Id
+                select x;
             var entity = query.Single();
             return entity.Name_English;
         }
@@ -673,38 +660,39 @@ namespace Shodypati.Controllers
         public string GetBrandName(int? Id)
         {
             var query = from x in Db.BrandTbls
-                        where x.Id == Id
-                        select x;
+                where x.Id == Id
+                select x;
             var entity = query.Single();
             return entity.Name_English;
         }
 
 
-        public async Task<List<System.Web.Mvc.SelectListItem>> GetAllMerchantNameList()
+        public async Task<List<SelectListItem>> GetAllMerchantNameList()
         {
             //custom property for parent     
             url = baseUrl + "api/MerchantsApi";
             url = url + "/GetAllMerchantsSelectList";
-            HttpResponseMessage responseMessageParentCat = await client.GetAsync(url);
-            List<SelectListItem> entities = new List<SelectListItem>();
+            var responseMessageParentCat = await client.GetAsync(url);
+            var entities = new List<SelectListItem>();
             if (responseMessageParentCat.IsSuccessStatusCode)
             {
                 var responseDataParentCat = responseMessageParentCat.Content.ReadAsStringAsync().Result;
 
                 entities = JsonConvert.DeserializeObject<List<SelectListItem>>(responseDataParentCat);
             }
+
             //end custom property for parent 
             return entities;
         }
 
-        public async Task<List<System.Web.Mvc.SelectListItem>> GetAllBrandNameList()
+        public async Task<List<SelectListItem>> GetAllBrandNameList()
         {
             //custom property for parent     
             url = baseUrl + "api/BrandsApi";
             url = url + "/GetAllBrandsSelectList";
-            HttpResponseMessage responseMessageParentCat = await client.GetAsync(url);
+            var responseMessageParentCat = await client.GetAsync(url);
 
-            List<SelectListItem> entities = new List<SelectListItem>();
+            var entities = new List<SelectListItem>();
 
             if (responseMessageParentCat.IsSuccessStatusCode)
             {
@@ -718,26 +706,5 @@ namespace Shodypati.Controllers
         }
 
         #endregion
-
-        #region all
-        public List<SelectListItem> SetSelectedItem(List<SelectListItem> items, int? id)
-        {
-            List<SelectListItem> tempItems = new List<SelectListItem>();
-
-            foreach (var item in items)
-            {
-                tempItems.Add(new SelectListItem
-                {
-                    Text = item.Text,
-                    Value = item.Value,
-                    Selected = (String.Equals(item.Value, id.ToString(), StringComparison.CurrentCultureIgnoreCase)) ? true : false
-                });
-            }
-            return tempItems;
-        }
-        #endregion
-
-
-
     }
 }

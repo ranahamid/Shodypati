@@ -1,21 +1,16 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Shodypati.Controllers;
 using Shodypati.Filters;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Shodypati.DAL
 {
     [ExceptionHandlerAttribute]
-    public class DoctorWorkingAreaDataAccessRepository : BaseController, IDoctorWorkingAreaAccessRepository<DoctorWorkingArea, int>
+    public class DoctorWorkingAreaDataAccessRepository : BaseController,
+        IDoctorWorkingAreaAccessRepository<DoctorWorkingArea, int>
     {
         public DoctorWorkingAreaDataAccessRepository()
         {
@@ -24,7 +19,7 @@ namespace Shodypati.DAL
 
         public IEnumerable<DoctorWorkingArea> Get()
         {
-            var entities = Db.DoctorWorkingAreaTbls.Select(x => new DoctorWorkingArea()
+            var entities = Db.DoctorWorkingAreaTbls.Select(x => new DoctorWorkingArea
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -36,7 +31,7 @@ namespace Shodypati.DAL
 
         public DoctorWorkingArea Get(int id)
         {
-            var entity = Db.DoctorWorkingAreaTbls.Where(x => x.Id == id).Select(x => new DoctorWorkingArea()
+            var entity = Db.DoctorWorkingAreaTbls.Where(x => x.Id == id).Select(x => new DoctorWorkingArea
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -48,7 +43,6 @@ namespace Shodypati.DAL
 
         public void Post(DoctorWorkingArea entity)
         {
-
             Db.DoctorWorkingAreaTbls.InsertOnSubmit(new DoctorWorkingAreaTbl
             {
                 Description = entity.Description,
@@ -67,9 +61,9 @@ namespace Shodypati.DAL
         public void Put(int id, DoctorWorkingArea entity)
         {
             var isEntity = from x in Db.DoctorWorkingAreaTbls
-                           where x.Id == entity.Id
-                           select x;
-            
+                where x.Id == entity.Id
+                select x;
+
             var entitySingle = isEntity.Single();
             entitySingle.Description = entity.Description;
             entitySingle.WorkingArea = entity.WorkingArea;
@@ -88,8 +82,8 @@ namespace Shodypati.DAL
         public void Delete(int id)
         {
             var query = from x in Db.DoctorWorkingAreaTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query.Count() == 1)
             {
@@ -110,10 +104,10 @@ namespace Shodypati.DAL
         //custom
         public List<SelectListItem> GetAllDoctorWorkingAreasSelectList()
         {
-            var entities = Db.DoctorWorkingAreaTbls.Select(x => new SelectListItem()
+            var entities = Db.DoctorWorkingAreaTbls.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
-                Text = x.WorkingArea,
+                Text = x.WorkingArea
                 //   Selected = (x.IsHomePageBanner != null && x.IsHomePageBanner == true)
             }).ToList();
 

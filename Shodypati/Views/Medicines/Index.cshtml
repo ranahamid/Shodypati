@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<Shodypati.Models.UserIds>
+﻿@model IEnumerable<Shodypati.Models.UserIds>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -13,28 +12,28 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
 
 
-        </tr>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.UserId }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </td>
-                </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.UserId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.UserId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.UserId})
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+        </tr>
+    }
     </tbody>
 </table>

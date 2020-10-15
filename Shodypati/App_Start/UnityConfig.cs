@@ -1,24 +1,16 @@
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Http;
 using Microsoft.Practices.Unity;
-using Shodypati.Controllers;
 using Shodypati.DAL;
 using Shodypati.Models;
-using System;
-using System.Data.Entity;
-using System.Web.Http;
-using System.Web.Mvc;
 using Unity.WebApi;
 
 namespace Shodypati
 {
     public static class UnityConfig
     {
-    
-
         public static void RegisterComponents()
         {
-			var container = new UnityContainer();
+            var container = new UnityContainer();
 
             // register all your components with the container here
             // it is NOT necessary to register your controllers
@@ -36,20 +28,27 @@ namespace Shodypati
             //Brand
             container.RegisterType<IMerchantAccessRepository<Merchant, int>, MerchantDataAccessRepository>();
             //CampaignProduct
-            container.RegisterType<ICampaignProductAccessRepository<CampaignProducts, int>, CampaignProductDataAccessRepository>();
+            container
+                .RegisterType<ICampaignProductAccessRepository<CampaignProducts, int>,
+                    CampaignProductDataAccessRepository>();
             //Banner
             container.RegisterType<IBannerAccessRepository<Banner, int>, BannerDataAccessRepository>();
             //account
             container.RegisterType<IAccountAccessRepository<RegisterViewModel, int>, AccountDataAccessRepository>();
             //orders
             container.RegisterType<IOrderAccessRepository<Orders, int>, OrderDataAccessRepository>();
-    
+
             //OrderPaymentMethod
-            container.RegisterType<IOrderPaymentMethodAccessRepository<OrderPaymentMethod, int>, OrderPaymentMethodDataAccessRepository>();
+            container
+                .RegisterType<IOrderPaymentMethodAccessRepository<OrderPaymentMethod, int>,
+                    OrderPaymentMethodDataAccessRepository>();
             //OrderPaymentStatus
-            container.RegisterType<IOrderPaymentStatusAccessRepository<OrderPaymentStatus, int>, OrderPaymentStatusDataAccessRepository>();
+            container
+                .RegisterType<IOrderPaymentStatusAccessRepository<OrderPaymentStatus, int>,
+                    OrderPaymentStatusDataAccessRepository>();
             //OrderShipping
-            container.RegisterType<IOrderShippingAccessRepository<OrderShipping, int>, OrderShippingDataAccessRepository>();
+            container
+                .RegisterType<IOrderShippingAccessRepository<OrderShipping, int>, OrderShippingDataAccessRepository>();
             //OrderStatus
             container.RegisterType<IOrderStatusAccessRepository<OrderStatus, int>, OrderStatusDataAccessRepository>();
 
@@ -60,7 +59,9 @@ namespace Shodypati
             //Appointment
             container.RegisterType<IAppointmentAccessRepository<Appointment, int>, AppointmentDataAccessRepository>();
             //DoctorWorkingArea
-            container.RegisterType<IDoctorWorkingAreaAccessRepository<DoctorWorkingArea, int>, DoctorWorkingAreaDataAccessRepository>();
+            container
+                .RegisterType<IDoctorWorkingAreaAccessRepository<DoctorWorkingArea, int>,
+                    DoctorWorkingAreaDataAccessRepository>();
 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

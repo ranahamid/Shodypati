@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Shodypati.Models;
+using System.Web.Mvc;
 using Shodypati.DAL;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers.Api
 {
     public class BrandsApiController : ApiController
     {
-        private IBrandAccessRepository<Brand, int> _repository;
+        private readonly IBrandAccessRepository<Brand, int> _repository;
 
 
         public BrandsApiController(IBrandAccessRepository<Brand, int> r)
@@ -25,28 +19,25 @@ namespace Shodypati.Controllers.Api
         }
 
 
-        [Route("api/BrandsApi/")]
+        [System.Web.Http.Route("api/BrandsApi/")]
         // GET: api/BrandsApi
         public IEnumerable<Brand> GetBrands()
         {
             return _repository.Get();
         }
 
-        [Route("api/BrandsApi/{id}")]
+        [System.Web.Http.Route("api/BrandsApi/{id}")]
         // GET: api/BrandsApi/5
         [ResponseType(typeof(Brand))]
         public IHttpActionResult Get(int id)
         {
             var item = _repository.Get(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            if (item == null) return NotFound();
             return Ok(item);
         }
 
 
-        [Route("api/BrandsApi/{id}")]
+        [System.Web.Http.Route("api/BrandsApi/{id}")]
         // PUT: api/BrandsApi/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBrand(int id, Brand entity)
@@ -55,7 +46,7 @@ namespace Shodypati.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Route("api/BrandsApi/")]
+        [System.Web.Http.Route("api/BrandsApi/")]
         // POST: api/BrandsApi
         [ResponseType(typeof(Brand))]
         public IHttpActionResult PostBrand(Brand entity)
@@ -64,22 +55,21 @@ namespace Shodypati.Controllers.Api
             return Ok(entity);
         }
 
-        [Route("api/BrandsApi/{id}")]
+        [System.Web.Http.Route("api/BrandsApi/{id}")]
         // DELETE: api/BrandsApi/5
         [ResponseType(typeof(Brand))]
         public IHttpActionResult DeleteBrand(int id)
         {
             _repository.Delete(id);
-            return StatusCode(HttpStatusCode.NoContent);    
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         ////custom api 
-        [Route("api/BrandsApi/GetAllBrandsSelectList/")]
+        [System.Web.Http.Route("api/BrandsApi/GetAllBrandsSelectList/")]
         // GetAllBrandsSelectList: api/BrandsApi/GetAllBrandsSelectList
-        public List<System.Web.Mvc.SelectListItem> GetAllCategoriesSelectList()
+        public List<SelectListItem> GetAllCategoriesSelectList()
         {
             return _repository.GetAllBrandsSelectList();
         }
-
     }
 }

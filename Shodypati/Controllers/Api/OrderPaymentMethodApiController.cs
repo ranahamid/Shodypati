@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Shodypati.Models;
+using System.Web.Mvc;
 using Shodypati.DAL;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers.Api
 {
     public class OrderPaymentMethodApiController : ApiController
     {
-        private IOrderPaymentMethodAccessRepository<OrderPaymentMethod, int> _repository;
+        private readonly IOrderPaymentMethodAccessRepository<OrderPaymentMethod, int> _repository;
 
         public OrderPaymentMethodApiController(IOrderPaymentMethodAccessRepository<OrderPaymentMethod, int> r)
         {
@@ -24,25 +18,22 @@ namespace Shodypati.Controllers.Api
         }
 
 
-        [Route("api/OrderPaymentMethodApi/")]
+        [System.Web.Http.Route("api/OrderPaymentMethodApi/")]
         public IEnumerable<OrderPaymentMethod> GetOrderPaymentMethods()
         {
             return _repository.Get();
         }
 
-        [Route("api/OrderPaymentMethodApi/{id}")]
+        [System.Web.Http.Route("api/OrderPaymentMethodApi/{id}")]
         [ResponseType(typeof(OrderPaymentMethod))]
         public IHttpActionResult GetOrderPaymentMethod(int id)
         {
             var item = _repository.Get(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            if (item == null) return NotFound();
             return Ok(item);
         }
 
-        [Route("api/OrderPaymentMethodApi/{id}")]
+        [System.Web.Http.Route("api/OrderPaymentMethodApi/{id}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutOrderPaymentMethod(int id, OrderPaymentMethod entity)
         {
@@ -50,7 +41,7 @@ namespace Shodypati.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Route("api/OrderPaymentMethodApi/")]
+        [System.Web.Http.Route("api/OrderPaymentMethodApi/")]
         [ResponseType(typeof(OrderPaymentMethod))]
         public IHttpActionResult PostOrderPaymentMethod(OrderPaymentMethod entity)
         {
@@ -58,7 +49,7 @@ namespace Shodypati.Controllers.Api
             return Ok(entity);
         }
 
-        [Route("api/OrderPaymentMethodApi/{id}")]
+        [System.Web.Http.Route("api/OrderPaymentMethodApi/{id}")]
         [ResponseType(typeof(OrderPaymentMethod))]
         public IHttpActionResult DeleteOrderPaymentMethod(int id)
         {
@@ -67,9 +58,9 @@ namespace Shodypati.Controllers.Api
         }
 
         ////custom api 
-        [Route("api/OrderPaymentMethodApi/GetAllOrderPaymentMethodSelectList/")]
+        [System.Web.Http.Route("api/OrderPaymentMethodApi/GetAllOrderPaymentMethodSelectList/")]
         // GetAllBrandsSelectList: api/OrderPaymentMethodApi/GetAllOrderPaymentMethodSelectList
-        public List<System.Web.Mvc.SelectListItem> GetAllOrderPaymentMethodSelectList()
+        public List<SelectListItem> GetAllOrderPaymentMethodSelectList()
         {
             return _repository.GetAllOrderPaymentMethodSelectList();
         }

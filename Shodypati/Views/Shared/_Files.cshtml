@@ -1,37 +1,39 @@
-﻿    <div class="row fileupload-buttonbar">
-        <div class="col-lg-7">
-            <!-- The fileinput-button span is used to style the file input field as button -->
-            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>Add files...</span>
-                <input type="file" name="files[]" multiple ng-disabled="disabled" id="input-file-btn">
-            </span>
-            <button type="button" class="btn btn-primary start" data-ng-click="submit()">
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start upload</span>
-            </button>
+﻿<div class="row fileupload-buttonbar">
+    <div class="col-lg-7">
+        <!-- The fileinput-button span is used to style the file input field as button -->
+        <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>Add files...</span>
+            <input type="file" name="files[]" multiple ng-disabled="disabled" id="input-file-btn">
+        </span>
+        <button type="button" class="btn btn-primary start" data-ng-click="submit()">
+            <i class="glyphicon glyphicon-upload"></i>
+            <span>Start upload</span>
+        </button>
 
-            <!-- The global file processing state -->
-            <span class="fileupload-process"></span>
-        </div>
-        <!-- The global progress state -->
-        <div class="col-lg-5 fade" data-ng-class="{in: active()}">
-            <!-- The global progress bar -->
-            <div class="progress progress-striped active" data-file-upload-progress="progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
-            <!-- The extended global progress state -->
-            <div class="progress-extended">&nbsp;</div>
-        </div>
+        <!-- The global file processing state -->
+        <span class="fileupload-process"></span>
     </div>
+    <!-- The global progress state -->
+    <div class="col-lg-5 fade" data-ng-class="{in: active()}">
+        <!-- The global progress bar -->
+        <div class="progress progress-striped active" data-file-upload-progress="progress()">
+            <div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div>
+        </div>
+        <!-- The extended global progress state -->
+        <div class="progress-extended">&nbsp;</div>
+    </div>
+</div>
 
-    <!-- The table listing the files available for upload/download -->
+<!-- The table listing the files available for upload/download -->
 <table class="table-striped files ng-cloak">
     <thead>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
     </thead>
     <tbody>
     <tr data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
@@ -39,7 +41,9 @@
         <td data-ng-switch data-on="!!file.thumbnailUrl">
 
             <div class="preview" data-ng-switch-when="true">
-                <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
+                <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery>
+                    <img data-ng-src="{{file.thumbnailUrl}}" alt="">
+                </a>
             </div>
             <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
         </td>
@@ -77,8 +81,3 @@
     </tr>
     </tbody>
 </table>
-
-
-
-
-

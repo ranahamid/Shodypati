@@ -7,7 +7,7 @@
 
 <h2>User Details</h2>
 <div class="">
-    @{ Html.RenderAction("GetUserInfoById", "Account", new { id = Model.UserId }); }
+    @{ Html.RenderAction("GetUserInfoById", "Account", new {id = Model.UserId}); }
 </div>
 
 <h2>Edit</h2>
@@ -29,33 +29,34 @@
                     {
                         foreach (var item in Model.medicineList)
                         {
-
-                            string MedicineName = item.MedicineName;
-                            int? Price = item.Price;
-                            DateTime? FinishTime = item.FinishTime;
-                            string Quantity = item.Quantity;
+                            var MedicineName = item.MedicineName;
+                            var Price = item.Price;
+                            var FinishTime = item.FinishTime;
+                            var Quantity = item.Quantity;
 
                             <div class="multi-field">
-                                <button class="btn btn-info btn-sm float-right remove-field" type="button"> <i class="fa fa-close"> </i></button>
+                                <button class="btn btn-info btn-sm float-right remove-field" type="button">
+                                    <i class="fa fa-close"> </i>
+                                </button>
 
                                 <div class="form-group">
                                     <div class="row">
 
                                         <div class="col-md-4" id="searchtext">
-                                            @Html.LabelFor(model => MedicineName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            @Html.TextBoxFor(m => MedicineName, new { @class = "form-control form-control-sm" })
+                                            @Html.LabelFor(model => MedicineName, new {@class = "control-label col-md-2"})
+                                            @Html.TextBoxFor(m => MedicineName, new {@class = "form-control form-control-sm"})
                                         </div>
                                         <div class="col-md-2" id="searchtext">
-                                            @Html.LabelFor(model => Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            @Html.TextBoxFor(m => Quantity, new { @class = "form-control form-control-sm" })
+                                            @Html.LabelFor(model => Quantity, new {@class = "control-label col-md-2"})
+                                            @Html.TextBoxFor(m => Quantity, new {@class = "form-control form-control-sm"})
                                         </div>
                                         <div class="col-md-2" id="searchtext">
-                                            @Html.LabelFor(model => Price, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            @Html.TextBoxFor(m => Price, new { @class = "form-control form-control-sm" })
+                                            @Html.LabelFor(model => Price, new {@class = "control-label col-md-2"})
+                                            @Html.TextBoxFor(m => Price, new {@class = "form-control form-control-sm"})
                                         </div>
                                         <div class="col-md-4" id="searchtext">
-                                            @Html.LabelFor(model => FinishTime, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            @Html.TextBoxFor(m => FinishTime, new { @class = "form-control form-control-sm datetime" })
+                                            @Html.LabelFor(model => FinishTime, new {@class = "control-label col-md-2"})
+                                            @Html.TextBoxFor(m => FinishTime, new {@class = "form-control form-control-sm datetime"})
                                         </div>
                                     </div>
                                 </div>
@@ -65,26 +66,28 @@
                     else
                     {
                         <div class="multi-field">
-                            <button class="btn btn-info btn-sm float-right remove-field" type="button"> <i class="fa fa-close"> </i></button>
+                            <button class="btn btn-info btn-sm float-right remove-field" type="button">
+                                <i class="fa fa-close"> </i>
+                            </button>
 
                             <div class="form-group">
                                 <div class="row">
 
                                     <div class="col-md-4" id="searchtext">
-                                        @Html.LabelFor(m => m.MedicineName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @Html.TextBoxFor(m => m.MedicineName, new { @class = "form-control form-control-sm" })
+                                        @Html.LabelFor(m => m.MedicineName, new {@class = "control-label col-md-2"})
+                                        @Html.TextBoxFor(m => m.MedicineName, new {@class = "form-control form-control-sm"})
                                     </div>
                                     <div class="col-md-2" id="searchtext">
-                                        @Html.LabelFor(m => m.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control form-control-sm" })
+                                        @Html.LabelFor(m => m.Quantity, new {@class = "control-label col-md-2"})
+                                        @Html.TextBoxFor(m => m.Quantity, new {@class = "form-control form-control-sm"})
                                     </div>
                                     <div class="col-md-2" id="searchtext">
-                                        @Html.LabelFor(m => m.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @Html.TextBoxFor(m => m.Price, new { @class = "form-control form-control-sm" })
+                                        @Html.LabelFor(m => m.Price, new {@class = "control-label col-md-2"})
+                                        @Html.TextBoxFor(m => m.Price, new {@class = "form-control form-control-sm"})
                                     </div>
                                     <div class="col-md-4" id="searchtext">
-                                        @Html.LabelFor(m => m.FinishTime, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @Html.TextBoxFor(m => m.FinishTime, new { @class = "form-control form-control-sm datetime" })
+                                        @Html.LabelFor(m => m.FinishTime, new {@class = "control-label col-md-2"})
+                                        @Html.TextBoxFor(m => m.FinishTime, new {@class = "form-control form-control-sm datetime"})
                                     </div>
                                 </div>
                             </div>
@@ -108,12 +111,11 @@
     }
 
 
-
-    $('.multi-field-wrapper').each(function () {
+    $('.multi-field-wrapper').each(function() {
         var $wrapper = $('.multi-fields', this);
 
 
-        $('.multi-field .remove-field', $wrapper).click(function () {
+        $('.multi-field .remove-field', $wrapper).click(function() {
             if ($('.multi-field', $wrapper).length > 1)
                 $(this).parent('.multi-field').remove();
         });

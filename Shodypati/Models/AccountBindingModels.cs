@@ -1,7 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace Shodypati.Models
 {
@@ -26,15 +24,12 @@ namespace Shodypati.Models
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
-
     }
 
-    
+
     public class RegisterExternalBindingModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Required] [Display(Name = "Email")] public string Email { get; set; }
     }
 
     public class RemoveLoginBindingModel
@@ -54,7 +49,7 @@ namespace Shodypati.Models
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
-        public string NewPassword { get; set; }    
+        public string NewPassword { get; set; }
     }
 
 
@@ -83,7 +78,7 @@ namespace Shodypati.Models
         public string Mobile { get; set; }
 
         public string Email { get; set; }
-         
+
         public string UserId { get; set; }
     }
 

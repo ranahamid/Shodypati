@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Shodypati.Models;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
-using Shodypati.DAL;
-using System.Configuration;
+using System.Web.Mvc;
+using Newtonsoft.Json;
 using Shodypati.Filters;
+using Shodypati.Models;
+
 namespace Shodypati.Controllers
 {
     [Authorize(Roles = "Admin")]
     [ExceptionHandler]
     public class OrderStatusController : BaseController
     {
-
         public OrderStatusController()
         {
             //api url                  
@@ -55,7 +47,6 @@ namespace Shodypati.Controllers
         }
 
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(OrderStatus entity)
@@ -63,11 +54,9 @@ namespace Shodypati.Controllers
             if (ModelState.IsValid)
             {
                 var responseMessage = await client.PostAsJsonAsync(url, entity);
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+                if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             }
+
             return View(entity);
         }
 
@@ -82,20 +71,15 @@ namespace Shodypati.Controllers
         }
 
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, OrderStatus entity)
         {
             if (!ModelState.IsValid) return View(entity);
             var responseMessage = await client.PutAsJsonAsync(url + "/" + id, entity);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
+            if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             return View(entity);
         }
-
 
 
         // GET: OrderStatuss/Delete/5
@@ -109,24 +93,19 @@ namespace Shodypati.Controllers
         }
 
         // POST: OrderStatuss/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             var responseMessage = await client.DeleteAsync(url + "/" + id);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
+            if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             throw new Exception("Exception");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
+            if (disposing) Db.Dispose();
             base.Dispose(disposing);
         }
     }

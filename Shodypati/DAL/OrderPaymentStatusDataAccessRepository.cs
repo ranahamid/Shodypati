@@ -1,32 +1,26 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Shodypati.Controllers;
 using Shodypati.Filters;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-
 
 namespace Shodypati.DAL
 {
     [ExceptionHandlerAttribute]
-    public class OrderPaymentStatusDataAccessRepository : BaseController, IOrderPaymentStatusAccessRepository<OrderPaymentStatus, int>
+    public class OrderPaymentStatusDataAccessRepository : BaseController,
+        IOrderPaymentStatusAccessRepository<OrderPaymentStatus, int>
     {
         public IEnumerable<OrderPaymentStatus> Get()
         {
-            List<OrderPaymentStatus> entities = new List<OrderPaymentStatus>();
+            var entities = new List<OrderPaymentStatus>();
 
-            entities = Db.OrderPaymentStatusTbls.Select(x => new OrderPaymentStatus()
+            entities = Db.OrderPaymentStatusTbls.Select(x => new OrderPaymentStatus
             {
                 Id = x.Id,
                 Name = x.Name,
-                DefaultStatus = x.DefaultStatus,
+                DefaultStatus = x.DefaultStatus
             }).ToList();
 
             return entities;
@@ -34,17 +28,14 @@ namespace Shodypati.DAL
 
         public OrderPaymentStatus Get(int id)
         {
-            OrderPaymentStatus entity = Db.OrderPaymentStatusTbls.Where(x => x.Id == id).Select(x => new OrderPaymentStatus()
+            var entity = Db.OrderPaymentStatusTbls.Where(x => x.Id == id).Select(x => new OrderPaymentStatus
             {
                 Id = x.Id,
                 Name = x.Name,
-                DefaultStatus = x.DefaultStatus,
+                DefaultStatus = x.DefaultStatus
             }).SingleOrDefault();
 
-            if (entity == null)
-            {
-                return null;
-            }
+            if (entity == null) return null;
 
             return entity;
         }
@@ -55,8 +46,7 @@ namespace Shodypati.DAL
             {
                 //   Id              = entity.Id,           
                 Name = entity.Name,
-                DefaultStatus = entity.DefaultStatus,
-
+                DefaultStatus = entity.DefaultStatus
             });
             try
             {
@@ -71,17 +61,14 @@ namespace Shodypati.DAL
         public void Put(int id, OrderPaymentStatus entity)
         {
             var isEntity = from x in Db.OrderPaymentStatusTbls
-                           where x.Id == entity.Id
-                           select x;
+                where x.Id == entity.Id
+                select x;
 
-            if (isEntity == null)
-            {
-                return;
-            }
+            if (isEntity == null) return;
 
             if (isEntity != null)
             {
-                OrderPaymentStatusTbl entitySingle = isEntity.Single();
+                var entitySingle = isEntity.Single();
 
                 entitySingle.Name = entity.Name;
                 entitySingle.DefaultStatus = entity.DefaultStatus;
@@ -100,12 +87,12 @@ namespace Shodypati.DAL
         public void Delete(int id)
         {
             var query = from x in Db.OrderPaymentStatusTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query != null && query.Count() == 1)
             {
-                OrderPaymentStatusTbl entity = query.SingleOrDefault();
+                var entity = query.SingleOrDefault();
                 Db.OrderPaymentStatusTbls.DeleteOnSubmit(entity);
             }
 
@@ -119,19 +106,18 @@ namespace Shodypati.DAL
             }
         }
 
-        public List<System.Web.Mvc.SelectListItem> GetAllOrderPaymentStatusSelectList()
+        public List<SelectListItem> GetAllOrderPaymentStatusSelectList()
         {
-            List<SelectListItem> entities = new List<SelectListItem>();
+            var entities = new List<SelectListItem>();
 
-            entities = Db.OrderPaymentStatusTbls.Select(x => new SelectListItem()
+            entities = Db.OrderPaymentStatusTbls.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
-                Text = x.Name,
+                Text = x.Name
                 // Selected = (item.Value.ToLower() == entity..ToString().ToLower()) ? true : false
             }).ToList();
 
             return entities;
         }
-
     }
 }

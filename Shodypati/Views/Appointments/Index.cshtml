@@ -13,47 +13,47 @@
 
     <div class="form-horizontal">
         <h4>Select Doctor</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
         <div class="form-group">
-            @Html.LabelFor(m => m.SelectedDoctorWorkingTypeId, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.SelectedDoctorWorkingTypeId, new {@class = "col-md-2 control-label"})
 
             <div class="col-md-10">
-                @Html.DropDownListFor(m => Model.SelectedDoctorWorkingTypeId, Model.AllWorkingSelectListItems, "---Select Doctor Type---", new { @id = "doctortypeid", @class = "form-control", @onchange = "FillDoctors()" })
-                @Html.ValidationMessageFor(model => model.SelectedDoctorWorkingTypeId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => Model.SelectedDoctorWorkingTypeId, Model.AllWorkingSelectListItems, "---Select Doctor Type---", new {id = "doctortypeid", @class = "form-control", onchange = "FillDoctors()"})
+                @Html.ValidationMessageFor(model => model.SelectedDoctorWorkingTypeId, "", new {@class = "text-danger"})
             </div>
         </div>
-    
+
 
         <div class="form-group" id="doctorsdiv">
-            @Html.Partial("_DoctorsDrop", new DoctorViewModel()
-               {          
-                   SelectedWorkingTypeId = (string)Model.SelectedDoctorWorkingTypeId
-               })
+            @Html.Partial("_DoctorsDrop", new DoctorViewModel
+            {
+                SelectedWorkingTypeId = Model.SelectedDoctorWorkingTypeId
+            })
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Get" class="btn btn-default" />
+                <input type="submit" value="Get" class="btn btn-default"/>
             </div>
         </div>
     </div>
 }
 
 
-
 <script>
-   
-    function FillDoctors()
-    {
+
+    function FillDoctors() {
         var id = $('#doctortypeid').val();
 
         $("#doctorsdiv").empty();
-        $("#doctorsdiv").load('/Appointments/FillDoctors', { id: id }, function (responseTxt, statusTxt, xhr) {
-            var doctorselected = $('#doctortypeid :selected').val();
-            console.log("Selected: " + doctorselected);
+        $("#doctorsdiv").load('/Appointments/FillDoctors',
+            { id: id },
+            function(responseTxt, statusTxt, xhr) {
+                var doctorselected = $('#doctortypeid :selected').val();
+                console.log("Selected: " + doctorselected);
 
-        });
+            });
     }
 </script>

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /*
  * blueimp Gallery Video Factory CSS 1.3.0
  * https://github.com/blueimp/Gallery
@@ -11,77 +12,75 @@
  */
 
 .blueimp-gallery > .slides > .slide > .video-content > img {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  /* Prevent artifacts in Mozilla Firefox: */
-  -moz-backface-visibility: hidden;
+    /* Prevent artifacts in Mozilla Firefox: */
+    -moz-backface-visibility: hidden;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    margin: auto;
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
 }
+
 .blueimp-gallery > .slides > .slide > .video-content > video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
+
 .blueimp-gallery > .slides > .slide > .video-content > iframe {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
+    border: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 100%;
+    width: 100%;
 }
-.blueimp-gallery > .slides > .slide > .video-playing > iframe {
-  top: 0;
-}
+
+.blueimp-gallery > .slides > .slide > .video-playing > iframe { top: 0; }
+
 .blueimp-gallery > .slides > .slide > .video-content > a {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  left: 0;
-  margin: -64px auto 0;
-  width: 128px;
-  height: 128px;
-  background: url(../img/video-play.png) center no-repeat;
-  opacity: 0.8;
-  cursor: pointer;
+    background: url(../img/video-play.png) center no-repeat;
+    cursor: pointer;
+    height: 128px;
+    left: 0;
+    margin: -64px auto 0;
+    opacity: 0.8;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 128px;
 }
-.blueimp-gallery > .slides > .slide > .video-content > a:hover {
-  opacity: 1;
-}
+
+.blueimp-gallery > .slides > .slide > .video-content > a:hover { opacity: 1; }
+
 .blueimp-gallery > .slides > .slide > .video-playing > a,
-.blueimp-gallery > .slides > .slide > .video-playing > img {
-  display: none;
-}
-.blueimp-gallery > .slides > .slide > .video-content > video {
-  display: none;
-}
-.blueimp-gallery > .slides > .slide > .video-playing > video {
-  display: block;
-}
+.blueimp-gallery > .slides > .slide > .video-playing > img { display: none; }
+
+.blueimp-gallery > .slides > .slide > .video-content > video { display: none; }
+
+.blueimp-gallery > .slides > .slide > .video-playing > video { display: block; }
+
 .blueimp-gallery > .slides > .slide > .video-loading > a {
-  background: url(../img/loading.gif) center no-repeat;
-  background-size: 64px 64px;
+    background: url(../img/loading.gif) center no-repeat;
+    background-size: 64px 64px;
 }
 
 /* Replace PNGs with SVGs for capable browsers (excluding IE<9) */
-body:last-child .blueimp-gallery > .slides > .slide > .video-content:not(.video-loading) > a {
-  background-image: url(../img/video-play.svg);
-}
+
+body:last-child .blueimp-gallery > .slides > .slide > .video-content:not(.video-loading) > a { background-image: url(../img/video-play.svg); }
 
 /* IE7 fixes */
-*+html .blueimp-gallery > .slides > .slide > .video-content {
-  height: 100%;
-}
-*+html .blueimp-gallery > .slides > .slide > .video-content > a {
-  left: 50%;
-  margin-left: -64px;
+
+* + html .blueimp-gallery > .slides > .slide > .video-content { height: 100%; }
+
+* + html .blueimp-gallery > .slides > .slide > .video-content > a {
+    left: 50%;
+    margin-left: -64px;
 }

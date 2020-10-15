@@ -9,7 +9,7 @@
 
 <div>
     <h4>Category</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name_English)
@@ -32,7 +32,7 @@
         </dt>
 
         <dd>
-            @Html.TextAreaFor(m => m.Description, new { @class = "form-control summernote" })
+            @Html.TextAreaFor(m => m.Description, new {@class = "form-control summernote"})
             @*@Html.DisplayFor(model => model.Description)*@
         </dd>
 
@@ -48,19 +48,17 @@
             @Html.DisplayNameFor(model => model.ImagePath)
         </dt>
 
-        
 
         <dd>
-              @{
-                  if (!string.IsNullOrEmpty(Model.ImagePath))
-                    {
-                       
-                        <a href="@Model.ImagePath" data-lightbox="image-1" data-title="@Model.Name_English">
-                            <img src="@Model.ImagePath" class="img-display" />
-                        </a>
-                    }
+            @{
+                if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <a href="@Model.ImagePath" data-lightbox="image-1" data-title="@Model.Name_English">
+                        <img src="@Model.ImagePath" class="img-display"/>
+                    </a>
                 }
-       
+            }
+
         </dd>
 
         <dt>
@@ -71,7 +69,6 @@
             @Html.DisplayFor(model => model.Parent1Name_English)
         </dd>
 
-      
 
         <dt>
             @Html.DisplayNameFor(model => model.ShowOnHomePage)
@@ -113,11 +110,10 @@
             @Html.DisplayFor(model => model.Published)
         </dd>
 
-  
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -1,45 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Shodypati.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using Shodypati.DAL;
-using System.Configuration;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Hosting;
+using System.Web.Mvc;
+using Newtonsoft.Json;
 using Shodypati.Filters;
 using Shodypati.Helpers;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers
 {
     [Authorize(Roles = "Admin")]
     [ExceptionHandler]
-    public class OrderPaymentMethodsController :   BaseController
+    public class OrderPaymentMethodsController : BaseController
     {
         private readonly FilesHelper _filesHelper;
-        readonly string tempPath = "~/OrderPaymentMethods/";
-        readonly string serverMapPath = "~/Content/images/OrderPaymentMethods/";
+        private readonly string DeleteURL = "/OrderPaymentMethods/DeleteAdditionalFile/?file=";
+        private readonly string serverMapPath = "~/Content/images/OrderPaymentMethods/";
+        private readonly string tempPath = "~/OrderPaymentMethods/";
         private readonly string UrlBase = "/Content/images/OrderPaymentMethods/"; //with out '/'
-        readonly string DeleteURL = "/OrderPaymentMethods/DeleteAdditionalFile/?file=";
-        private string StorageRoot => Path.Combine(HostingEnvironment.MapPath(serverMapPath));
-        string DeleteType = "GET";
+        private readonly string DeleteType = "GET";
 
         public OrderPaymentMethodsController()
         {
-            int randN = GetRandomNumber();
-            _filesHelper = new FilesHelper(DeleteURL, DeleteType, StorageRoot + randN + "/", UrlBase + randN + "/", tempPath + randN + "/", serverMapPath + randN + "/");
+            var randN = GetRandomNumber();
+            _filesHelper = new FilesHelper(DeleteURL, DeleteType, StorageRoot + randN + "/", UrlBase + randN + "/",
+                tempPath + randN + "/", serverMapPath + randN + "/");
 
             //api url                  
             url = baseUrl + "api/OrderPaymentMethodApi";
         }
+
+        private string StorageRoot => Path.Combine(HostingEnvironment.MapPath(serverMapPath));
 
 
         // GET: OrderPaymentMethods
@@ -65,10 +60,9 @@ namespace Shodypati.Controllers
         // GET: OrderPaymentMethods/Create
         public ActionResult Create()
         {
-            OrderPaymentMethod entity = new OrderPaymentMethod();
+            var entity = new OrderPaymentMethod();
             return View(entity);
         }
-
 
 
         [HttpPost]
@@ -77,10 +71,7 @@ namespace Shodypati.Controllers
         {
             if (!ModelState.IsValid) return View(entity);
             var responseMessage = await client.PostAsJsonAsync(url, entity);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
+            if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
 
             return View(entity);
         }
@@ -92,13 +83,10 @@ namespace Shodypati.Controllers
 
             var currentContext = HttpContext;
             _filesHelper.UploadAndShowResults(currentContext, resultList);
-            JsonFiles files = new JsonFiles(resultList);
+            var files = new JsonFiles(resultList);
 
-            bool isEmpty = !resultList.Any();
-            if (isEmpty)
-            {
-                return Json("Error ");
-            }
+            var isEmpty = !resultList.Any();
+            if (isEmpty) return Json("Error ");
 
             return Json(files);
         }
@@ -109,6 +97,7 @@ namespace Shodypati.Controllers
             _filesHelper.DeleteFile(file);
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
+
         // GET: OrderPaymentMethods/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -120,20 +109,15 @@ namespace Shodypati.Controllers
         }
 
 
-    
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, OrderPaymentMethod entity)
         {
             if (!ModelState.IsValid) return View(entity);
-            HttpResponseMessage responseMessage = await client.PutAsJsonAsync(url + "/" + id, entity);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
+            var responseMessage = await client.PutAsJsonAsync(url + "/" + id, entity);
+            if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             return View(entity);
         }
-
 
 
         // GET: OrderPaymentMethods/Delete/5
@@ -149,24 +133,19 @@ namespace Shodypati.Controllers
         }
 
         // POST: OrderPaymentMethods/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             var responseMessage = await client.DeleteAsync(url + "/" + id);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
+            if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             throw new Exception("Exception");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
+            if (disposing) Db.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -1,8 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DB_A2C6ED_shodypati" Class="ShodypatiDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=DB_A2C6ED_shodypati;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DefaultConnection" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Database Name="DB_A2C6ED_shodypati" Class="ShodypatiDataContext"
+          xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings"
+              ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=DB_A2C6ED_shodypati;Integrated Security=True"
+              SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings"
+              SettingsPropertyName="DefaultConnection" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BannerImageTbl" Member="BannerImageTbls">
     <Type Name="BannerImageTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="URL" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="ImagePath" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
@@ -14,7 +21,8 @@
   </Table>
   <Table Name="dbo.StockStatusTbl" Member="StockStatusTbls">
     <Type Name="StockStatusTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="NameEnglish" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="NameBangla" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="DescriptionEnglish" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
@@ -23,7 +31,8 @@
   </Table>
   <Table Name="dbo.BannerTbl" Member="BannerTbls">
     <Type Name="BannerTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="CreatedOnUtc" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="UpdatedOnUtc" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
@@ -34,7 +43,8 @@
   </Table>
   <Table Name="dbo.BazarListTbl" Member="BazarListTbls">
     <Type Name="BazarListTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="MainImagePath" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
@@ -46,7 +56,8 @@
   </Table>
   <Table Name="dbo.BrandTbl" Member="BrandTbls">
     <Type Name="BrandTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="Name_English" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="Name_Bangla" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="Logo" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
@@ -58,13 +69,15 @@
   </Table>
   <Table Name="dbo.CampaignProductsTbl" Member="CampaignProductsTbls">
     <Type Name="CampaignProductsTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.CategoryTbl" Member="CategoryTbls">
     <Type Name="CategoryTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="Name_English" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="Name_Bangla" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
@@ -80,7 +93,8 @@
   </Table>
   <Table Name="dbo.CustomerSearchTbl" Member="CustomerSearchTbls">
     <Type Name="CustomerSearchTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Keyword" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
       <Column Name="IpAddress" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
@@ -89,7 +103,8 @@
   </Table>
   <Table Name="dbo.DoctorAppointmentTbl" Member="DoctorAppointmentTbls">
     <Type Name="DoctorAppointmentTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="PatientName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Address" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -108,13 +123,15 @@
   </Table>
   <Table Name="dbo.DoctorRegistrationTypeTbl" Member="DoctorRegistrationTypeTbls">
     <Type Name="DoctorRegistrationTypeTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="RegistrationType" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.DoctorTbl" Member="DoctorTbls">
     <Type Name="DoctorTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="FullName" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
       <Column Name="RegistrationNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="RegistrationType" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
@@ -139,7 +156,8 @@
   </Table>
   <Table Name="dbo.DoctorWorkingAreaTbl" Member="DoctorWorkingAreaTbls">
     <Type Name="DoctorWorkingAreaTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="WorkingArea" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
     </Type>
@@ -155,7 +173,8 @@
   </Table>
   <Table Name="dbo.LogTbl" Member="LogTbls">
     <Type Name="LogTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="ExceptionMessage" Type="System.String" DbType="NVarChar(3050)" CanBeNull="true" />
       <Column Name="ExceptionStackTrace" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ControllerName" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
@@ -169,7 +188,8 @@
   </Table>
   <Table Name="dbo.MedicineListTbl" Member="MedicineListTbls">
     <Type Name="MedicineListTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="MedicineName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Quantity" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -179,7 +199,8 @@
   </Table>
   <Table Name="dbo.MerchantTbl" Member="MerchantTbls">
     <Type Name="MerchantTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="URL" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="Name_English" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="Name_Bangla" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
@@ -195,7 +216,8 @@
   </Table>
   <Table Name="dbo.OrderPaymentMethodTbl" Member="OrderPaymentMethodTbls">
     <Type Name="OrderPaymentMethodTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="Instructions" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="InstructionsImageUrl" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
@@ -204,14 +226,16 @@
   </Table>
   <Table Name="dbo.OrderPaymentStatusTbl" Member="OrderPaymentStatusTbls">
     <Type Name="OrderPaymentStatusTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="DefaultStatus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.OrdersAddressTbl" Member="OrdersAddressTbls">
     <Type Name="OrdersAddressTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="OrderGuidId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="IsShipping" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="IsBilling" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
@@ -227,14 +251,16 @@
   </Table>
   <Table Name="dbo.OrderShippingTbl" Member="OrderShippingTbls">
     <Type Name="OrderShippingTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Note" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.OrdersProductTbl" Member="OrdersProductTbls">
     <Type Name="OrdersProductTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="OrderGuidId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ProductName_English" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
@@ -260,14 +286,16 @@
   </Table>
   <Table Name="dbo.OrderStatusTbl" Member="OrderStatusTbls">
     <Type Name="OrderStatusTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="DefaultStatus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.OrdersTbl" Member="OrdersTbls">
     <Type Name="OrdersTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="GuidId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="CustomerId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="OrderStatusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -298,7 +326,8 @@
   </Table>
   <Table Name="dbo.ProductImageTbl" Member="ProductImageTbls">
     <Type Name="ProductImageTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ImagePath" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
@@ -307,14 +336,16 @@
   </Table>
   <Table Name="dbo.ProductRelatedTbl" Member="ProductRelatedTbls">
     <Type Name="ProductRelatedTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="ProductId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="RelatedProductId" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.ProductReviewTbl" Member="ProductReviewTbls">
     <Type Name="ProductReviewTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="ProdcutId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CustomerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IsApproved" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
@@ -327,7 +358,8 @@
   </Table>
   <Table Name="dbo.ProductTbl" Member="ProductTbls">
     <Type Name="ProductTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="ProductName_English" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="ProductName_Bangla" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="Description_English" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
@@ -380,7 +412,8 @@
   </Table>
   <Table Name="dbo.ShipmentTbl" Member="ShipmentTbls">
     <Type Name="ShipmentTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="OrderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="TrackingNumber" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="CreatedOnUtc" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
@@ -391,7 +424,8 @@
   </Table>
   <Table Name="dbo.UserTbl" Member="UserTbls">
     <Type Name="UserTbl">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
+              CanBeNull="false" />
       <Column Name="FirstName" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="Company" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Shodypati.Models
 {
@@ -10,8 +6,7 @@ namespace Shodypati.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        [Required] public string Name { get; set; }
 
         public int OrderId { get; set; }
 
@@ -24,7 +19,5 @@ namespace Shodypati.Models
         public string DeliveryDateUtc { get; set; }
 
         public string AdminComment { get; set; }
-
     }
-
 }

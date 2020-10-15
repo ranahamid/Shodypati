@@ -9,7 +9,7 @@
 
 <div>
     <h4>Brand</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name_English)
@@ -33,7 +33,7 @@
 
         <dd>
             <a href="@Model.Logo" data-lightbox="image-1" data-title="@Model.Name_English">
-                <img src="@Model.Logo" class="img-display" />
+                <img src="@Model.Logo" class="img-display"/>
             </a>
         </dd>
 
@@ -69,11 +69,10 @@
             @Html.DisplayFor(model => model.Published)
         </dd>
 
-   
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

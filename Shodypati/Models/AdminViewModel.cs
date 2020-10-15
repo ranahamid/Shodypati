@@ -7,6 +7,7 @@ namespace Shodypati.Models
     public class RoleViewModel
     {
         public string Id { get; set; }
+
         [Required(AllowEmptyStrings = false)]
         [Display(Name = "RoleName")]
         public string Name { get; set; }
@@ -19,7 +20,7 @@ namespace Shodypati.Models
         public string Name { get; set; }
 
         public string Address { get; set; }
-    
+
         [Required]
         [Phone]
         [Display(Name = "Phone Number")]

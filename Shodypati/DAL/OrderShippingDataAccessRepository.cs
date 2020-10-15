@@ -1,17 +1,10 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Shodypati.Controllers;
 using Shodypati.Filters;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-
 
 namespace Shodypati.DAL
 {
@@ -20,11 +13,11 @@ namespace Shodypati.DAL
     {
         public IEnumerable<OrderShipping> Get()
         {
-            var entities = Db.OrderShippingTbls.Select(x => new OrderShipping()
+            var entities = Db.OrderShippingTbls.Select(x => new OrderShipping
             {
                 Id = x.Id,
                 Name = x.Name,
-                Note = x.Note,
+                Note = x.Note
             }).ToList();
 
             return entities;
@@ -32,11 +25,11 @@ namespace Shodypati.DAL
 
         public OrderShipping Get(int id)
         {
-            OrderShipping entity = Db.OrderShippingTbls.Where(x => x.Id == id).Select(x => new OrderShipping()
+            var entity = Db.OrderShippingTbls.Where(x => x.Id == id).Select(x => new OrderShipping
             {
                 Id = x.Id,
                 Name = x.Name,
-                Note = x.Note,
+                Note = x.Note
             }).SingleOrDefault();
 
             return entity;
@@ -48,8 +41,7 @@ namespace Shodypati.DAL
             {
                 //   Id              = entity.Id,           
                 Name = entity.Name,
-                Note = entity.Note,
-
+                Note = entity.Note
             });
             try
             {
@@ -64,14 +56,13 @@ namespace Shodypati.DAL
         public void Put(int id, OrderShipping entity)
         {
             var isEntity = from x in Db.OrderShippingTbls
-                           where x.Id == entity.Id
-                           select x;
+                where x.Id == entity.Id
+                select x;
 
             var entitySingle = isEntity.Single();
 
             entitySingle.Name = entity.Name;
             entitySingle.Note = entity.Note;
-
 
 
             try
@@ -87,12 +78,12 @@ namespace Shodypati.DAL
         public void Delete(int id)
         {
             var query = from x in Db.OrderShippingTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query.Count() == 1)
             {
-                OrderShippingTbl entity = query.SingleOrDefault();
+                var entity = query.SingleOrDefault();
                 Db.OrderShippingTbls.DeleteOnSubmit(entity ?? throw new InvalidOperationException());
             }
 
@@ -107,12 +98,12 @@ namespace Shodypati.DAL
         }
 
         //custom
-        public List<System.Web.Mvc.SelectListItem> GetAllOrderShippingSelectList()
+        public List<SelectListItem> GetAllOrderShippingSelectList()
         {
-            var entities = Db.OrderShippingTbls.Select(x => new SelectListItem()
+            var entities = Db.OrderShippingTbls.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
-                Text = x.Name,
+                Text = x.Name
                 // Selected = (item.Value.ToLower() == entity..ToString().ToLower()) ? true : false
             }).ToList();
 

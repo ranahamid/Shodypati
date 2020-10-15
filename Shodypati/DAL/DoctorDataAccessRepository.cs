@@ -1,17 +1,11 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
 using Shodypati.Controllers;
 using Shodypati.Filters;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Shodypati.DAL
 {
@@ -22,9 +16,10 @@ namespace Shodypati.DAL
         {
             Db = new ShodypatiDataContext();
         }
+
         public IEnumerable<Doctor> Get()
         {
-            var entities = Db.DoctorTbls.Select(x => new Doctor()
+            var entities = Db.DoctorTbls.Select(x => new Doctor
             {
                 Id = x.Id,
                 FullName = x.FullName,
@@ -34,7 +29,7 @@ namespace Shodypati.DAL
                 Designation = x.Designation,
                 YearOfExperience = x.YearOfExperience,
                 SelectedDoctorWorkingTypeId = x.WorkingArea,
-         
+
                 Addresss = x.Addresss,
                 DateOfBirth = x.DateOfBirth,
                 PhoneNumber = x.PhoneNumber,
@@ -49,24 +44,16 @@ namespace Shodypati.DAL
                 RawDBImagePath = x.VisitingCard,
                 CreatedOnUtc = x.CreatedOnUtc,
                 UpdatedOnUtc = x.UpdatedOnUtc,
-                Active = x.Active,
+                Active = x.Active
             }).ToList();
 
             return entities;
         }
 
-        public string GetTimeFromTimeSpan(TimeSpan start,TimeSpan end)
-        {
-            var timeStart = start.ToString(@"hh\:mm\:ss");
-            var timeEnd = end.ToString(@"hh\:mm\:ss");
-            return timeStart+" - " +timeEnd;
-        }
-
-      
 
         public Doctor Get(int id)
         {
-            var entity = Db.DoctorTbls.Where(x => x.Id == id).Select(x => new Doctor()
+            var entity = Db.DoctorTbls.Where(x => x.Id == id).Select(x => new Doctor
             {
                 Id = x.Id,
                 FullName = x.FullName,
@@ -83,21 +70,21 @@ namespace Shodypati.DAL
                 Email = x.Email,
                 SelectedVisitDaysStr = GetDaysNameFromNumbers(x.CanVisitDays),
                 SelectedVisitDays = GetListFromCommaSeparatedIntList(x.CanVisitDays),
-                HiddenDays =GetHiddenDaysFromActiveDays(x.CanVisitDays),
+                HiddenDays = GetHiddenDaysFromActiveDays(x.CanVisitDays),
                 VisitTimeStart = x.VisitTimeStart,
                 VisitTimeEnd = x.VisitTimeEnd,
-                VisitTime = GetTimeFromTimeSpan(x.VisitTimeStart, x.VisitTimeEnd) ,
+                VisitTime = GetTimeFromTimeSpan(x.VisitTimeStart, x.VisitTimeEnd),
                 SlotDuration = x.SlotDuration,
                 VisitFee = x.VisitFee,
                 VisitingCard = HttpUtility.UrlPathEncode(baseUrl + x.VisitingCard),
                 RawDBImagePath = x.VisitingCard,
                 CreatedOnUtc = x.CreatedOnUtc,
                 UpdatedOnUtc = x.UpdatedOnUtc,
-                Active = x.Active,
-
+                Active = x.Active
             }).SingleOrDefault();
 
-            var query = Db.DoctorWorkingAreaTbls.SingleOrDefault(y => y.Id.ToString() == entity.SelectedDoctorWorkingTypeId);
+            var query = Db.DoctorWorkingAreaTbls.SingleOrDefault(y =>
+                y.Id.ToString() == entity.SelectedDoctorWorkingTypeId);
             if (query != null && entity != null)
                 entity.WorkingTypeName = query.WorkingArea;
 
@@ -107,34 +94,21 @@ namespace Shodypati.DAL
         public void Post(Doctor entity)
         {
             var imgAddress = string.Empty;
-            if (entity.VisitingCard != null)
-            {
-                imgAddress = entity.VisitingCard.TrimStart('/');
-            }
+            if (entity.VisitingCard != null) imgAddress = entity.VisitingCard.TrimStart('/');
 
             // string visitDays=string.Empty;
 
             var visitDays = new StringBuilder();
             foreach (var item in entity.SelectedVisitDays)
-            {
-
                 if (visitDays.ToString() != string.Empty)
-                {
                     visitDays.Append("," + item);
-                }
                 else
-                {
                     visitDays.Append(item);
-                }
-            }
 
             if (entity.SlotDuration == 0)
                 entity.SlotDuration = 10;
 
-            if (entity.VisitTimeEnd.ToString() == "00:00:00")
-            {
-                entity.VisitTimeEnd = new TimeSpan(0, 23, 0, 0);
-            }
+            if (entity.VisitTimeEnd.ToString() == "00:00:00") entity.VisitTimeEnd = new TimeSpan(0, 23, 0, 0);
 
             Db.DoctorTbls.InsertOnSubmit(new DoctorTbl
             {
@@ -161,7 +135,7 @@ namespace Shodypati.DAL
                 VisitingCard = imgAddress,
                 CreatedOnUtc = DateTime.Now,
                 UpdatedOnUtc = DateTime.Now,
-                Active = entity.Active,
+                Active = entity.Active
             });
             try
             {
@@ -176,28 +150,18 @@ namespace Shodypati.DAL
         public void Put(int id, Doctor entity)
         {
             var isEntity = from x in Db.DoctorTbls
-                           where x.Id == entity.Id
-                           select x;
+                where x.Id == entity.Id
+                select x;
 
             var imgAddress = string.Empty;
-            if (entity.RawDBImagePath != null)
-            {
-                imgAddress = entity.RawDBImagePath.TrimStart('/');
-            }
+            if (entity.RawDBImagePath != null) imgAddress = entity.RawDBImagePath.TrimStart('/');
 
             var visitDays = new StringBuilder();
             foreach (var item in entity.SelectedVisitDays)
-            {
-
                 if (visitDays.ToString() != string.Empty)
-                {
                     visitDays.Append("," + item);
-                }
                 else
-                {
                     visitDays.Append(item);
-                }
-            }
 
             if (entity.SlotDuration == 0)
                 entity.SlotDuration = 10;
@@ -238,8 +202,8 @@ namespace Shodypati.DAL
         public void Delete(int id)
         {
             var query = from x in Db.DoctorTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query.Count() == 1)
             {
@@ -257,5 +221,11 @@ namespace Shodypati.DAL
             }
         }
 
+        public string GetTimeFromTimeSpan(TimeSpan start, TimeSpan end)
+        {
+            var timeStart = start.ToString(@"hh\:mm\:ss");
+            var timeEnd = end.ToString(@"hh\:mm\:ss");
+            return timeStart + " - " + timeEnd;
+        }
     }
 }

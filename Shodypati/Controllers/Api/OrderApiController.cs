@@ -1,42 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Shodypati.Models;
-using Shodypati.DAL;
-using Newtonsoft.Json;
-using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
+using Shodypati.DAL;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers.Api
 {
     public class OrderApiController : ApiController
     {
-        private IOrderAccessRepository<Orders, int> _repository;
+        private readonly IOrderAccessRepository<Orders, int> _repository;
 
-
-        public ApplicationUserManager UserManager
-        {
-            get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-        }
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-        }
         public OrderApiController(IOrderAccessRepository<Orders, int> r)
         {
             _repository = r;
         }
+
+
+        public ApplicationUserManager UserManager =>
+            HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+        public ApplicationSignInManager SignInManager =>
+            HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>();
 
 
         [Route("api/OrderApi/")]
@@ -52,10 +41,7 @@ namespace Shodypati.Controllers.Api
         public IHttpActionResult GetOrder(int id)
         {
             var item = _repository.Get(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            if (item == null) return NotFound();
             return Ok(item);
         }
 
@@ -71,19 +57,16 @@ namespace Shodypati.Controllers.Api
         [Route("api/OrderApi/")]
         // POST: api/OrderApi
         [ResponseType(typeof(OrderMobile))]
-        public async Task<IHttpActionResult> PostOrder(/*Orders entity*/)
+        public async Task<IHttpActionResult> PostOrder( /*Orders entity*/)
         {
-            string responseData = await Request.Content.ReadAsStringAsync();
+            var responseData = await Request.Content.ReadAsStringAsync();
             var entity = JsonConvert.DeserializeObject<Orders>(responseData);
 
             //_repository.Post(entity);
             //return Ok(entity);
 
             var item = _repository.Post(entity, UserManager);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            if (item == null) return NotFound();
             return Ok(item);
         }
 

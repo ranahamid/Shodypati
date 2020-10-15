@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Shodypati.DAL
 {
@@ -12,6 +9,5 @@ namespace Shodypati.DAL
         void Post(TEntity entity);
         void Put(TPrimaryKey id, TEntity entity);
         void Delete(TPrimaryKey id);
-        
     }
 }

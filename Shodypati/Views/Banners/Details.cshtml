@@ -9,7 +9,7 @@
 
 <div>
     <h4>Banner</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -54,19 +54,21 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.BannerImages)
-            {
-                <tr>
-                    <td>@item.Description</td>
-                    <td><img src="@item.ImagePath" class="img-display" /></td>
-                    <td>@item.DisplayOrder</td>
-                </tr>
-            }
+        @foreach (var item in Model.BannerImages)
+        {
+            <tr>
+                <td>@item.Description</td>
+                <td>
+                    <img src="@item.ImagePath" class="img-display"/>
+                </td>
+                <td>@item.DisplayOrder</td>
+            </tr>
+        }
         </tbody>
     </table>
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

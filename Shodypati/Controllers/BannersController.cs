@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Shodypati.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using Shodypati.DAL;
-using System.Configuration;
-using Shodypati.Filters;
-
-using Shodypati.Helpers;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Hosting;
-
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using Shodypati.DAL;
+using Shodypati.Filters;
+using Shodypati.Helpers;
+using Shodypati.Models;
 
 namespace Shodypati.Controllers
 {
@@ -27,61 +19,62 @@ namespace Shodypati.Controllers
     public class BannersController : BaseController
     {
         private readonly FilesHelper _filesHelper;
-        String tempPath = "~/banners/";
-        String serverMapPath = "~/Content/images/banners/";
-        private string UrlBase = "/Content/images/banners/"; //with out '/'
-        String DeleteURL = "/banners/DeleteAdditionalFile/?file=";
-        private string StorageRoot => Path.Combine(HostingEnvironment.MapPath(serverMapPath));
-        String DeleteType = "GET";
+        private readonly string DeleteType = "GET";
+        private readonly string DeleteURL = "/banners/DeleteAdditionalFile/?file=";
+        private readonly string serverMapPath = "~/Content/images/banners/";
+        private readonly string tempPath = "~/banners/";
+        private readonly string UrlBase = "/Content/images/banners/"; //with out '/'
 
         public BannersController()
         {
-            int randN = GetRandomNumber();
+            var randN = GetRandomNumber();
 
-            _filesHelper = new FilesHelper(DeleteURL, DeleteType, StorageRoot + randN + "/", UrlBase + randN + "/", tempPath + randN + "/", serverMapPath + randN + "/");
+            _filesHelper = new FilesHelper(DeleteURL, DeleteType, StorageRoot + randN + "/", UrlBase + randN + "/",
+                tempPath + randN + "/", serverMapPath + randN + "/");
 
             //api url                  
             url = baseUrl + "api/BannersApi";
         }
+
+        private string StorageRoot => Path.Combine(HostingEnvironment.MapPath(serverMapPath));
+
         // GET: Banners
         public async Task<ActionResult> Index()
         {
-
-            HttpResponseMessage responseMessage = await client.GetAsync(url);
+            var responseMessage = await client.GetAsync(url);
             if (responseMessage.IsSuccessStatusCode)
             {
                 var responseData = responseMessage.Content.ReadAsStringAsync().Result;
                 var entity = JsonConvert.DeserializeObject<List<Banner>>(responseData);
                 return View(entity);
             }
+
             throw new Exception("Exception");
         }
-
 
 
         // GET: Banners/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
+            var responseMessage = await client.GetAsync(url + "/" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 var responseData = responseMessage.Content.ReadAsStringAsync().Result;
                 var entity = JsonConvert.DeserializeObject<Banner>(responseData);
                 return View(entity);
             }
+
             throw new Exception("Exception");
         }
-
-
 
 
         // GET: Banners/SetBanner
         public async Task<ActionResult> SetBanner()
         {
-            BannerSelectList banner = new BannerSelectList
+            var banner = new BannerSelectList
             {
                 AllBanerItems = await GetAllBannerList()
-            };       
+            };
             return View(banner);
         }
 
@@ -105,15 +98,15 @@ namespace Shodypati.Controllers
             {
                 //set previous to 0
                 var preEntity = from x in Db.BannerTbls
-                                where x.IsHomePageBanner == true
-                                select x;
+                    where x.IsHomePageBanner == true
+                    select x;
                 SetisHomePage(preEntity, false);
 
 
                 //current
                 var isEntity = from x in Db.BannerTbls
-                               where x.Id.ToString() == entity.SelectedBanner
-                               select x;
+                    where x.Id.ToString() == entity.SelectedBanner
+                    select x;
                 SetisHomePage(isEntity, true);
 
                 try
@@ -124,15 +117,17 @@ namespace Shodypati.Controllers
                 {
                     throw new Exception("Exception");
                 }
+
                 return RedirectToAction("Index");
             }
+
             return View(entity);
         }
 
         // GET: Banners/Create
         public ActionResult Create()
         {
-            Banner entity = new Banner {GuidId = Guid.NewGuid()};
+            var entity = new Banner {GuidId = Guid.NewGuid()};
             return View(entity);
         }
 
@@ -143,12 +138,10 @@ namespace Shodypati.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpResponseMessage responseMessage = await client.PostAsJsonAsync(url, entity);
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+                var responseMessage = await client.PostAsJsonAsync(url, entity);
+                if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             }
+
             return View(entity);
         }
 
@@ -161,24 +154,20 @@ namespace Shodypati.Controllers
             var currentContext = HttpContext;
 
             _filesHelper.UploadAndShowResults(currentContext, resultList);
-            JsonFiles files = new JsonFiles(resultList);
+            var files = new JsonFiles(resultList);
 
-            bool isEmpty = !resultList.Any();
+            var isEmpty = !resultList.Any();
             if (isEmpty)
-            {
                 return Json("Error ");
-            }
-            else
-            {
-                return Json(files);
-            }
+            return Json(files);
         }
+
         [HttpPost]
         public JsonResult UploadAdditional()
         {
             var resultList = new List<ViewDataUploadFilesResult>();
             var currentContext = HttpContext;
-           
+
 
             _filesHelper.UploadAndShowResults(currentContext, resultList);
             //save to db
@@ -187,19 +176,20 @@ namespace Shodypati.Controllers
                 var bannerId = Guid.Parse(Request.Form["GuidId"]);
                 foreach (var item in resultList)
                 {
-                    string fileUrl = item.url;
+                    var fileUrl = item.url;
                     Db.BannerImageTbls.InsertOnSubmit(new BannerImageTbl
                     {
                         // Id = GuidId,
                         BannerGuidId = bannerId,
                         ImagePath = fileUrl.TrimStart('/'),
                         Description = null,
-                        DisplayOrder = 1,
+                        DisplayOrder = 1
                     });
                 }
+
                 Db.SubmitChanges();
             }
-           
+
             catch (Exception)
             {
                 throw new Exception("Exception");
@@ -209,10 +199,7 @@ namespace Shodypati.Controllers
             var files = new JsonFiles(resultList);
 
             var isEmpty = !resultList.Any();
-            if (isEmpty)
-            {
-                return Json("Error ");
-            }
+            if (isEmpty) return Json("Error ");
 
             return Json(files);
         }
@@ -230,11 +217,11 @@ namespace Shodypati.Controllers
             _filesHelper.DeleteFile(file);
             //delete from db
             var bannerId = Guid.Parse(Request.Form["GuidId"]);
-            var img = "Content/images/banner/"+file;
+            var img = "Content/images/banner/" + file;
             var query = from x in Db.BannerImageTbls
-                        where x.BannerGuidId == bannerId && 
-                              x.ImagePath== img                              
-                        select x;
+                where x.BannerGuidId == bannerId &&
+                      x.ImagePath == img
+                select x;
 
             if (query.Count() == 1)
             {
@@ -250,13 +237,15 @@ namespace Shodypati.Controllers
             {
                 throw new Exception("Exception");
             }
+
             //
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
+
         // GET: Banners/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-            HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
+            var responseMessage = await client.GetAsync(url + "/" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 var responseData = responseMessage.Content.ReadAsStringAsync().Result;
@@ -264,6 +253,7 @@ namespace Shodypati.Controllers
 
                 return View(entity);
             }
+
             throw new Exception("Exception");
         }
 
@@ -274,47 +264,41 @@ namespace Shodypati.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpResponseMessage responseMessage = await client.PutAsJsonAsync(url + "/" + id, entity);
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+                var responseMessage = await client.PutAsJsonAsync(url + "/" + id, entity);
+                if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             }
+
             throw new Exception("Exception");
         }
 
         // GET: Banners/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
-            HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
+            var responseMessage = await client.GetAsync(url + "/" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 var responseData = responseMessage.Content.ReadAsStringAsync().Result;
                 var entity = JsonConvert.DeserializeObject<Banner>(responseData);
                 return View(entity);
             }
+
             throw new Exception("Exception");
         }
 
         // POST: Banners/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            HttpResponseMessage responseMessage = await client.DeleteAsync(url + "/" + id);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
+            var responseMessage = await client.DeleteAsync(url + "/" + id);
+            if (responseMessage.IsSuccessStatusCode) return RedirectToAction("Index");
             throw new Exception("Exception");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
+            if (disposing) Db.Dispose();
             base.Dispose(disposing);
         }
     }

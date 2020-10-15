@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Shodypati.Models
 {
@@ -27,5 +24,4 @@ namespace Shodypati.Models
 
         public DateTime? CreatedOnUtc { get; set; }
     }
-
 }

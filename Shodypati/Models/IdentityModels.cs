@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Shodypati.Models
 {
@@ -24,40 +24,30 @@ namespace Shodypati.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
 
             // Add custom user claims here
-            if (this.Name != null)
-            {
-                userIdentity.AddClaim(new Claim("Name", this.Name));
-            }
-            if (this.Address != null)
-            {
-                userIdentity.AddClaim(new Claim("Address", this.Address));
-            }
-           
+            if (Name != null) userIdentity.AddClaim(new Claim("Name", Name));
+            if (Address != null) userIdentity.AddClaim(new Claim("Address", Address));
+
             return userIdentity;
         }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-
         static ApplicationDbContext()
         {
             // Set the database intializer which is run once during application start
             // This seeds the database with admin user credentials and admin role
-            Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
+            Database.SetInitializer(new ApplicationDbInitializer());
+        }
+
+        public ApplicationDbContext()
+            : base("DefaultConnection", false)
+        {
         }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-
-       
     }
-
-
 }

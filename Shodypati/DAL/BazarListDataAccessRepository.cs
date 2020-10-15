@@ -1,37 +1,29 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using Shodypati.Controllers;
 using Shodypati.Filters;
-using Shodypati.Helpers;
 using Shodypati.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Hosting;
-using System.Web.Mvc;
+
 namespace Shodypati.DAL
 {
     [ExceptionHandlerAttribute]
     public class BazarListDataAccessRepository : BaseController, IBazarListAccessRepository<BazarList, int>
-    {       
+    {
         public IEnumerable<BazarList> Get()
         {
-            var entities = Db.BazarListTbls.Select(x => new BazarList()
+            var entities = Db.BazarListTbls.Select(x => new BazarList
             {
-                Id              = x.Id,
-                Name            = x.Name,
+                Id = x.Id,
+                Name = x.Name,
                 MainImagePath = HttpUtility.UrlPathEncode(baseUrl + x.MainImagePath),
                 RawDBImagePath = x.MainImagePath,
-                Address         = x.Address,
-                Description     = x.Description,
-                Number          = x.Number,
-                CreatedOnUtc    = x.CreatedOnUtc,
-                UpdatedOnUtc    = x.UpdatedOnUtc,
+                Address = x.Address,
+                Description = x.Description,
+                Number = x.Number,
+                CreatedOnUtc = x.CreatedOnUtc,
+                UpdatedOnUtc = x.UpdatedOnUtc
             }).ToList();
 
             return entities;
@@ -39,43 +31,39 @@ namespace Shodypati.DAL
 
         public BazarList Get(int id)
         {
-            BazarList entity = Db.BazarListTbls.Where(x => x.Id == id).Select(x => new BazarList()
+            var entity = Db.BazarListTbls.Where(x => x.Id == id).Select(x => new BazarList
             {
-                Id              = x.Id,
-                Name            = x.Name,
-   
-                MainImagePath =  HttpUtility.UrlPathEncode(baseUrl + x.MainImagePath),
+                Id = x.Id,
+                Name = x.Name,
+
+                MainImagePath = HttpUtility.UrlPathEncode(baseUrl + x.MainImagePath),
                 RawDBImagePath = x.MainImagePath,
-                Address         = x.Address,
-                Description     = x.Description,
-                Number          = x.Number,
-                CreatedOnUtc    = x.CreatedOnUtc,
-                UpdatedOnUtc    = x.UpdatedOnUtc,       
+                Address = x.Address,
+                Description = x.Description,
+                Number = x.Number,
+                CreatedOnUtc = x.CreatedOnUtc,
+                UpdatedOnUtc = x.UpdatedOnUtc
             }).SingleOrDefault();
 
             return entity;
         }
 
-     
 
         public void Post(BazarList entity)
         {
             var imgAddress = string.Empty;
-         
-            if (entity.MainImagePath != null)
-            {
-                imgAddress = entity.MainImagePath.TrimStart('/');
-            }
+
+            if (entity.MainImagePath != null) imgAddress = entity.MainImagePath.TrimStart('/');
 
             Db.BazarListTbls.InsertOnSubmit(new BazarListTbl
-            {             
-                Name            = entity.Name,
-                MainImagePath   = imgAddress,
-                Address         = entity.Address,
-                Description     = entity.Description,
-                Number          = entity.Number,
-                CreatedOnUtc    = entity.CreatedOnUtc,
-                UpdatedOnUtc    = entity.UpdatedOnUtc,
+            {
+                Name = entity.Name,
+                MainImagePath = imgAddress,
+                Address = entity.Address,
+                Description = entity.Description,
+                Number = entity.Number,
+                CreatedOnUtc = entity.CreatedOnUtc,
+                UpdatedOnUtc = entity.UpdatedOnUtc
             });
             try
             {
@@ -90,24 +78,21 @@ namespace Shodypati.DAL
         public void Put(int id, BazarList entity)
         {
             var isEntity = from x in Db.BazarListTbls
-                           where x.Id == entity.Id
-                           select x;
+                where x.Id == entity.Id
+                select x;
 
             var imgAddress = string.Empty;
-            if (entity.RawDBImagePath != null)
-            {
-                imgAddress = entity.RawDBImagePath.TrimStart('/');
-            }
+            if (entity.RawDBImagePath != null) imgAddress = entity.RawDBImagePath.TrimStart('/');
 
-            
-             BazarListTbl entitySingle = isEntity.Single();
-             entitySingle.Name = entity.Name;
-             entitySingle.MainImagePath = imgAddress;
-             entitySingle.Address = entity.Address;
-             entitySingle.Description = entity.Description;
-             entitySingle.Number = entity.Number;
-             entitySingle.UpdatedOnUtc = DateTime.Now;
-            
+
+            var entitySingle = isEntity.Single();
+            entitySingle.Name = entity.Name;
+            entitySingle.MainImagePath = imgAddress;
+            entitySingle.Address = entity.Address;
+            entitySingle.Description = entity.Description;
+            entitySingle.Number = entity.Number;
+            entitySingle.UpdatedOnUtc = DateTime.Now;
+
 
             try
             {
@@ -122,12 +107,12 @@ namespace Shodypati.DAL
         public void Delete(int id)
         {
             var query = from x in Db.BazarListTbls
-                        where x.Id == id
-                        select x;
+                where x.Id == id
+                select x;
 
             if (query.Count() == 1)
             {
-                BazarListTbl entity = query.SingleOrDefault();
+                var entity = query.SingleOrDefault();
                 Db.BazarListTbls.DeleteOnSubmit(entity ?? throw new InvalidOperationException());
             }
 
